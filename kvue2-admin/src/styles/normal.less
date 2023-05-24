@@ -1,0 +1,37 @@
+/* 常用的基础样式class */
+
+#app {
+  height: 100%;
+}
+
+/* 文本显示省略号 */
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ********** 表格中link-button的间距 ************/
+.table-link-btton a+a {
+  margin: 0 5px;
+}
+
+// dl-dt-dd 用于展示key-value的样式
+.dl-keyvalue {
+  dt {
+    margin: 5px 2px;
+    display: block;
+    color: #0009;
+
+    &::before {
+      content: "▍";
+      color: #66a2e4;
+    }
+  }
+
+  dd {
+    margin-inline-start: 5px;
+    margin: 5px 2px 18px 20px;
+  }
+
+}

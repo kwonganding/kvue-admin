@@ -1,0 +1,16 @@
+# http://editorconfig.org
+
+# VSCode 使用 EditorConfig 需要去插件市场下载插件 EditorConfig for VS Code
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 2 #缩进2个空格
+end_of_line = lf
+insert_final_newline = true #在文件末尾插入一个空白行
+trim_trailing_whitespace = true  #去掉尾部空格
+
+[*.md]
+insert_final_newline = false
+trim_trailing_whitespace = false

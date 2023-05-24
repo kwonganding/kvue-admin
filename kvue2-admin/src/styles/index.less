@@ -1,0 +1,46 @@
+@import './var.less';
+@import './view.less';
+@import './normal.less';
+@import './main.less';
+
+
+/* 下面都是一些默认被动样式，无需引用 */
+
+html {
+  font-size: 14px;
+  font-family: Helvetica, Tahoma, Arial, "Microsoft YaHei", "微软雅黑", STXihei, "华文细黑", Heiti, "黑体", SimSun, "宋体", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+
+li {
+  list-style: none;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+div:focus {
+  outline: none;
+}
