@@ -62,8 +62,6 @@ const constantRoutes = [
     name: 'Home',
     meta: { title: '首页', icon: 'el-icon-s-home', affix: true },
   },
-  // 这里配了刷新就会先到这里了,待解决
-  // { path: '*', redirect: '/404', meta: { title: '404' }, },
 ]
 
 //创建路由器
@@ -88,9 +86,7 @@ router.beforeEach(async (to, from, next) => {
     .then(() => {
       //基于用户权限处理路由、菜单，都统一添加到框架页下面
       const items = buildRoutes()
-      const lay = { path: '/', name: 'Layout', component: Layout, children: [] }
-      lay.children.push(...items)
-      router.addRoute(lay)
+      router.addRoutes(items)
       // 由于更新了路由，需重新设置当前路由目标。replace: true替换，不会产生历史记录
       return next({ ...to, replace: true })
     })

@@ -36,7 +36,7 @@ module.exports = {
     //   "objects": "always",
     //   "imports": "never",
     //   "exports": "never",
-    //   "functions": "never",
+    //   "functions": "never"
     // }]
   },
 }

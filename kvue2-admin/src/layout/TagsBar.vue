@@ -138,7 +138,7 @@ export default {
   list-style-type: none;
   display: flex;
   margin: 20px 20px 0 0px;
-  line-height: 30px;
+  line-height: 32px;
   font-size: 14px;
 
   .item {
@@ -152,25 +152,36 @@ export default {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
+    .title{
+      margin-left: 2px;
+    }
 
+    // 小分割线
     &:nth-of-type(n + 2):not(.active):before {
       content: "⋮";
       position: absolute;
       left: -3px;
-      color: #fff5;
+      color: #fff9;
     }
 
     .close {
       display: none;
+      position: relative;
+      left: 6px;
+      border-radius: 2px;
     }
 
     &:hover {
-      background-color: #0001;
+      background-color: #0002;
+
+      .close {
+        display: initial;
+      }
     }
 
     &:hover .close:hover {
-      background: #4443;
-      color: red;
+      background: #f72525;
+      color: #fff;
     }
   }
 
@@ -183,8 +194,6 @@ export default {
 
     & .close {
       display: initial;
-      position: relative;
-      left: 5px;
     }
 
     // 加一点连接凹槽弧度效果

@@ -1,4 +1,5 @@
 // 动态路由配置信息
+import Layout from '../layout'
 
 /**
  * 服务端存储的权限资源数据结构，树形结构，包含了目录、菜单、按钮权限资源。
@@ -7,14 +8,14 @@
  * asyncRoutes：路由数据，挂载到框架页面下面（children），给路由组件用于路由
  */
 const item = {
-  key: 'home',    // 唯一编码，如果是组件，则为组件Name
-  title: '工作台', // 标题
-  url: '/home',   // 路由地址，目录、功能权限则不需要，不能斜杠开头
-  type: 'view',   // dictionary(目录)、view(视图组件)、permission(按钮、请求权限)
-  show: true,     // 是否显示到菜单
-  sort: 1,        // 在菜单中的同级排序
-  icon: '',       // 图标
-  parentKey: '',  // 父级key，根节点则为空
+  name: 'home',        // 唯一编码，如果是组件（菜单视图），则为组件Name
+  title: '工作台',     // 标题
+  url: 'views/home',  // 路由地址，目录、功能权限则不需要，不能斜杠开头
+  type: 'view',       // dictionary(目录)、view(视图组件,菜单项)、permission(按钮、请求权限)
+  show: true,         // 是否显示到菜单
+  sort: 1,            // 在菜单中的同级排序
+  icon: '',           // 图标
+  parentName: '',      // 父级name，根节点则为空
 }
 
 /**
@@ -22,34 +23,35 @@ const item = {
  */
 const roleResource = [
   {
-    key: 't22',
+    name: 't22',
     title: 'test2',
     url: 'views/t2',
     type: 'view',
     show: true,
     sort: 1,
     icon: 'el-icon-thumb',
-    parentKey: '',
+    parentName: '',
+    permissions: ['add', 'edit', 'delete']
   },
   {
-    key: 'user-center',
+    name: 'user-center',
     title: '用户中心',
     url: '',
     type: 'dictionary',
     show: true,
     sort: 1,
     icon: 'el-icon-thumb',
-    parentKey: '',
+    parentName: '',
   },
   {
-    key: 'userlist',
+    name: 'userlist',
     title: '用户管理',
     url: 'views/Home',
     type: 'view',
     show: true,
     sort: 1,
     icon: 'el-icon-thumb',
-    parentKey: 'user-center',
+    parentName: 'user-center',
   }
 ]
 
@@ -59,12 +61,21 @@ const roleResource = [
  */
 function createAsyncRoutes() {
   return [
+    // 根节点
     {
-      meta: { title: 't1页面的视图在这', icon: 'el-icon-s-home', permission: [] },
-      path: '/t1',
-      name: 't11',
-      component: () => import('@/views/t1.vue'),
-    }
+      path: '/',
+      name: 'Layout',
+      component: Layout,
+      children: [
+        {
+          path: '/t1', name: 't11',
+          component: () => import('@/views/t1'),
+          meta: { title: 't1页面的视图在这', icon: 'el-icon-s-home', show: true },
+        },
+      ]
+    },
+    // 404 要放到这里，就是整体路由的最后
+    { path: '*', redirect: '/404', meta: { title: '404', show: false }, }
   ]
 }
 export let asyncRoutes = []
@@ -76,7 +87,8 @@ export let asyncRoutes = []
 function createMenuRoutes() {
   return [
     {
-      path: '/t1?q=sss',
+      path: '/t1',
+      name: 't11',
       meta: { title: 't1页面的视图在这', icon: 'el-icon-s-home', show: true },
     },
   ]
@@ -86,8 +98,8 @@ export let menuRoutes = []
 // 构建route对象
 function buildRouteItem(roleItem) {
   let route = {}
-  route.name = roleItem.key
-  route.path = roleItem.key
+  route.name = roleItem.name
+  route.path = roleItem.name
   if (roleItem.url) {
     // 注意这里的坑，必须 “@/”开头，作为常量字符，不能放到动态参数里。大概原因是 动态导入需要首先确定路径
     route.component = () => import(`@/${roleItem.url}`)
@@ -119,22 +131,22 @@ export function buildRoutes(roleItems = roleResource) {
   roleItems.forEach(item => {
     let route = buildRouteItem(item)
     routes.push(route)
-    //key作为对象Key
+    //name作为对象Key
     map[route.name] = route
   })
   // 循环：构建树、找出视图组件
   routes.forEach(item => {
     //parent为空的是根节点
-    if (!item.meta.parentKey) {
+    if (!item.meta.parentName) {
       menuRoutes.push(item)
     }
     else {
-      map[item.meta.parentKey].children ??= []
-      map[item.meta.parentKey].children.push(item)
+      map[item.meta.parentName].children ??= []
+      map[item.meta.parentName].children.push(item)
     }
     //找出视图组件，用于路由
     if (item.meta.type === 'view') {
-      asyncRoutes.push(item)
+      asyncRoutes[0].children.push(item)
     }
   })
   // 递归处理一下path，递归父节点的name+自己的name

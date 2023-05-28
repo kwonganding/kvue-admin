@@ -29,7 +29,7 @@ module.exports = {
     { name: "靛青", backgroundColor: '#177CB0', color: '#FFF' },
     { name: "橘黄", backgroundColor: '#FF8936', color: '#FFF' },
     { name: "酱紫", backgroundColor: '#d0378d', color: '#FFF' },
-    { name: "珍珠", backgroundColor: 'rgb(243 241 241)', color: '#333' },
+    { name: "天蓝", backgroundColor: '#42B9F5', color: '#FFE' },
     { name: "玄青", backgroundColor: '#3D3B4F', color: '#EEE' },
     { name: "葱青", backgroundColor: 'rgb(13 165 122)', color: '#EEE' },
   ],

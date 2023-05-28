@@ -1,12 +1,14 @@
 <template>
-  <el-menu router class="sidebar-menu view-scroll" :collapse="collapse" :default-active="$route.path">
-    <MenuItem v-for="item in menuItems" :item="item" :key="item.path" />
-  </el-menu>
+<el-menu router class="sidebar-menu view-scroll" :collapse="collapse" :default-active="$route.path"
+  :active-text-color="config.theme.backgroundColor">
+  <MenuItem v-for="item in menuItems" :item="item" :key="item.path"></MenuItem>
+</el-menu>
 </template>
 
 <script>
 import MenuItem from './MenuItem.vue'
 import { menuRoutes } from '@/router/routes'
+import settings from '@/settings'
 
 export default {
   name: 'Menu',
@@ -17,6 +19,7 @@ export default {
   data() {
     return {
       menuItems: [],
+      config: settings.userConfig,
     }
   },
   created: function() {
@@ -26,12 +29,15 @@ export default {
 </script>
 
 <style lang='less' scoped>
+@import url("@/styles/var.less");
+
 .el-menu {
   text-align: left;
   height: 100%;
   overflow-x: hidden;
+
   &:not(.el-menu--collapse) {
-    width: 200px;
+    width: @sidemenu-widht;
   }
 }
 </style>
@@ -41,4 +47,5 @@ export default {
   font-weight: bold;
   background-color: #409eff12;
 }
+
 </style>

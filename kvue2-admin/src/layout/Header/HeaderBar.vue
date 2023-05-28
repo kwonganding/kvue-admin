@@ -5,12 +5,14 @@
     <slot></slot>
   </div>
   <!-- 右侧工具按钮 -->
-  <i class="el-icon-search header-button" title="搜索"></i>
 
-  <i class="el-icon-message-solid header-button" title="系统通知，啥也不是！" style="padding:0 4px">
-    <sup class="el-badge__content hbadge">12</sup>
+  <i class="el-icon-search header-button" titlde="搜索"></i>
+
+  <i class="el-icon-message-solid header-button badge-wrapper" title="系统通知，啥也不是！">
+    <sup class="el-badge__content badge">12</sup>
   </i>
-  <i class="el-icon-setting header-button" v-on:click="$refs.settingBox.show()" title="系统设置"></i>
+
+  <i class="el-icon-setting header-button" v-on:click="$refs.settingBox.show()" title="用户配置"></i>
   <SettingBox ref="settingBox"></SettingBox>
 
   <el-dropdown class="header-userbox" @command="handleCommand">
@@ -104,23 +106,27 @@ export default {
 .header-button {
   height: 100%;
   opacity: 0.9;
-  padding: 0 10px;
   cursor: pointer;
-  font-size: 18px;
   line-height: inherit;
-
-  // 数量标签
-  .hbadge {
-    position: relative;
-    left: -2px;
-    height: 16px;
-    line-height: 16px;
-    padding: 0 4px;
-  }
+  padding: 0 12px;
+  font-size: 18px;
 
   &:hover {
     background: #fff7;
     opacity: 1;
+  }
+}
+
+// 数字-徽章样式
+.badge-wrapper {
+  position: relative;
+
+  .badge {
+    position: absolute;
+    height: 16px;
+    line-height: 16px;
+    top: 5px;
+    right: -4px;
   }
 }
 </style>

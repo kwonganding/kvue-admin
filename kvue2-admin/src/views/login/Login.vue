@@ -13,7 +13,7 @@
         <el-input v-model="formData.pwd" placeholder="请输入密码" prefix-icon="el-icon-lock" maxlength="30" show-password></el-input>
       </el-form-item>
 
-      <el-button type="primary" :loading="loading" style="width:100%;margin-top:20px" @click="login" icon="el-icon-circle-check">登录</el-button>
+      <el-button type="primary" :loading="loading" style="width:100%;margin-top:20px;height: 36px;border-radius: 18px;" @click="login" icon="el-icon-circle-check">登录</el-button>
     </el-form>
   </div>
 </template>

@@ -15,10 +15,6 @@ export default new Vuex.Store({
     cacheRoutes: (state, getters) => getters['tagsBar/cacheRoutes'],
     cacheNames: (state, getters) => getters['tagsBar/cacheNames'],
   },
-  mutations: {
-  },
-  actions: {
-  },
   modules: {
     user, tagsBar
   },

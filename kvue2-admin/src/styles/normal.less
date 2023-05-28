@@ -16,8 +16,9 @@
   margin: 0 5px;
 }
 
-// dl-dt-dd 用于展示key-value的样式
-.dl-keyvalue {
+// dl-dt-dd 的组合样式，用于key、value结构的信息展示。
+// 可配合dl-no-wrap使用，让dt、dd在同一行，但多组需要自己用<br/>来换行了
+.dl-blueline {
   dt {
     margin: 5px 2px;
     display: block;
@@ -25,7 +26,7 @@
 
     &::before {
       content: "▍";
-      color: #66a2e4;
+      color: #74aeec;
     }
   }
 
@@ -33,5 +34,14 @@
     margin-inline-start: 5px;
     margin: 5px 2px 18px 20px;
   }
+}
 
+.dl-no-wrap {
+  dt {
+    display: inline-block;
+  }
+
+  dd {
+    display: inline-block;
+  }
 }

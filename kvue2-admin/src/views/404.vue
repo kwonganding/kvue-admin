@@ -1,27 +1,33 @@
 <template>
-  <div>
-    <b>404 😭😭😭</b>
-    <br />
-    <i>没有找到该页面资源！</i>
-  </div>
+<div>
+  <img src="@/imgs/svg/404.svg" />
+  <p>😭😅🤣</p>
+  <b>404 : </b>
+  <i>资源没找到！</i>
+</div>
 </template>
 
 <script>
 export default {
   name: 'Page404',
-  data() {
-    return {
-
-    }
-  },
 }
 </script>
 
 <style lang='less' scoped>
 div {
-  font-size: 30px;
+  font-size: 2em;
   color: #0008;
-  line-height: 2em;
-  margin: 1em;
+  margin: 10vh auto;
+  text-align: center;
+
+  p {
+    font-size: 2.2em;
+    line-height: 2em;
+  }
+
+  b {
+    color: #F00A;
+    margin-left: 15px;
+  }
 }
 </style>

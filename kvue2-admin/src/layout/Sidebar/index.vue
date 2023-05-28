@@ -1,9 +1,9 @@
 <template>
-<el-aside :width="config.menuCollapse ? 'auto' : '200px'" class="sidebar">
+<el-aside width="auto" class="sidebar">
   <!-- logo -->
   <div class="logo" :style="config.theme">
     <img src="@/imgs/logo.png" alt="logo" />
-    <h1 :class="{ collapse: config.menuCollapse }" class="horizontal-collapse-transition">{{ title }}</h1>
+    <h1 :class="{ collapse: config.menuCollapse }">{{ title }}</h1>
   </div>
 
   <!-- 菜单 -->
@@ -51,10 +51,6 @@ export default {
     // 浮在菜单上，主要是为了动画一致（共用一条右侧外框线）
     position: absolute;
     bottom: 0px;
-
-    &:hover {
-      background: #a5c7f510;
-    }
   }
 }
 
@@ -68,21 +64,27 @@ export default {
     vertical-align: middle;
     height: 80%;
     margin-right: 2px;
+    z-index: 2;
   }
 
   h1 {
     display: inline-block;
     vertical-align: middle;
-    font-size: 18px;
+    font-size: 1.4em;
     margin: 0px;
-    padding-left: 5px;
+    margin-left: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    // 动画必须设置初始值
+    width: @sidemenu-widht - @header-height - 10;
+    opacity: 1;
+    transition: all .3s;
+    z-index: 1;
 
     &.collapse {
       opacity: 0;
-      width: 0px;
-      height: 0px;
-      overflow: hidden;
-      padding-left: 0px;
+      width: 0;
+      transform: translateX(-50%);
     }
   }
 }

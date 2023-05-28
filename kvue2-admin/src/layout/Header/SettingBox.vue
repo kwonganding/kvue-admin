@@ -1,8 +1,8 @@
 <template>
-<el-drawer title="系统配置" :visible.sync="visible" size="320px" :modal="false" class="drawer-box"
+<el-drawer title="用户配置" :visible.sync="visible" size="320px" :modal="false" class="drawer-box"
   style="line-height: initial;">
   <!-- 主题 -->
-  <dl class=" dl-keyvalue">
+  <dl class=" dl-blueline">
     <dt>主题</dt>
     <dd>
       <ul class="teama-box" @click="handleThemaClick($event)">
@@ -12,7 +12,7 @@
       </ul>
     </dd>
 
-    <dt>路由切换动画</dt>
+    <dt>页面切换动画</dt>
     <dd>
       <el-switch v-model="config.routerAnimation" class="config-box" active-text="启用"></el-switch>
     </dd>
@@ -34,7 +34,7 @@ export default {
   name: 'SettingBox',
   data() {
     return {
-      visible: true,
+      visible: false,
       config: settings.userConfig,
       themes: Object.freeze(settings.themes)
     }

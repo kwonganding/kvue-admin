@@ -2,6 +2,7 @@ import Vue from "vue"
 import App from "./App.vue"
 import store from './store'
 import router from './router'
+import './directive/permission'
 import './plugins/element.js'
 import './styles/index.less'
 

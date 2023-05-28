@@ -1,22 +1,31 @@
 <template>
-  <el-menu-item v-if="!hasChildren" :index="item.path">
+<el-menu-item v-if="!hasChildren" :index="item.path" style="position: relative;">
+  <i :class="item.meta.icon"></i>
+  <!-- 名称用title插槽，折叠时才有效 -->
+  <span slot="title">{{ item.meta.title }}</span>
+  <span v-show="isActived" class="active-suffix" :style="config.theme"> </span>
+</el-menu-item>
+<el-submenu v-else :index="item.path">
+  <template slot="title">
     <i :class="item.meta.icon"></i>
-    <!-- 名称用title插槽，折叠时才有效 -->
-    <span slot="title">{{item.meta.title}}</span>
-  </el-menu-item>
-  <el-submenu v-else :index="item.path">
-    <template slot="title">
-      <i :class="item.meta.icon"></i>
-      <span slot="title">{{item.meta.title}}</span>
-    </template>
-    <MenuItem v-for="child in children" :item="child" :key="child.meta.title"></MenuItem>
-  </el-submenu>
+    <span slot="title">{{ item.meta.title }}</span>
+  </template>
+  <MenuItem v-for="child in children" :item="child" :key="child.meta.title">
+  </MenuItem>
+</el-submenu>
 </template>
 
 <script>
+import settings from '@/settings'
+
 export default {
   name: 'MenuItem',
   props: ['item'],
+  data() {
+    return {
+      config: settings.userConfig,
+    }
+  },
   computed: {
     children() {
       return this.item?.children?.filter(s => s.meta.show)
@@ -24,7 +33,20 @@ export default {
     hasChildren() {
       return this.item?.children?.length > 0
     },
+    isActived() {
+      return this.$route.path == this.item.path
+    }
   },
 }
 </script>
+
+<style scoped lang="less">
+.active-suffix {
+  position: absolute;
+  left: 1px;
+  width: 3px;
+  height: 100%;
+  border-top: 1px #FFF solid;
+}
+</style>
 
