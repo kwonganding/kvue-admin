@@ -1,23 +1,28 @@
 <template>
-<el-select placeholder="选择图标" v-model="value" v-bind="$attrs" ref="select">
-  <i :class="value" slot="prefix" class="prefix-icon"></i>
-  <el-option value="" ref="option" class="option view-scroll" :style="{ width: optionWidth }">
-    <div @click.stop>
-      <el-input v-model="searchText" class="searchText" size="mini" clearable suffix-icon="el-icon-search"
-        placeholder="输入关键词搜索"></el-input>
-      <el-collapse value="1">
-        <el-collapse-item title="element-icons" name="1" @click.stop>
-          <i v-for="name in elementIcons" class="icon-item" :class="name" :key="name" @click.stop="iconClick(name)"
-            :title="name"></i>
-        </el-collapse-item>
-        <el-collapse-item title="iconfont-icons" name="2" @click.stop>
-          <i v-for="name in iconfontIcons" :class="iconfonClass(name)" :key="name"
-            @click.stop="iconClick(iconfonClass(name))" class="icon-item" :title="name"></i>
-        </el-collapse-item>
-      </el-collapse>
-    </div>
-  </el-option>
-</el-select>
+<el-popover placement="bottom" :width="popWidth" trigger="click">
+  <div>
+    <el-input v-model="searchText" class="searchText" size="mini" clearable suffix-icon="el-icon-search"
+      placeholder="输入关键词搜索"></el-input>
+
+    <el-collapse value="1" class="view-scroll icons-wrapper">
+      <el-collapse-item title="element-icons" name="1">
+        <i v-for="name in elementIcons" class="icon-item" :class="name" :key="name" @click="iconClick(name)"
+          :title="name"></i>
+      </el-collapse-item>
+      <el-collapse-item title="iconfont-icons" name="2">
+        <i v-for="name in iconfontIcons" :class="iconfontClass(name)" :key="name"
+          @click="iconClick(iconfontClass(name))" class="icon-item" :title="name"></i>
+      </el-collapse-item>
+    </el-collapse>
+  </div>
+
+  <el-input v-model="value" ref="inputIcon" slot="reference" placeholder="点击选择图标" v-bind="$attrs">
+    <template slot="prepend">
+      <i :class="value" class="prefix-icon"></i>
+    </template>
+  </el-input>
+
+</el-popover>
 </template>
 
 <script>
@@ -31,7 +36,7 @@ export default {
     return {
       value: 'el-icon-setting',
       searchText: '',
-      optionWidth: '100%'
+      popWidth: '100%',
     }
   },
   computed: {
@@ -43,11 +48,12 @@ export default {
     }
   },
   mounted() {
-    this.optionWidth = this.$refs.select.$el.clientWidth + 'px'
-    // this.$refs.option.$el.scrollIntoView(true)
+    //最少宽度300
+    const w = this.$refs.inputIcon.$el.clientWidth
+    this.popWidth = w > 300 ? w : 300
   },
   methods: {
-    iconfonClass(name) {
+    iconfontClass(name) {
       return `iconfont ${name}`
     },
     iconClick(name) {
@@ -59,29 +65,21 @@ export default {
 
 <style lang='less' scoped>
 .prefix-icon {
-  line-height: 32px;
-  margin-left: 4px;
-  font-size: 16px;
+  font-size: 18px;
   color: initial;
+
 }
 
-.option {
+.searchText {
+  margin: 0 2px 5px;
+  width: calc(100% - 4px);
+}
+
+
+
+.icons-wrapper {
   min-height: 100px;
-  height: auto;
-  padding: 0 5px;
-  background: none;
-  line-height: 1;
-  font-weight: normal;
-  white-space: initial;
-
-  &:hover {
-    background: none;
-  }
-
-  .searchText {
-    margin: 0 10px 3px 5px;
-    width: calc(100% - 15px);
-  }
+  max-height: 500px;
 
   .icon-item {
     font-size: 20px;
@@ -91,7 +89,7 @@ export default {
 
     &:hover {
       transform: scale(1.5);
-      color: #409EFF;
+      color: var(--theme-hcolor);
     }
   }
 }

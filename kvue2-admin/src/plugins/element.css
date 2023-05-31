@@ -94,6 +94,11 @@
     padding: 20px 20px 10px;
 }
 
+/* el-popover */
+.el-popover {
+    padding: 8px;
+}
+
 /* el-table */
 .el-table--medium .el-table__cell {
     padding: 8px 0;

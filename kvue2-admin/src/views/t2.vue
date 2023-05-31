@@ -11,8 +11,9 @@
     <p :class="cc">123</p>
 
   </div>
-  <el-card>
-    <IconSelect @hook:mounted="console.log('mountddd')" style="width:400px" clearable></IconSelect>
+  <el-card style="width:500px; margin: 10px;padding: 10px;">
+    <IconSelect @hook:mounted="console.log('mountddd')" clearable>
+    </IconSelect>
   </el-card>
   <el-card>
     <TreeSelect :data="menuRoutes" :value="selectValue" clearable
