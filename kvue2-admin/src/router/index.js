@@ -5,7 +5,7 @@ import defaultSetting from '@/settings'
 import { buildRoutes } from './routes'
 
 import Layout from '../layout'
-import Login from '../views/login/Login.vue'
+import Login from '../views/login/login.vue'
 
 Vue.use(VueRouter)
 
@@ -36,13 +36,13 @@ const constantRoutes = [
       {
         path: '/redirect/:path(.*)',
         name: 'Redirect',
-        component: () => import('@/views/Redirect.vue')
+        component: () => import('@/views/redirect.vue')
       },
       {
         path: '/home',
         name: 'Home',
         meta: { title: '首页', icon: 'el-icon-s-home', affix: true },
-        component: () => import('@/views/Home.vue')
+        component: () => import('@/views/home.vue')
       },
       {
         path: '/user',
@@ -101,7 +101,7 @@ router.afterEach((to, from) => {
 })
 
 /**
- * 重置权限，退出登录时调用
+ * 重置路由（权限），退出登录时调用
  */
 export function resetRouter() {
   router.matcher = createRouter().matcher

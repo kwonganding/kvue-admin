@@ -1,10 +1,10 @@
 {
-  "name": "vue2-element-admin",
+  "name": "vue2-admin",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --mode dev",
+    "build": "vue-cli-service build",
     "build:mock": "vue-cli-service build --mode mock",
     "lint": "vue-cli-service lint"
   },

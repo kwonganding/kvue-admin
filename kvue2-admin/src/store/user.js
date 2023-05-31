@@ -64,11 +64,16 @@ const actions = {
     })
   },
 
+  /**
+   * 退出登录，清除token、用户信息、保存的标签数据
+   * @param {} context 
+   */
   logout: (context) => {
     return new Promise((resolve, reject) => {
       logout().then(() => {
         context.commit('SET_TOKEN', '')
         context.commit('SET_USERINFO', null)
+        // 这里调用其他vuex模块的 mutation，注意带上参数{root:true}
         context.commit('tagsBar/CLEAR', null, { root: true })
         resetRouter()
       })

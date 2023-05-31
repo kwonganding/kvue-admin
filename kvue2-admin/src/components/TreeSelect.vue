@@ -1,14 +1,18 @@
 <template>
-<el-select v-model="currentText" placeholder="请选择" @clear="handelClear" clearable class="tree-select">
+<!-- 代理所有属性、事件：v-bind="$attrs" v-on="$listeners" -->
+<el-select v-model="currentText" placeholder="请选择" @clear="handelClear" clearable class="tree-select" v-bind="$attrs"
+  v-on="$listeners">
   <el-option class="option view-scroll" :value="currentItem[options.value]" :label="currentItem[options.label]">
     <!-- data：数据-->
     <!-- props：数据结构配置 -->
     <!-- node-key：唯一标识字段 -->
-    <el-tree ref="tree" :data="data" :node-key="options.value" :props="options" class="tree"
+    <el-tree ref="tree" :data="data" :node-key="options.value" :props="options" class="tree-select-tree"
       @current-change="handleCurrentChange"></el-tree>
   </el-option>
 </el-select>
 </template>
+
+
 
 <script>
 export default {
@@ -31,10 +35,10 @@ export default {
     value(nval) {
       //如果是内部文件变化，则不处理，避免循环更新
       if (this.innerValueChange) {
-        this.innerValueChange = false;
-        return;
+        this.innerValueChange = false
+        return
       }
-      this.initialize();
+      this.initialize()
     }
   },
   data() {
@@ -48,28 +52,28 @@ export default {
       //如果只能选择叶子节点，当前是非叶子节点时干活！
       if (this.onlyLeaf && !node.isLeaf) {
         //重置选中项
-        this.$refs.tree.setCurrentKey(this.value);
-        return; //不更新选中值
+        this.$refs.tree.setCurrentKey(this.value)
+        return //不更新选中值
       }
-      this.emitValue(item);
+      this.emitValue(item)
     },
     //清除
     handelClear() {
-      this.emitValue({});
-      this.$refs.tree.setCurrentKey(null);
+      this.emitValue({})
+      this.$refs.tree.setCurrentKey(null)
     },
     //初始化设置当前选中的项
     initialize() {
-      let key = this.value;
-      const node = key ? this.$refs.tree.getNode(key) : null;
-      this.currentItem = node ? node.data : {};
-      this.$refs.tree.setCurrentKey(key);
+      let key = this.value
+      const node = key ? this.$refs.tree.getNode(key) : null
+      this.currentItem = node ? node.data : {}
+      this.$refs.tree.setCurrentKey(key)
     },
     // 更新值
     emitValue(item) {
-      this.currentItem = item;
-      this.innerValueChange = true;
-      this.$emit('input', item[this.options.value]);
+      this.currentItem = item
+      this.innerValueChange = true
+      this.$emit('input', item[this.options.value])
     }
   }
 }
@@ -80,7 +84,6 @@ export default {
   min-height: 100px;
   height: auto;
   overflow-y: auto;
-  padding: 0 5px;
   background: none;
   line-height: 1;
   font-weight: normal;
@@ -96,8 +99,8 @@ export default {
 </style>
 
 <style lang="less">
-.tree-select {
-  .el-tree .is-current>.el-tree-node__content {
+.tree-select-tree {
+  .is-current>.el-tree-node__content {
     font-weight: 600;
     color: #409eff;
   }

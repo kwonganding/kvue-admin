@@ -9,22 +9,38 @@
   <el-button type="danger" v-permission="'delete'">删除</el-button>
   <div>
     <p :class="cc">123</p>
-    <IconSelect></IconSelect>
+
   </div>
+  <el-card>
+    <IconSelect @hook:mounted="console.log('mountddd')" style="width:400px" clearable></IconSelect>
+  </el-card>
+  <el-card>
+    <TreeSelect :data="menuRoutes" :value="selectValue" clearable
+      :options="{ id: 'name', label: (data, node) => data.meta.title, children: 'children' }">
+    </TreeSelect>
+  </el-card>
+
+  <el-card>
+  </el-card>
 </div>
 </template>
 
 <script>
 
 import IconSelect from '@/components/IconSelect'
+import TreeSelect from '@/components/TreeSelect'
+import { menuRoutes } from '@/router/routes'
 
 export default {
   name: 't22',
-  components: { IconSelect },
+  components: { IconSelect, TreeSelect },
   data() {
     return {
       permission: 'add',
-      cc: 'red b'
+      cc: 'red b',
+      console,
+      menuRoutes,
+      selectValue: '',
     }
   },
   methods: {

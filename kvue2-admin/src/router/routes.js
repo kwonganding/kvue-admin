@@ -46,7 +46,7 @@ const roleResource = [
   {
     name: 'userlist',
     title: '用户管理',
-    url: 'views/Home',
+    url: 'views/home',
     type: 'view',
     show: true,
     sort: 1,

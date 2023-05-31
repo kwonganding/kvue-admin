@@ -51,13 +51,11 @@ service.interceptors.response.use(
       // 将该token设置到vuex以及本地存储中
       store.commit('SET_TOKEN', newToken)
     }
-    // 处理自定义响应状态码，规范：{code:0,message:'',其他数据}
+    // 处理自定义响应状态码，数据规范：{code:0,message:'',其他数据}
     switch (data.code) {
-      case 0:
-        // 正常返回
+      case 0:           // 正常返回
         return data
-      case 4001:
-        //token过期
+      case 4001:        //token过期
         break
       default:
         throw new Error(data.message)
