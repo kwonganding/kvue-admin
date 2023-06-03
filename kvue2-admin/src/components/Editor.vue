@@ -1,1 +1,21 @@
-<!-- 代理所有属性、事件：v-bind="$attrs" v-on="$listeners" -->
+
+<template>
+<div>1</div>
+</template>
+
+<script>
+export default {
+  name: '',
+  data() {
+    return {
+
+    }
+  },
+  methods: {
+
+  }
+}
+</script>
+
+<style lang='less' scoped>
+</style>

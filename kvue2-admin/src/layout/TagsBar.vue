@@ -68,8 +68,9 @@ export default {
       return route.meta && route.meta.affix
     },
     initialAffix() {
-      //初始化固定的标签页
-      const affixs = this.$router.options.routes.filter((v) => v.meta?.affix)
+      //初始化固定的标签页，默认第一个是本地constantRoutes中的框架组件
+      const affixs = this.$router.options.routes[0]?.children.filter((v) => v.meta?.affix)
+
       affixs.forEach(v => {
         this.$store.commit('tagsBar/ADD', v)
       })
@@ -152,7 +153,8 @@ export default {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
-    .title{
+
+    .title {
       margin-left: 2px;
     }
 
@@ -187,8 +189,7 @@ export default {
 
   .item.active {
     background-color: #fff;
-    color: #0c43f7;
-    font-weight: bold;
+    color: var(--theme-hcolor);
     margin-right: -1px; //遮住分隔符“⋮”
     position: relative;
 

@@ -1,7 +1,8 @@
 <template>
 <el-menu router class="sidebar-menu view-scroll" :collapse="collapse" :default-active="$route.path"
   :active-text-color="config.theme.backgroundColor">
-  <MenuItem v-for="item in menuItems" :item="item" :key="item.path"></MenuItem>
+  <MenuItem v-for="item in menuItems" :item="item" :key="item.path">
+  </MenuItem>
 </el-menu>
 </template>
 
@@ -42,10 +43,12 @@ export default {
 }
 </style>
 
-<style>
+<style lang="less">
 .sidebar-menu .el-menu-item.is-active {
-  font-weight: bold;
   background-color: #409eff12;
-}
 
+  span {
+    font-weight: bold;
+  }
+}
 </style>

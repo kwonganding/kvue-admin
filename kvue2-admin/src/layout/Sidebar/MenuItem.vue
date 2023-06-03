@@ -2,13 +2,13 @@
 <el-menu-item v-if="!hasChildren" :index="item.path" style="position: relative;">
   <i :class="item.meta.icon"></i>
   <!-- 名称用title插槽，折叠时才有效 -->
-  <span slot="title">{{ item.meta.title }}</span>
+  <span slot="title" style="margin-left:2px">{{ item.meta.title }}</span>
   <span v-show="isActived" class="active-suffix" :style="config.theme"> </span>
 </el-menu-item>
 <el-submenu v-else :index="item.path">
   <template slot="title">
     <i :class="item.meta.icon"></i>
-    <span slot="title">{{ item.meta.title }}</span>
+    <span slot="title" style="margin-left:2px">{{ item.meta.title }}</span>
   </template>
   <MenuItem v-for="child in children" :item="child" :key="child.meta.title">
   </MenuItem>

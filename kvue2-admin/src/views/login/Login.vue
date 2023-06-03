@@ -12,7 +12,7 @@
 
     <el-form-item prop="pwd" required>
       <el-input v-model="formData.pwd" placeholder="请输入密码" prefix-icon="el-icon-lock" maxlength="30" show-password
-        @:keyup.enter.native="login"></el-input>
+        @keyup.enter.native="login"></el-input>
     </el-form-item>
 
     <el-button type="primary" :loading="loading" style="width:100%;margin-top:20px;height: 36px;border-radius: 18px;"
@@ -25,7 +25,7 @@
 import defaultSetting from '@/settings'
 
 export default {
-  name: 'Login',
+  name: 'login',
   data() {
     return {
       loading: false,
@@ -59,7 +59,7 @@ export default {
           .then(mes => {
             this.$message.success(mes)
             // 登录成功，跳转路由
-            this.$router.push('/')
+            this.$router.push('/').catch(() => { })
           })
           .catch(err => {
             this.$message.error(err)

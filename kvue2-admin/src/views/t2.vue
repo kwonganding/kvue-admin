@@ -11,18 +11,37 @@
     <p :class="cc">123</p>
 
   </div>
-  <el-card style="width:500px; margin: 10px;padding: 10px;">
-    <IconSelect @hook:mounted="console.log('mountddd')" clearable>
-    </IconSelect>
-  </el-card>
-  <el-card>
-    <TreeSelect :data="menuRoutes" :value="selectValue" clearable
-      :options="{ id: 'name', label: (data, node) => data.meta.title, children: 'children' }">
-    </TreeSelect>
-  </el-card>
 
-  <el-card>
-  </el-card>
+  <div class="cards">
+    <el-card header="图标选择器" class="item">
+      <div style="margin:10px">
+        <IconSelect v-model="selectIcon" clearable hide-on-selected></IconSelect>
+      </div>
+      <div style="margin:10px">
+        <IconSelect v-model="selectIcon" style="background-color: red;" disabled></IconSelect>
+      </div>
+    </el-card>
+    <el-card header="树选择器" class="item">
+      <TreeSelect :data="menuRoutes" :value="selectValue" clearable style="margin:10px"
+        :options="{ id: 'name', label: (data) => data.meta.title, children: 'children' }">
+      </TreeSelect>
+    </el-card>
+
+    <el-card header="表单" class="item">
+      <el-form label-width="90px">
+        <el-form-item label="菜单图标：">
+          <IconSelect></IconSelect>
+        </el-form-item>
+
+        <el-form-item label="菜单图标：">
+
+        </el-form-item>
+      </el-form>
+    </el-card>
+
+    <el-card class="item">
+    </el-card>
+  </div>
 </div>
 </template>
 
@@ -42,6 +61,7 @@ export default {
       console,
       menuRoutes,
       selectValue: '',
+      selectIcon: 'el-icon-setting',
     }
   },
   methods: {
@@ -57,5 +77,17 @@ export default {
 
 .b {
   text-decoration: line-through;
+}
+
+.cards {
+  display: flex;
+  flex-flow: wrap;
+
+  .item {
+    min-width: 200px;
+    margin: 20px;
+    padding: 0 10px 10px;
+    flex: 1 1 400px;
+  }
 }
 </style>

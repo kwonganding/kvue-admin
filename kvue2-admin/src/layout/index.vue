@@ -1,3 +1,4 @@
+<!-- 框架主页面 -->
 <template>
 <el-container style="height:100%">
   <!-- 左侧菜单工具栏 -->
@@ -54,6 +55,7 @@ export default {
   height: 100%;
   position: relative;
   overflow: hidden auto;
+  flex-flow: column;
 }
 
 // 路由切换动画

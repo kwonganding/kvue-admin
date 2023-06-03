@@ -1,13 +1,16 @@
+<!-- 下拉树形选择器 -->
 <template>
 <!-- 代理所有属性、事件：v-bind="$attrs" v-on="$listeners" -->
-<el-select v-model="currentText" placeholder="请选择" @clear="handelClear" clearable class="tree-select" v-bind="$attrs"
-  v-on="$listeners">
-  <el-option class="option view-scroll" :value="currentItem[options.value]" :label="currentItem[options.label]">
+<el-select ref="select" v-model="currentText" @clear="handelClear" class="tree-select" v-bind="$attrs" v-on="$listeners"
+  :filter-method="filter" :filterable="filterable">
+  <el-option class="tree-wrapper-option view-scroll" :value="currentItem[option.value]"
+    :label="currentItem[option.label]">
     <!-- data：数据-->
     <!-- props：数据结构配置 -->
     <!-- node-key：唯一标识字段 -->
-    <el-tree ref="tree" :data="data" :node-key="options.value" :props="options" class="tree-select-tree"
-      @current-change="handleCurrentChange"></el-tree>
+    <el-tree ref="tree" :data="data" :node-key="option.value" :props="option" class="tree-select-tree" show-checkbox
+      @current-change="handleCurrentChange" :filter-node-method="filterNode" :check-on-click-node="true"
+      :highlight-current="true"></el-tree>
   </el-option>
 </el-select>
 </template>
@@ -19,32 +22,33 @@ export default {
   name: 'TreeSelect',
   props: {
     value: { default: null }, //选中的值
-    data: { type: Array },  //数据
-    onlyLeaf: { type: Boolean, default: true },  //只能选择叶子节点
+    data: { type: Array },  // 树形结构数据
+    onlyLeaf: { type: Boolean, default: true },  //是否只能选择叶子节点
+    filterable: { type: Boolean, default: true }, // 是否支持搜索
     //树形数据结构配置
-    options: { type: Object, default: function() { return { value: 'id', label: 'name', children: 'children' } } }
+    option: { type: Object, default: () => { return { value: 'id', label: 'name', children: 'children' } } }
+  },
+  data() {
+    return {
+      currentItem: {}, //当前的有效选项
+      innerValueChange: false, //标记是否内部文件变化
+    }
   },
   computed: {
     //当前选中的选项文本
     currentText: {
-      get() { return this.currentItem?.[this.options.label] },
+      get() { return this.currentItem?.[this.option.label] },
       set() { }
     }
   },
   watch: {
     value(nval) {
       //如果是内部文件变化，则不处理，避免循环更新
-      if (this.innerValueChange) {
-        this.innerValueChange = false
-        return
-      }
+      // if (this.innerValueChange) {
+      //   this.innerValueChange = false
+      //   return
+      // }
       this.initialize()
-    }
-  },
-  data() {
-    return {
-      currentItem: {}, //当前的有效选项
-      innerValueChange: false, //标记是否内部文件变化
     }
   },
   methods: {
@@ -73,28 +77,40 @@ export default {
     emitValue(item) {
       this.currentItem = item
       this.innerValueChange = true
-      this.$emit('input', item[this.options.value])
+      this.$emit('input', item[this.option.value])
+      // this.$refs.select.blur()
+    },
+    // 触发节点筛选
+    filter(text) {
+      this.$refs.tree.filter(text)
+    },
+    // 执行节点筛选
+    filterNode(value, data) {
+      console.log(data)
+      if (!value) return true
+      return data[this.option.label].includes(value)
     }
   }
 }
 </script>
 
 <style lang='less' scoped>
-.option {
+.tree-select {
+  width: 100%;
+}
+
+.tree-wrapper-option {
   min-height: 100px;
   height: auto;
   overflow-y: auto;
   background: none;
   line-height: 1;
   font-weight: normal;
+  padding: 0;
 
   &:hover {
     background: none;
   }
-}
-
-.tree {
-  background: none;
 }
 </style>
 
@@ -102,11 +118,12 @@ export default {
 .tree-select-tree {
   .is-current>.el-tree-node__content {
     font-weight: 600;
-    color: #409eff;
+    color: var(--theme-hcolor);
   }
 
   .el-tree-node__content {
     height: 32px;
+    margin: 1px;
   }
 }
 </style>

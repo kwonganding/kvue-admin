@@ -29,24 +29,24 @@ const constantRoutes = [
     children: [
       {
         path: '/404',
-        name: 'Page404',
+        name: 'page404',
         meta: { title: '404' },
         component: () => import('@/views/404.vue')
       },
       {
         path: '/redirect/:path(.*)',
-        name: 'Redirect',
+        name: 'redirect',
         component: () => import('@/views/redirect.vue')
       },
       {
         path: '/home',
-        name: 'Home',
+        name: 'home',
         meta: { title: '首页', icon: 'el-icon-s-home', affix: true },
         component: () => import('@/views/home.vue')
       },
       {
         path: '/user',
-        name: 'User',
+        name: 'user',
         meta: { title: '个人中心', icon: 'el-icon-user-solid' },
         component: () => import('@/views/user')
       },
@@ -56,12 +56,7 @@ const constantRoutes = [
     path: '/login',
     meta: { title: "登录" },
     component: Login,
-  },
-  {
-    path: '/home',
-    name: 'Home',
-    meta: { title: '首页', icon: 'el-icon-s-home', affix: true },
-  },
+  }
 ]
 
 //创建路由器
@@ -81,7 +76,7 @@ router.beforeEach(async (to, from, next) => {
   if (store.getters.userInfo)
     return next()
 
-  // 首次进入、刷新进入：获取用户信息，包括前权限，基于权限资源初始化路由、系统菜单
+  // 首次进入、刷新进入：获取用户信息，包括权限，基于权限资源初始化路由、系统菜单
   store.dispatch('user/getInfo')
     .then(() => {
       //基于用户权限处理路由、菜单，都统一添加到框架页下面

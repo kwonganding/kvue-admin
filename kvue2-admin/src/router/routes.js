@@ -7,57 +7,44 @@ import Layout from '../layout'
  * menuResource：菜单资源，用于菜单展示，包含了目录、菜单
  * asyncRoutes：路由数据，挂载到框架页面下面（children），给路由组件用于路由
  */
-const item = {
-  name: 'home',        // 唯一编码，如果是组件（菜单视图），则为组件Name
-  title: '工作台',     // 标题
-  url: 'views/home',  // 路由地址，目录、功能权限则不需要，不能斜杠开头
-  type: 'view',       // dictionary(目录)、view(视图组件,菜单项)、permission(按钮、请求权限)
-  show: true,         // 是否显示到菜单
-  sort: 1,            // 在菜单中的同级排序
-  icon: '',           // 图标
-  parentName: '',      // 父级name，根节点则为空
-}
+// const item = {
+//   name: 'home',       // 唯一编码，如果是组件（菜单视图），则为组件name
+//   title: '工作台',     // 标题
+//   url: 'views/home',  // 路由地址，目录、功能权限则不需要，不能斜杠开头
+//   type: 'view',       // dictionary(目录)、view(视图组件,菜单项)、permission(按钮、请求权限)
+//   show: true,         // 是否显示到菜单
+//   sort: 1,            // 在菜单中的同级排序
+//   icon: '',           // 图标
+//   parentName: '',     // 父级name，根节点则为空
+// }
 
 /**
  * 服务端返回的菜单资源，这里配置的数据仅为调试用
  */
 const roleResource = [
   {
-    name: 't22',
-    title: 'test2',
-    url: 'views/t2',
-    type: 'view',
-    show: true,
-    sort: 1,
-    icon: 'el-icon-thumb',
-    parentName: '',
+    name: 'dev-view', title: '本地开发',
+    url: '',
+    type: 'dictionary', show: true, sort: 1,
+    icon: 'iconfont icon-codelibrary-fill', parentName: '',
+  },
+  {
+    name: 'components', title: '常用组件',
+    url: 'views/dev-view/components',
+    type: 'view', show: true, sort: 1,
+    icon: 'iconfont icon-compass', parentName: 'dev-view',
     permissions: ['add', 'edit', 'delete']
   },
   {
-    name: 'user-center',
-    title: '用户中心',
-    url: '',
-    type: 'dictionary',
-    show: true,
-    sort: 1,
-    icon: 'el-icon-thumb',
-    parentName: '',
-  },
-  {
-    name: 'userlist',
-    title: '用户管理',
-    url: 'views/home',
-    type: 'view',
-    show: true,
-    sort: 1,
-    icon: 'el-icon-thumb',
-    parentName: 'user-center',
+    name: 'userlist', title: '富文本/上传',
+    url: 'views/dev-view/file-editor',
+    type: 'view', show: true, sort: 1,
+    icon: 'iconfont icon-file-text', parentName: 'dev-view',
   }
 ]
 
 /**
- * 动态路由资源，附加到路由中Layout下，roleResource处理后会追加到这里。
- * 本地调试可配置，需要搭配 menuRoutes
+ * 动态路由资源，附加到路由中，roleResource处理后会追加到这里。
  */
 function createAsyncRoutes() {
   return [
@@ -66,13 +53,7 @@ function createAsyncRoutes() {
       path: '/',
       name: 'Layout',
       component: Layout,
-      children: [
-        {
-          path: '/t1', name: 't11',
-          component: () => import('@/views/t1'),
-          meta: { title: 't1页面的视图在这', icon: 'el-icon-s-home', show: true },
-        },
-      ]
+      children: []
     },
     // 404 要放到这里，就是整体路由的最后
     { path: '*', redirect: '/404', meta: { title: '404', show: false }, }
@@ -82,16 +63,9 @@ export let asyncRoutes = []
 
 /**
  * 用于菜单显示的资源，roleResource处理后会追加到这里。
- * 本地调试可配置，需要搭配 asyncRoutes
  */
 function createMenuRoutes() {
-  return [
-    {
-      path: '/t1',
-      name: 't11',
-      meta: { title: 't1页面的视图在这', icon: 'el-icon-s-home', show: true },
-    },
-  ]
+  return []
 }
 export let menuRoutes = []
 

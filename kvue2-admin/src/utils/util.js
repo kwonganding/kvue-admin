@@ -8,7 +8,7 @@
  */
 export function delay(func, ms) {
     return function(...args) {
-        setTimeout((...args) => {
+        setTimeout(() => {
             func.apply(this, args)
         }, ms)
     }
@@ -192,3 +192,4 @@ export function param2Obj(url) {
         '"}'
     )
 }
+
