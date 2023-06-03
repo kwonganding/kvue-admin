@@ -3,10 +3,11 @@
 <div class="cards">
   <el-card :header="`图标选择器：${icon}`" class="item">
     <div class="m10">
-      <IconSelect v-model="icon" clearable hide-on-selected></IconSelect>
+      <IconSelect v-model="icon" clearable></IconSelect>
     </div>
     <div class="m10">
-      <IconSelect v-model="icon" :disabled="disabled" :clearable="clearable"></IconSelect>
+      <IconSelect v-model="icon" :disabled="disabled" :clearable="clearable" :hide-on-selected="hideOnSelected">
+      </IconSelect>
     </div>
   </el-card>
 
@@ -18,7 +19,8 @@
     </div>
     <div class="m10">
       <TreeSelect :data="tree.data" v-model="tree.value" :disabled="disabled" :clearable="clearable"
-        :onlyLeaf="onlyLeaf" :filterable="filterable" :options="{ value: 'id', label: 'name', children: 'children' }">
+        :hide-on-selected="hideOnSelected" :only-leaf="onlyLeaf" :filterable="filterable"
+        :options="{ value: 'id', label: 'name', children: 'children' }">
       </TreeSelect>
     </div>
   </el-card>
@@ -35,14 +37,16 @@
     </el-form>
   </el-card>
 
-  <el-card class="item" header="配置">
+  <el-card class="item" header="配置（第二排）">
     <el-checkbox label="disabled" v-model="disabled" class="m10"></el-checkbox>
     <el-checkbox label="clearable" v-model="clearable" class="m10"></el-checkbox>
-    <el-checkbox label="filterable-树选择器" v-model="filterable" class="m10"></el-checkbox>
-    <el-checkbox label="onlyLeaf-树选择器" v-model="onlyLeaf" class="m10"></el-checkbox>
-    <el-input v-model="text"></el-input>
-    <el-button type="primary" @click="search">搜索</el-button>
-    <el-button type="primary" @click="setTreeDisable">setTreeDisable</el-button>
+    <el-checkbox label="filterable-树支持搜索过滤" v-model="filterable" class="m10"></el-checkbox>
+    <el-checkbox label="only-leaf-树只能选择叶子节点" v-model="onlyLeaf" class="m10"></el-checkbox>
+    <el-checkbox label="hide-on-selected-选中后关闭" v-model="hideOnSelected" class="m10"></el-checkbox>
+    <br>
+    <el-input v-model="text" class="m10" style="width:120px" placeholder="树搜索"></el-input>
+    <el-button type="primary" @click="search" class="m10">搜索</el-button>
+    <el-button type="primary" @click="setTreeDisable" class="m10">setTreeDisable</el-button>
   </el-card>
 
 </div>
@@ -81,9 +85,10 @@ export default {
       clearable: false,
       filterable: true,
       onlyLeaf: true,
+      hideOnSelected: true,
       text: '',
       tree: {
-        data: list2Tree(treeList),
+        data: setTreeDisable(list2Tree(treeList)),
         value: null
       },
       icon: 'el-icon-setting',
@@ -95,8 +100,9 @@ export default {
   },
   methods: {
     search() {
+      let data = this.tree.data
+      this.tree.data = filterTree(data, (item) => item.name.includes(this.text))
       console.log(treeList)
-      this.tree.data = filterTree(list2Tree(treeList), (item) => item.name.includes(this.text))
     },
     setTreeDisable() {
       setTreeDisable(this.tree.data, this.tree.data[1])

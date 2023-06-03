@@ -3,19 +3,17 @@
 <!-- 代理所有属性、事件：v-bind="$attrs" v-on="$listeners" -->
 <el-select ref="select" v-model="currentText" @clear="handelClear" class="tree-select" v-bind="$attrs" v-on="$listeners"
   :filter-method="filter" :filterable="filterable">
-  <el-option class="tree-wrapper-option view-scroll" :value="currentItem[option.value]"
-    :label="currentItem[option.label]">
+  <el-option class="tree-wrapper-option view-scroll" :value="selectedItem?.[option.value]"
+    :label="selectedItem?.[option.label]">
     <!-- data：数据-->
     <!-- props：数据结构配置 -->
     <!-- node-key：唯一标识字段 -->
-    <el-tree ref="tree" :data="data" :node-key="option.value" :props="option" class="tree-select-tree" show-checkbox
-      @current-change="handleCurrentChange" :filter-node-method="filterNode" :check-on-click-node="true"
-      :highlight-current="true"></el-tree>
+    <el-tree ref="tree" :data="data" :node-key="option.value" :props="option" class="tree-select-tree"
+      @current-change="handleCurrentChange" :filter-node-method="filterNode" :highlight-current="true"
+      check-on-click-node></el-tree>
   </el-option>
 </el-select>
 </template>
-
-
 
 <script>
 export default {
@@ -23,62 +21,52 @@ export default {
   props: {
     value: { default: null }, //选中的值
     data: { type: Array },  // 树形结构数据
-    onlyLeaf: { type: Boolean, default: true },  //是否只能选择叶子节点
+    onlyLeaf: { type: Boolean, default: true },  //是否只能选择叶子节点，使用属性为“only-leaf”
     filterable: { type: Boolean, default: true }, // 是否支持搜索
+    hideOnSelected:  // 选中后是否隐藏，默认fasle，使用的属性为 “hide-on-selected”
+      { type: Boolean, default: true },
     //树形数据结构配置
     option: { type: Object, default: () => { return { value: 'id', label: 'name', children: 'children' } } }
   },
   data() {
     return {
-      currentItem: {}, //当前的有效选项
-      innerValueChange: false, //标记是否内部文件变化
+      selectedItem: {}, //当前被选中的项
     }
   },
   computed: {
     //当前选中的选项文本
     currentText: {
-      get() { return this.currentItem?.[this.option.label] },
+      get() { return this.selectedItem?.[this.option.label] },
       set() { }
-    }
+    },
   },
   watch: {
     value(nval) {
-      //如果是内部文件变化，则不处理，避免循环更新
-      // if (this.innerValueChange) {
-      //   this.innerValueChange = false
-      //   return
-      // }
-      this.initialize()
+      this.selectedItem = this.$refs.tree?.getNode(nval)?.data ?? null
+      this.$refs.tree.setCurrentKey(nval)
     }
   },
   methods: {
-    handleCurrentChange(item, node) {
-      //如果只能选择叶子节点，当前是非叶子节点时干活！
-      if (this.onlyLeaf && !node.isLeaf) {
+    handleCurrentChange(data, node) {
+      //如果只能选择叶子节点，或者节点不可用，则重置
+      if ((this.onlyLeaf && !node.isLeaf) || node.disabled) {
         //重置选中项
         this.$refs.tree.setCurrentKey(this.value)
-        return //不更新选中值
+        return
       }
-      this.emitValue(item)
+      this.emitValue(data)
     },
     //清除
     handelClear() {
-      this.emitValue({})
+      this.emitValue(null)
       this.$refs.tree.setCurrentKey(null)
     },
-    //初始化设置当前选中的项
-    initialize() {
-      let key = this.value
-      const node = key ? this.$refs.tree.getNode(key) : null
-      this.currentItem = node ? node.data : {}
-      this.$refs.tree.setCurrentKey(key)
-    },
     // 更新值
-    emitValue(item) {
-      this.currentItem = item
-      this.innerValueChange = true
-      this.$emit('input', item[this.option.value])
-      // this.$refs.select.blur()
+    emitValue(data) {
+      this.selectedItem = data
+      this.$emit('input', data?.[this.option.value])
+      if (this.hideOnSelected)
+        this.$refs.select.blur()
     },
     // 触发节点筛选
     filter(text) {
@@ -99,6 +87,7 @@ export default {
   width: 100%;
 }
 
+// option容器
 .tree-wrapper-option {
   min-height: 100px;
   height: auto;
@@ -116,9 +105,17 @@ export default {
 
 <style lang="less">
 .tree-select-tree {
+
+  // 高亮选中状态
   .is-current>.el-tree-node__content {
     font-weight: 600;
     color: var(--theme-hcolor);
+  }
+
+  // 禁用状态
+  [aria-disabled="true"] .el-tree-node__content {
+    color: #C0C4CC;
+    cursor: not-allowed;
   }
 
   .el-tree-node__content {

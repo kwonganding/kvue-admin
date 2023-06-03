@@ -1,12 +1,16 @@
 // tree树形结构数据处理
 
+import { Function } from "core-js"
+
 /**
- * 集合数据转换为树形结构
+ * 集合数据转换为树形结构。parent支持函数，示例：(n) => n.meta.parentName
  * @param {Array} list 集合数据
  * @param {Object} option 对象键配置，默认值{ key: 'id', parent: 'pid', children: 'children' }
  */
 export function list2Tree(list, option = { key: 'id', parent: 'pid', children: 'children' }) {
   let tree = []
+  // 获取父节点编码统一为函数
+  let pvalue = typeof (option.parent) === 'function' ? option.parent : (n) => n[option.parent]
   // map存放所有对象
   let map = {}
   list.forEach(item => {
@@ -14,13 +18,14 @@ export function list2Tree(list, option = { key: 'id', parent: 'pid', children: '
   })
   //遍历设置根节点、父级节点
   list.forEach(item => {
-    if (!item[option.parent])
+    if (!pvalue(item))
       tree.push(item)
     else {
-      map[item[option.parent]][option.children] ??= []
-      map[item[option.parent]][option.children].push(item)
+      map[pvalue(item)][option.children] ??= []
+      map[pvalue(item)][option.children].push(item)
     }
   })
+  console.log(tree)
   return tree
 }
 
@@ -50,7 +55,7 @@ export function tree2List(tree, option = { children: 'children' }) {
  */
 export function setTreeDisable(tree, disabledNode, option = { children: 'children', disabled: 'disabled' }) {
   if (!tree || tree.length <= 0)
-    return
+    return tree
   // 递归更新disabled值
   const update = function(tree, value) {
     if (!tree || tree.length <= 0)
@@ -62,9 +67,11 @@ export function setTreeDisable(tree, disabledNode, option = { children: 'childre
   }
   // 开始干活，先重置
   update(tree, false)
+  if (!disabledNode) return tree
   // 设置所有子节点disable = true
   disabledNode[option.disabled] = true
   update(disabledNode[option.children], true)
+  return tree
 }
 
 /**
@@ -81,9 +88,9 @@ export function filterTree(tree, func, option = { children: 'children' }) {
     if (func(node)) {
       // 当前节点命中
       const newNode = { ...node, [option.children]: null }
-      const fnode = filterTree(node[option.children], func, option)
-      if (fnode && fnode.length > 0)
-        newNode[option.children] = fnode
+      const cnodes = filterTree(node[option.children], func, option)
+      if (cnodes && cnodes.length > 0)
+        newNode[option.children] = cnodes
       resTree.push(newNode)
     }
     else {
