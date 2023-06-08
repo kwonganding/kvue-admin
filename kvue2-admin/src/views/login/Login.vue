@@ -1,24 +1,27 @@
 <template>
-<div class="login-page">
-  <el-form :model="formData" ref="loginForm" class="login-form" :rules="formRules" @submit.prevent="">
-    <div>
-      <h3>系统登录</h3>
-      <p>欢迎登录{{ title }}</p>
-    </div>
-    <el-form-item prop="name" required>
-      <el-input v-model.trim="formData.name" placeholder="请输入用户名" prefix-icon="el-icon-user" maxlength="50"
-        clearable></el-input>
-    </el-form-item>
+  <div class="login-page">
+    <el-form :model="formData" ref="loginForm" class="login-form" :rules="formRules" @submit.prevent>
+      <div>
+        <h3>系统登录</h3>
+        <p>欢迎登录{{ title }}</p>
+      </div>
+      <el-form-item prop="name" required>
+        <el-input v-model.trim="formData.name" placeholder="请输入用户名" prefix-icon="el-icon-user" maxlength="50" clearable></el-input>
+      </el-form-item>
 
-    <el-form-item prop="pwd" required>
-      <el-input v-model="formData.pwd" placeholder="请输入密码" prefix-icon="el-icon-lock" maxlength="30" show-password
-        @keyup.enter.native="login"></el-input>
-    </el-form-item>
+      <el-form-item prop="pwd" required>
+        <el-input v-model="formData.pwd" placeholder="请输入密码" prefix-icon="el-icon-lock" maxlength="30" show-password @keyup.enter.native="login"></el-input>
+      </el-form-item>
 
-    <el-button type="primary" :loading="loading" style="width:100%;margin-top:20px;height: 36px;border-radius: 18px;"
-      @click="login" icon="el-icon-circle-check">登录</el-button>
-  </el-form>
-</div>
+      <el-button
+        type="primary"
+        :loading="loading"
+        style="width:100%;margin-top:20px;height: 36px;border-radius: 18px;"
+        @click="login"
+        icon="el-icon-circle-check"
+      >登录</el-button>
+    </el-form>
+  </div>
 </template>
 
 <script>
@@ -47,7 +50,7 @@ export default {
   methods: {
     login() {
       this.loading = true
-      this.$refs.loginForm.validate((valid, mes) => {
+      this.$refs.loginForm.validate((valid) => {
         //验证
         if (!valid) {
           this.$message.error('输入有误，请修改后重新提交！')

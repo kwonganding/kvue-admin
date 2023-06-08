@@ -1,15 +1,17 @@
 <template>
-<div>
-  <p style="color:var(--bg-color)">t1111111111</p>
-  <input v-model="mes" />
-  <el-button type="info" @click="findRule">set color</el-button>
-  <el-tabs>
-    <el-tab-pane label="t1111"><el-input v-model="mes" placeholder=""></el-input></el-tab-pane>
-    <el-tab-pane label="t222">
-      <input type="text" />
-    </el-tab-pane>
-  </el-tabs>
-</div>
+  <div>
+    <p style="color:var(--bg-color)">t1111111111</p>
+    <input v-model="mes" />
+    <el-button type="info" @click="findRule">set color</el-button>
+    <el-tabs>
+      <el-tab-pane label="t1111">
+        <el-input v-model="mes" placeholder></el-input>
+      </el-tab-pane>
+      <el-tab-pane label="t222">
+        <input type="text" />
+      </el-tab-pane>
+    </el-tabs>
+  </div>
 </template>
 
 <script>

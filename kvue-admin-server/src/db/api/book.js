@@ -4,7 +4,7 @@ let express = require('express');
 //获取Express的路由
 let router = express.Router();
 //引入db库
-const db = require('../db/db.js');
+const db = require('../src/db/db.js');
 
 //获取book列表，带分页、查询条件
 router.post('/book/list', (req, res) => {

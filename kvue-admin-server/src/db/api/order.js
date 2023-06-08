@@ -2,7 +2,7 @@
 
 let express = require('express');
 let router = express.Router();
-const db = require('../db/db.js');
+const db = require('../src/db/db.js');
 
 
 //获取order列表，带分页、查询条件

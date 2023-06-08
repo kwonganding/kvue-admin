@@ -1,4 +1,4 @@
-# vue2-element-admin
+# kvue2-admin
 
 ## Project setup
 ```

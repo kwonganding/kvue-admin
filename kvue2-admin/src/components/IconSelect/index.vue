@@ -1,28 +1,38 @@
 <!-- 图标选择器 -->
 <template>
-<el-popover placement="bottom" :width="popWidth" trigger="click" :disabled="disabled" ref="popBox">
-  <!-- 图标搜索框 -->
-  <el-input v-model="searchText" size="mini" clearable suffix-icon="el-icon-search" placeholder="输入class关键词搜索"
-    style="padding: 0 5px 5px;"></el-input>
-  <!-- 图标列表 -->
-  <el-collapse value="1" class="view-scroll icons-wrapper">
-    <el-collapse-item title="element-icons" name="1">
-      <i v-for="name in elementIcons" class="icon-item" :class="name" :key="name" @click="iconClick(name)"
-        :title="name"></i>
-    </el-collapse-item>
-    <el-collapse-item title="iconfont-icons" name="2">
-      <i v-for="name in iconfontIcons" :class="iconfontClass(name)" :key="name" @click="iconClick(iconfontClass(name))"
-        class="icon-item" :title="name"></i>
-    </el-collapse-item>
-  </el-collapse>
+  <el-popover placement="bottom" :width="popWidth" trigger="click" :disabled="disabled" ref="popBox">
+    <!-- 图标搜索框 -->
+    <el-input v-model="searchText" size="mini" clearable suffix-icon="el-icon-search" placeholder="输入class关键词搜索" style="padding: 0 5px 5px;"></el-input>
+    <!-- 图标列表 -->
+    <el-collapse value="1" class="view-scroll icons-wrapper">
+      <el-collapse-item title="element-icons" name="1">
+        <i v-for="name in elementIcons" class="icon-item" :class="name" :key="name" @click="iconClick(name)" :title="name"></i>
+      </el-collapse-item>
+      <el-collapse-item title="iconfont-icons" name="2">
+        <i
+          v-for="name in iconfontIcons"
+          :class="iconfontClass(name)"
+          :key="name"
+          @click="iconClick(iconfontClass(name))"
+          class="icon-item"
+          :title="name"
+        ></i>
+      </el-collapse-item>
+    </el-collapse>
 
-  <!-- 宿主，一个文本输入框 -->
-  <el-input :value="value" @input="$emit('input', $event)" ref="inputBox" slot="reference" placeholder="点击选择图标"
-    :disabled="disabled" v-bind="$attrs">
-    <i slot="prepend" :class="value" class="prefix-icon"></i>
-  </el-input>
-
-</el-popover>
+    <!-- 宿主，一个文本输入框 -->
+    <el-input
+      :value="value"
+      @input="$emit('input', $event)"
+      ref="inputBox"
+      slot="reference"
+      placeholder="点击选择图标"
+      :disabled="disabled"
+      v-bind="$attrs"
+    >
+      <i slot="prepend" :class="value" class="prefix-icon"></i>
+    </el-input>
+  </el-popover>
 </template>
 
 <script>

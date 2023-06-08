@@ -2,9 +2,17 @@
 <!-- <Pagination :total="total" :size.sync="search.size" :index.sync="search.index" @pagination="loadData"></Pagination> -->
 
 <template>
-<el-pagination style="text-align:right;margin-top:5px" background :total="total" :current-page="currentPage"
-  :page-size="pageSize" :page-sizes="[5, 10, 20, 50]" @current-change="pageChanged" @size-change="pageSizeChanged"
-  layout="total, sizes, prev, pager, next, jumper"></el-pagination>
+  <el-pagination
+    style="text-align:right;margin-top:5px"
+    background
+    :total="total"
+    :current-page="currentPage"
+    :page-size="pageSize"
+    :page-sizes="[5, 10, 20, 50]"
+    @current-change="pageChanged"
+    @size-change="pageSizeChanged"
+    layout="total, sizes, prev, pager, next, jumper"
+  ></el-pagination>
 </template>
 
 <script>

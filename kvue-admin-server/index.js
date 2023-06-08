@@ -17,17 +17,17 @@ server.use('/api/file', express.static('./file'));
 
 //*****  加载api路由 *****/
 
-const path='/api';
+const path = '/api';
 // 基础api
-const base = require('./api/base.js');
+const base = require('./src/api/base.js');
 // 书籍模块api
-const book = require('./api/book.js');
+const book = require('./src//api/book.js');
 // 文件上传api
-const file = require('./api/file.js');
+const file = require('./src//api/file.js');
 // 订单管理api
-const order = require('./api/order.js');
+const order = require('./src//api/order.js');
 // 系统管理功能API
-const system = require('./api/system.js');
+const system = require('./src//api/system.js');
 
 server.use(path, base);
 server.use(path, book);
@@ -53,6 +53,3 @@ server.listen(3000, err => {
   if (!err)
     console.log('服务器启动成功，地址：http://localhost:3000')
 })
-
-
-

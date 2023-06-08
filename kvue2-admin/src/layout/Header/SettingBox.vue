@@ -1,29 +1,28 @@
 <template>
-<el-drawer title="用户配置" :visible.sync="visible" size="320px" :modal="false" class="drawer-box"
-  style="line-height: initial;">
-  <!-- 主题 -->
-  <dl class=" dl-blueline">
-    <dt>主题</dt>
-    <dd>
-      <ul class="teama-box" @click="handleThemaClick($event)">
-        <li v-for="t in themes" :style="t" :key="t.name" :class="t.name == config.theme.name ? 'active' : ''">{{ t.name
-        }}
-        </li>
-      </ul>
-    </dd>
+  <el-drawer title="用户配置" :visible.sync="visible" size="320px" :modal="false" class="drawer-box" style="line-height: initial;">
+    <!-- 主题 -->
+    <dl class="dl-blueline">
+      <dt>主题</dt>
+      <dd>
+        <ul class="teama-box" @click="handleThemaClick($event)">
+          <li v-for="t in themes" :style="t" :key="t.name" :class="t.name == config.theme.name ? 'active' : ''">
+            {{ t.name
+            }}
+          </li>
+        </ul>
+      </dd>
 
-    <dt>页面切换动画</dt>
-    <dd>
-      <el-switch v-model="config.routerAnimation" class="config-box" active-text="启用"></el-switch>
-    </dd>
+      <dt>页面切换动画</dt>
+      <dd>
+        <el-switch v-model="config.routerAnimation" class="config-box" active-text="启用"></el-switch>
+      </dd>
 
-    <dt>收起侧边栏</dt>
-    <dd>
-      <el-switch v-model="config.menuCollapse" class="config-box" active-text="启用"></el-switch>
-    </dd>
-  </dl>
-
-</el-drawer>
+      <dt>收起侧边栏</dt>
+      <dd>
+        <el-switch v-model="config.menuCollapse" class="config-box" active-text="启用"></el-switch>
+      </dd>
+    </dl>
+  </el-drawer>
 </template>
 
 <script>

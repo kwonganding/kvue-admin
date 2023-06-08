@@ -93,7 +93,7 @@ router.beforeEach(async (to, from, next) => {
     })
 })
 // 全局守卫，每个路由导航后：更新标题
-router.afterEach((to, from) => {
+router.afterEach((to) => {
   document.title = defaultSetting.getPageTitle(to.meta.title)
 })
 

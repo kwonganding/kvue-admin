@@ -5,7 +5,7 @@ module.exports = {
   tabWidth: 2, //tab键的空格数
   // singleQuote: false,
   useTabs: false, //是否使用tab进行缩进，默认为false，表示用空格进行缩减
-  semi: true, //行末是否使用分号，默认为 true
+  semi: false, //行末是否使用分号，默认为 true
   singleQuote: false, //字符串是否使用单引号，默认为false，使用双引号
   bracketSpacing: true, // 对象左右两侧需要空格
 }

@@ -1,27 +1,27 @@
 <!-- 框架主页面 -->
 <template>
-<el-container style="height:100%">
-  <!-- 左侧菜单工具栏 -->
-  <Sidebar></Sidebar>
+  <el-container style="height:100%">
+    <!-- 左侧菜单工具栏 -->
+    <Sidebar></Sidebar>
 
-  <!-- 右边：上为header，下为主容器区域 -->
-  <el-container direction="vertical">
-    <!-- 头部，包括 -->
-    <HeaderBar>
-      <!-- 标签栏放在这里 -->
-      <TagsBar></TagsBar>
-    </HeaderBar>
+    <!-- 右边：上为header，下为主容器区域 -->
+    <el-container direction="vertical">
+      <!-- 头部，包括 -->
+      <HeaderBar>
+        <!-- 标签栏放在这里 -->
+        <TagsBar></TagsBar>
+      </HeaderBar>
 
-    <!-- 主容器 -->
-    <el-container class="main-wrapper view-scroll">
-      <transition mode="out-in" :name="config.routerAnimation ? 'fade-transform' : ''">
-        <keep-alive :include="cacheNames">
-          <router-view></router-view>
-        </keep-alive>
-      </transition>
+      <!-- 主容器 -->
+      <el-container class="main-wrapper view-scroll">
+        <transition mode="out-in" :name="config.routerAnimation ? 'fade-transform' : ''">
+          <keep-alive :include="cacheNames">
+            <router-view></router-view>
+          </keep-alive>
+        </transition>
+      </el-container>
     </el-container>
   </el-container>
-</el-container>
 </template>
 
 <script>

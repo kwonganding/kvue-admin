@@ -27,16 +27,5 @@ module.exports = {
 
     // 关闭驼峰命名规则
     "vue/multi-word-component-names": 0,
-
-
-    //要求对象内成员都必须加上逗号
-    //https://eslint.org/docs/latest/rules/comma-dangle#rule-details
-    // "comma-dangle": ["error", {
-    //   "arrays": "never",
-    //   "objects": "always",
-    //   "imports": "never",
-    //   "exports": "never",
-    //   "functions": "never"
-    // }]
   },
 }

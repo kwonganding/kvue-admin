@@ -1,38 +1,38 @@
 <template>
-<el-header class="header" :style="config.theme">
-  <div class="slot">
-    <!-- 左侧插槽，用来放标签栏吧 -->
-    <slot></slot>
-  </div>
-  <!-- 右侧工具按钮 -->
+  <el-header class="header" :style="config.theme">
+    <div class="slot">
+      <!-- 左侧插槽，用来放标签栏吧 -->
+      <slot></slot>
+    </div>
+    <!-- 右侧工具按钮 -->
 
-  <i class="el-icon-search header-button" titlde="搜索"></i>
+    <i class="el-icon-search header-button" titlde="搜索"></i>
 
-  <i class="el-icon-message-solid header-button badge-wrapper" title="系统通知，啥也不是！">
-    <sup class="el-badge__content badge">12</sup>
-  </i>
+    <i class="el-icon-message-solid header-button badge-wrapper" title="系统通知，啥也不是！">
+      <sup class="el-badge__content badge">12</sup>
+    </i>
 
-  <i class="el-icon-setting header-button" v-on:click="$refs.settingBox.show()" title="用户配置"></i>
-  <SettingBox ref="settingBox"></SettingBox>
+    <i class="el-icon-setting header-button" v-on:click="$refs.settingBox.show()" title="用户配置"></i>
+    <SettingBox ref="settingBox"></SettingBox>
 
-  <el-dropdown class="header-userbox" @command="handleCommand">
-    <span>
-      <img :src="baseURL + $store.getters.userInfo.avatar" alt="头像" />
-      [ {{ $store.getters.userInfo.name }} ]
-      <i class="el-icon-arrow-down el-icon--right" style="font-size:12px"></i>
-    </span>
-    <el-dropdown-menu slot="dropdown">
-      <el-dropdown-item command="about">
-        <i class="el-icon-info"></i>关于
-      </el-dropdown-item>
-      <el-dropdown-item command="user">
-        <i class="el-icon-user-solid"></i>个人中心
-      </el-dropdown-item>
-      <!-- <el-divider></el-divider> -->
-      <el-dropdown-item command="logout" divided icon="el-icon-circle-close">退出登录</el-dropdown-item>
-    </el-dropdown-menu>
-  </el-dropdown>
-</el-header>
+    <el-dropdown class="header-userbox" @command="handleCommand">
+      <span>
+        <img :src="baseURL + $store.getters.userInfo.avatar" alt="头像" />
+        [ {{ $store.getters.userInfo.name }} ]
+        <i class="el-icon-arrow-down el-icon--right" style="font-size:12px"></i>
+      </span>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item command="about">
+          <i class="el-icon-info"></i>关于
+        </el-dropdown-item>
+        <el-dropdown-item command="user">
+          <i class="el-icon-user-solid"></i>个人中心
+        </el-dropdown-item>
+        <!-- <el-divider></el-divider> -->
+        <el-dropdown-item command="logout" divided icon="el-icon-circle-close">退出登录</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
+  </el-header>
 </template>
 
 <script>

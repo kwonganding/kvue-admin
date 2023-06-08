@@ -1,10 +1,10 @@
 <template>
-<div>
-  <img src="@/imgs/svg/404.svg" />
-  <p>😭😅🤣</p>
-  <b>404 : </b>
-  <i>资源没找到！</i>
-</div>
+  <div>
+    <img src="@/imgs/svg/404.svg" />
+    <p>😭😅🤣</p>
+    <b>404 :</b>
+    <i>资源没找到！</i>
+  </div>
 </template>
 
 <script>
@@ -26,7 +26,7 @@ div {
   }
 
   b {
-    color: #F00A;
+    color: #f00a;
     margin-left: 15px;
   }
 }

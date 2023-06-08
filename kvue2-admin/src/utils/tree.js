@@ -3,13 +3,14 @@
 import { Function } from "core-js"
 
 /**
- * 集合数据转换为树形结构。parent支持函数，示例：(n) => n.meta.parentName
+ * 集合数据转换为树形结构。option.parent支持函数，示例：(n) => n.meta.parentName
  * @param {Array} list 集合数据
  * @param {Object} option 对象键配置，默认值{ key: 'id', parent: 'pid', children: 'children' }
+ * @returns 树形结构数据tree
  */
 export function list2Tree(list, option = { key: 'id', parent: 'pid', children: 'children' }) {
   let tree = []
-  // 获取父节点编码统一为函数
+  // 获取父编码统一为函数
   let pvalue = typeof (option.parent) === 'function' ? option.parent : (n) => n[option.parent]
   // map存放所有对象
   let map = {}
@@ -25,7 +26,6 @@ export function list2Tree(list, option = { key: 'id', parent: 'pid', children: '
       map[pvalue(item)][option.children].push(item)
     }
   })
-  console.log(tree)
   return tree
 }
 
@@ -33,6 +33,7 @@ export function list2Tree(list, option = { key: 'id', parent: 'pid', children: '
  * 树形转平铺list（广度优先，先横向再纵向）
  * @param {*} tree 一颗大树
  * @param {*} option 对象键配置，默认值{ children: 'children' }
+ * @returns 平铺的列表
  */
 export function tree2List(tree, option = { children: 'children' }) {
   const list = []
@@ -79,7 +80,7 @@ export function setTreeDisable(tree, disabledNode, option = { children: 'childre
  * @param {Array|Tree} tree 一颗大树
  * @param {Function} func 过滤函数
  * @param {Object} option 对象键配置，默认值{ children: 'children' }
- * @returns 过滤或的新 newTree
+ * @returns 过滤后的新 newTree
  */
 export function filterTree(tree, func, option = { children: 'children' }) {
   let resTree = []

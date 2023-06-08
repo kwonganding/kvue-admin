@@ -1,18 +1,33 @@
 <!-- 下拉树形选择器 -->
 <template>
-<!-- 代理所有属性、事件：v-bind="$attrs" v-on="$listeners" -->
-<el-select ref="select" v-model="currentText" @clear="handelClear" class="tree-select" v-bind="$attrs" v-on="$listeners"
-  :filter-method="filter" :filterable="filterable">
-  <el-option class="tree-wrapper-option view-scroll" :value="selectedItem?.[option.value]"
-    :label="selectedItem?.[option.label]">
-    <!-- data：数据-->
-    <!-- props：数据结构配置 -->
-    <!-- node-key：唯一标识字段 -->
-    <el-tree ref="tree" :data="data" :node-key="option.value" :props="option" class="tree-select-tree"
-      @current-change="handleCurrentChange" :filter-node-method="filterNode" :highlight-current="true"
-      check-on-click-node></el-tree>
-  </el-option>
-</el-select>
+  <!-- 代理所有属性、事件：v-bind="$attrs" v-on="$listeners" -->
+  <el-select
+    ref="select"
+    v-model="currentText"
+    @clear="handelClear"
+    class="tree-select"
+    v-bind="$attrs"
+    v-on="$listeners"
+    :filter-method="filter"
+    :filterable="filterable"
+  >
+    <el-option class="tree-wrapper-option view-scroll" :value="selectedItem?.[option.value]" :label="selectedItem?.[option.label]">
+      <!-- data：数据-->
+      <!-- props：数据结构配置 -->
+      <!-- node-key：唯一标识字段 -->
+      <el-tree
+        ref="tree"
+        :data="data"
+        :node-key="option.value"
+        :props="option"
+        class="tree-select-tree"
+        @current-change="handleCurrentChange"
+        :filter-node-method="filterNode"
+        :highlight-current="true"
+        check-on-click-node
+      ></el-tree>
+    </el-option>
+  </el-select>
 </template>
 
 <script>
@@ -68,13 +83,12 @@ export default {
       if (this.hideOnSelected)
         this.$refs.select.blur()
     },
-    // 触发节点筛选
+    // 触发筛选
     filter(text) {
       this.$refs.tree.filter(text)
     },
     // 执行节点筛选
     filterNode(value, data) {
-      console.log(data)
       if (!value) return true
       return data[this.option.label].includes(value)
     }
@@ -105,16 +119,15 @@ export default {
 
 <style lang="less">
 .tree-select-tree {
-
   // 高亮选中状态
-  .is-current>.el-tree-node__content {
+  .is-current > .el-tree-node__content {
     font-weight: 600;
     color: var(--theme-hcolor);
   }
 
   // 禁用状态
   [aria-disabled="true"] .el-tree-node__content {
-    color: #C0C4CC;
+    color: #c0c4cc;
     cursor: not-allowed;
   }
 

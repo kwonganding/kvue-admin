@@ -2,7 +2,7 @@
 
 let express = require('express');
 let router = express.Router();
-const db = require('../db/db.js');
+const db = require('../src/db/db.js');
 
 // 获取所有字典类型列表
 router.get('/sys/dictype/list', (req, res) => {

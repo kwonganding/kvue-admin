@@ -1,18 +1,23 @@
 <template>
-<el-aside width="auto" class="sidebar">
-  <!-- logo -->
-  <div class="logo" :style="config.theme">
-    <img src="@/imgs/logo.png" alt="logo" />
-    <h1 :class="{ collapse: config.menuCollapse }">{{ title }}</h1>
-  </div>
+  <el-aside width="auto" class="sidebar">
+    <!-- logo -->
+    <div class="logo" :style="config.theme">
+      <img src="@/imgs/logo.png" alt="logo" />
+      <h1 :class="{ collapse: config.menuCollapse }">{{ title }}</h1>
+    </div>
 
-  <!-- 菜单 -->
-  <Menu :collapse="config.menuCollapse" class="sidebar-menu"></Menu>
+    <!-- 菜单 -->
+    <Menu :collapse="config.menuCollapse" class="sidebar-menu"></Menu>
 
-  <!-- 底部收缩按钮 -->
-  <el-button class="collapse-button" type="text" :icon="config.menuCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
-    v-on:click="config.menuCollapse = !config.menuCollapse" title="展开/收起侧边栏"></el-button>
-</el-aside>
+    <!-- 底部收缩按钮 -->
+    <el-button
+      class="collapse-button"
+      type="text"
+      :icon="config.menuCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
+      v-on:click="config.menuCollapse = !config.menuCollapse"
+      title="展开/收起侧边栏"
+    ></el-button>
+  </el-aside>
 </template>
 
 <script>
@@ -78,7 +83,7 @@ export default {
     // 动画必须设置初始值
     width: @sidemenu-widht - @header-height - 10;
     opacity: 1;
-    transition: all .3s;
+    transition: all 0.3s;
     z-index: 1;
 
     &.collapse {
