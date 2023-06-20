@@ -3,147 +3,151 @@
 
 /* el-button：高32px */
 .el-button {
-    border-radius: 2px;
+  border-radius: 2px;
 }
 
 .el-button--medium.is-circle {
-    padding: 8px;
+  padding: 8px;
 }
 
 .el-button--medium.is-round,
 .el-button--medium {
-    padding: 8px 14px;
+  padding: 8px 14px;
 }
 
 .el-button--text {
-    padding: 8px 4px;
+  padding: 8px 4px;
 }
 
 /* radio */
 .el-radio-button--medium .el-radio-button__inner {
-    padding: 8px 14px;
+  padding: 8px 14px;
 }
 
 /* el-link */
 .el-link [class*=el-icon-]+span {
-    margin-left: 2px;
+  margin-left: 2px;
 }
 
 /* el-input：高32px */
 .el-input__inner {
-    border-radius: 2px;
+  border-radius: 2px;
 }
 
 .el-input--medium .el-input__icon {
-    line-height: 32px;
+  line-height: 32px;
 }
 
 .el-input--medium .el-input__inner {
-    height: 32px;
-    line-height: 32px;
+  height: 32px;
+  line-height: 32px;
 }
 
 .el-input-group__append,
 .el-input-group__prepend {
-    border-radius: 2px;
+  border-radius: 2px;
 }
 
 /* input-number */
 .el-input-number--medium {
-    line-height: 30px;
+  line-height: 30px;
 }
 
 .el-input-number.is-controls-right[class*=medium] [class*=decrease],
 .el-input-number.is-controls-right[class*=medium] [class*=increase] {
-    line-height: 15px;
+  line-height: 15px;
 }
 
 /* el-card */
 .el-card__header {
-    padding: 10px 15px;
+  padding: 10px 15px;
 }
 
 .el-card__body {
-    padding: 5px;
+  padding: 5px;
 }
 
 .el-select-dropdown__wrap {
-    max-height: 400px;
+  max-height: 400px;
 }
 
 /* el-collapse */
 .el-collapse-item__header {
-    line-height: 40px;
-    height: 40px;
-    padding-left: 5px;
-    font-size: inherit;
-    color: #0009;
+  line-height: 40px;
+  height: 40px;
+  padding-left: 5px;
+  font-size: inherit;
+  color: #0009;
 }
 
 /* el-dialog */
 .el-dialog__header {
-    padding: 10px 15px;
-    background-color: #0001;
+  padding: 10px 15px;
+  background-color: #0001;
 }
 
 .el-dialog__headerbtn {
-    top: 15px;
+  top: 15px;
 }
 
 .el-dialog__body {
-    padding: 20px 20px 10px;
+  padding: 20px 20px 10px;
 }
 
 /* el-popover */
 .el-popover {
-    padding: 8px;
+  padding: 8px;
 }
 
 /* el-table */
 .el-table--medium .el-table__cell {
-    padding: 8px 0;
+  padding: 8px 0;
 }
 
 .el-table th.el-table__cell {
-    background-color: #01010106;
+  background-color: #01010106;
 }
 
 /* el-drawer */
 .el-drawer__header {
-    background-color: #0001;
-    margin: 0px;
-    padding: 10px 15px;
+  background-color: #0001;
+  margin: 0px;
+  padding: 10px 15px;
 }
 
 .el-drawer__body {
-    padding: 10px;
+  padding: 10px;
 }
 
 /* 菜单项的高度样式 */
 .el-submenu .el-menu-item {
-    height: 42px;
-    line-height: 42px;
+  height: 42px;
+  line-height: 42px;
 }
 
 .el-menu-item,
 .el-submenu__title {
-    height: 50px;
-    line-height: 50px;
+  height: 50px;
+  line-height: 50px;
+}
+
+.el-menu-item [class^=el-icon-] {
+  margin-right: 1px;
 }
 
 /* ///////////////备选 */
 .el-radio--medium.is-bordered {
-    padding: 8px 16px 0 8px;
-    border-radius: 2px;
-    height: 32px;
+  padding: 8px 16px 0 8px;
+  border-radius: 2px;
+  height: 32px;
 }
 
 .el-checkbox {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 
 .el-checkbox.is-bordered.el-checkbox--medium {
-    padding: 6px 12px 0 6px;
-    border-radius: 2px;
-    height: 28px;
+  padding: 6px 12px 0 6px;
+  border-radius: 2px;
+  height: 28px;
 }

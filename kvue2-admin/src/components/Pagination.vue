@@ -1,14 +1,14 @@
-<!-- // 分页组件 -->
-<!-- <Pagination :total="total" :size.sync="search.size" :index.sync="search.index" @pagination="loadData"></Pagination> -->
+<!-- // 分页组件,使用示例： -->
+<!-- <Pagination :total="total" :size.sync="search.size" :page.sync="search.page" @pagination="loadData"></Pagination> -->
 
 <template>
   <el-pagination
-    style="text-align:right;margin-top:5px"
+    style="text-align:right; margin-top:5px"
     background
     :total="total"
-    :current-page="currentPage"
-    :page-size="pageSize"
-    :page-sizes="[5, 10, 20, 50]"
+    :current-page.sync="currentPage"
+    :page-size.sync="pageSize"
+    :page-sizes="[5, 10, 20, 50, 100]"
     @current-change="pageChanged"
     @size-change="pageSizeChanged"
     layout="total, sizes, prev, pager, next, jumper"
@@ -17,19 +17,19 @@
 
 <script>
 export default {
+  name: 'Pagination',
   props: {
     //总数
-    total: { type: Number, default: 0, },
-    //页码，外部绑定，加修饰符.sync
-    size: { type: Number, default: 10, },
-    // 当前页码，外部绑定，加修饰符.sync
-    index: { type: Number, default: 1, }
+    total: { type: Number, require, default: 0, },
+    //页码，外部绑定加修饰符.sync
+    size: { type: Number, default: 20, },
+    // 当前页码，外部绑定加修饰符.sync
+    page: { type: Number, default: 1, }
   },
   computed: {
-    // 用修饰符“.sync”来实现更新父组件的值
     currentPage: {
-      get() { return this.index },
-      set(val) { this.$emit('update:index', val) }
+      get() { return this.page },
+      set(val) { this.$emit('update:page', val) }
     },
     pageSize: {
       get() { return this.size },
@@ -45,7 +45,7 @@ export default {
     },
     pageChanged(v) {
       // 修改父组件值
-      this.$emit('update:index', v)
+      this.$emit('update:page', v)
       // 触发分页事件
       this.$emit('pagination')
     },

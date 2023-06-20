@@ -12,8 +12,10 @@ import settings from '@/settings'
 
 
 //全局注入axios接口
-import request from './utils/request'
-Vue.prototype.$axios = request
+import { service, get, post } from './utils/request'
+Vue.prototype.$api = service
+Vue.prototype.$get = get
+Vue.prototype.$post = post
 
 
 new Vue({

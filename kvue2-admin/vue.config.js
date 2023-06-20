@@ -3,12 +3,8 @@ const defaultSettings = require('./src/settings.js')
 const TerserPlugin = require('terser-webpack-plugin')
 
 module.exports = defineConfig({
-  //默认false，是否需要转译的第三方依赖
-  transpileDependencies: true,
   //基本url，多用于指定子路径，同process.env.BASE_URL
   publicPath: process.env.BASE_URL,
-  // 并行构建
-  parallel: true,
   // 是否编译生成map文件，map文件主要是为了调试定位使用，可根据环境来调整开启策略
   productionSourceMap: false,
 

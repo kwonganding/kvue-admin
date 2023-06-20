@@ -11,7 +11,11 @@
     :filter-method="filter"
     :filterable="filterable"
   >
-    <el-option class="tree-wrapper-option view-scroll" :value="selectedItem?.[option.value]" :label="selectedItem?.[option.label]">
+    <el-option
+      class="tree-option view-scroll"
+      :value="selectedItem?.[option.value]"
+      :label="selectedItem?.[option.label]"
+    >
       <!-- data：数据-->
       <!-- props：数据结构配置 -->
       <!-- node-key：唯一标识字段 -->
@@ -20,7 +24,7 @@
         :data="data"
         :node-key="option.value"
         :props="option"
-        class="tree-select-tree"
+        class="tree-select-innertree"
         @current-change="handleCurrentChange"
         :filter-node-method="filterNode"
         :highlight-current="true"
@@ -102,7 +106,7 @@ export default {
 }
 
 // option容器
-.tree-wrapper-option {
+.tree-option {
   min-height: 100px;
   height: auto;
   overflow-y: auto;
@@ -118,7 +122,7 @@ export default {
 </style>
 
 <style lang="less">
-.tree-select-tree {
+.tree-select-innertree {
   // 高亮选中状态
   .is-current > .el-tree-node__content {
     font-weight: 600;

@@ -29,4 +29,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.a {
+  font-size: 15px;
+  .b {
+    color: red;
+  }
+}
 </style>

@@ -14,7 +14,11 @@
     </router-link>
 
     <!-- 页签按钮的右键菜单 -->
-    <el-card class="context-menu" v-show="tagMenu.visible" :style="{ left: tagMenu.left + 'px', top: tagMenu.top + 'px' }">
+    <el-card
+      class="context-menu"
+      v-show="tagMenu.visible"
+      :style="{ left: tagMenu.left + 'px', top: tagMenu.top + 'px' }"
+    >
       <ul>
         <li @click="refresh(selectedTag)" v-show="isActive(selectedTag)">
           <i class="el-icon-refresh"></i> 刷新
@@ -146,6 +150,7 @@ export default {
   line-height: 32px;
   font-size: 14px;
 
+  // 标签项
   .item {
     padding: 0 12px;
     margin: 0 1px;
@@ -171,7 +176,7 @@ export default {
     }
 
     .close {
-      display: none;
+      opacity: 0.5;
       position: relative;
       left: 6px;
       border-radius: 2px;
@@ -181,7 +186,7 @@ export default {
       background-color: #0002;
 
       .close {
-        display: initial;
+        opacity: 1;
       }
     }
 
@@ -191,6 +196,7 @@ export default {
     }
   }
 
+  // 标签项-激活
   .item.active {
     background-color: #fff;
     color: var(--theme-hcolor);
@@ -198,7 +204,7 @@ export default {
     position: relative;
 
     & .close {
-      display: initial;
+      opacity: 1;
     }
 
     // 加一点连接凹槽弧度效果

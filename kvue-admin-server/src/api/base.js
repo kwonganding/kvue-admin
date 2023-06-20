@@ -2,7 +2,7 @@
 
 let express = require('express');
 let router = express.Router();
-const db = require('../src/db/db.js');
+const db = require('../db/db.js');
 
 //登录：/login
 router.post('/auth/login', (req, res) => {

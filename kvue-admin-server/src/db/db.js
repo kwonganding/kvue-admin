@@ -1,7 +1,7 @@
 //加载sqlite并创建数据库实例
 
 let sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database('./db/book_db.db');
+let db = new sqlite3.Database('./src/db/book_db.db');
 
 //?sqlite参数化，用问号"?"占位，参数值用数组组装。
 //执行sql： db.run(sql,para,callback)

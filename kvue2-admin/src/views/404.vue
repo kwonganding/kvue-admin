@@ -3,7 +3,7 @@
     <img src="@/imgs/svg/404.svg" />
     <p>😭😅🤣</p>
     <b>404 :</b>
-    <i>资源没找到！</i>
+    <i>资源没找到！!</i>
   </div>
 </template>
 

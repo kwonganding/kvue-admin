@@ -44,7 +44,6 @@ service.interceptors.response.use(
   response => {
     NProgress.done()
     const data = response.data
-    console.log(data)
     //获取、更新token
     const newToken = response.headers[JWT_HEADER_KEY]
     if (newToken) {
@@ -64,12 +63,15 @@ service.interceptors.response.use(
   // 错误error，各种HTTP的异常状态码处理
   error => {
     NProgress.done()
-    console.log(error) // for debug
+    console.error(error) // for debug
     let message = "网络可能出现异常"
     const status = error?.response?.status
     switch (status) {
       case 500:
         message = "服务器好像开小差了，重试下吧！"
+        break
+      case 503:
+        message = "服务不可用"
         break
       case 400:
         message = "提交数据出错"
@@ -87,15 +89,19 @@ service.interceptors.response.use(
   }
 )
 
-function Get(url, params) {
+function get(url, params) {
   return service.get(url, { params })
+}
+
+function post(url, params) {
+  return service.post(url, params)
 }
 
 export default service
 export {
   service,
   BASE_URL as baseURL,
-  Get
+  get, post
 }
 
 //默认情况下，axios 使用 application/json 格式来发送请求数据。如果服务端有其他要求，则需指定格式

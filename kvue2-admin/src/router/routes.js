@@ -27,9 +27,9 @@ import { list2Tree } from '@/utils/tree'
  */
 const localResource = [
   {
-    name: 'dev-view', title: '本地开发',
+    name: 'dev-view', title: '开发调试',
     type: 'dictionary', url: '', show: true, sort: 1,
-    icon: 'iconfont icon-codelibrary-fill', parentName: '',
+    icon: 'iconfont icon-code', parentName: '',
   },
   {
     name: 'components', title: '常用组件',
@@ -42,12 +42,12 @@ const localResource = [
     name: 'userlist', title: '富文本/上传',
     url: 'views/dev-view/file-editor',
     type: 'view', show: true, sort: 2,
-    icon: 'iconfont icon-file-text', parentName: 'dev-view',
+    icon: 'el-icon-document', parentName: 'dev-view',
   },
   {
     name: 'tt', title: '空目录',
     type: 'dictionary', url: '', show: true, sort: 1,
-    icon: 'iconfont icon-codelibrary-fill', parentName: '',
+    icon: 'el-icon-sunset', parentName: '',
   },
 ]
 

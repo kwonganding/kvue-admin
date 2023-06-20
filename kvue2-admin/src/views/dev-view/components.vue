@@ -1,4 +1,4 @@
-<!-- 小组件 -->
+<!-- 小组件测试 -->
 <template>
   <div class="cards">
     <el-card :header="`图标选择器：${icon}`" class="item">
@@ -53,7 +53,8 @@
       <el-checkbox label="hide-on-selected-选中后关闭" v-model="hideOnSelected" class="m10"></el-checkbox>
       <br />
       <el-input v-model="text" class="m10" style="width: 120px" placeholder="树搜索"></el-input>
-      <el-button type="primary" @click="search" class="m10">搜索</el-button>
+      <el-button type="primary" @click="search" class="m10" icon="el-icon-search">搜索</el-button>
+      <el-button type="primary" @click="search" class="m10" icon="iconfont icon-search">搜索</el-button>
       <el-button type="primary" @click="setTreeDisable" class="m10">setTreeDisable</el-button>
     </el-card>
   </div>

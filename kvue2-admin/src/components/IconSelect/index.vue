@@ -2,11 +2,26 @@
 <template>
   <el-popover placement="bottom" :width="popWidth" trigger="click" :disabled="disabled" ref="popBox">
     <!-- 图标搜索框 -->
-    <el-input v-model="searchText" size="mini" clearable suffix-icon="el-icon-search" placeholder="输入class关键词搜索" style="padding: 0 5px 5px;"></el-input>
+    <el-input
+      v-model="searchText"
+      size="mini"
+      clearable
+      suffix-icon="el-icon-search"
+      placeholder="输入class关键词搜索"
+      style="padding: 0 5px 5px;"
+    ></el-input>
+
     <!-- 图标列表 -->
     <el-collapse value="1" class="view-scroll icons-wrapper">
       <el-collapse-item title="element-icons" name="1">
-        <i v-for="name in elementIcons" class="icon-item" :class="name" :key="name" @click="iconClick(name)" :title="name"></i>
+        <i
+          v-for="name in elementIcons"
+          class="icon-item"
+          :class="name"
+          :key="name"
+          @click="iconClick(name)"
+          :title="name"
+        ></i>
       </el-collapse-item>
       <el-collapse-item title="iconfont-icons" name="2">
         <i
@@ -52,7 +67,7 @@ export default {
       default: false,
     },
     hideOnSelected:  // 选中后是否隐藏，默认fasle，使用的属性为“hide-on-selected”
-      { type: Boolean, default: false }
+      { type: Boolean, default: true }
   },
   data() {
     return {
@@ -102,8 +117,6 @@ export default {
   .icon-item {
     font-size: 20px;
     margin: 5px;
-    // iconfont的坑，i默认是行内元素，transform不起作用，改成行内块元素
-    display: inline-block;
 
     &:hover {
       transform: scale(1.6);

@@ -19,6 +19,7 @@ module.exports = {
     // 没有使用的变量只警告，不报错
     "vue/no-unused-vars": "warn",
     "no-unused-vars": "warn",
+    "no-unreachable": "warn",
 
     // 禁用不必要的转义字符，转为警告吧
     "no-useless-escape": "warn",

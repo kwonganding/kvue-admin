@@ -1,14 +1,23 @@
 <template>
-  <el-drawer title="用户配置" :visible.sync="visible" size="320px" :modal="false" class="drawer-box" style="line-height: initial;">
+  <el-drawer
+    title="用户配置"
+    :visible.sync="visible"
+    size="320px"
+    :modal="false"
+    class="drawer-box"
+    style="line-height: initial;"
+  >
     <!-- 主题 -->
     <dl class="dl-blueline">
       <dt>主题</dt>
       <dd>
         <ul class="teama-box" @click="handleThemaClick($event)">
-          <li v-for="t in themes" :style="t" :key="t.name" :class="t.name == config.theme.name ? 'active' : ''">
-            {{ t.name
-            }}
-          </li>
+          <li
+            v-for="t in themes"
+            :style="t"
+            :key="t.name"
+            :class="t.name == config.theme.name ? 'active' : ''"
+          >{{ t.name }}</li>
         </ul>
       </dd>
 
@@ -52,8 +61,8 @@ export default {
     handleThemaClick(event) {
       if (event.target.tagName !== 'LI')
         return
-      const name = event.target.innerText
-      this.config.theme = this.themes.filter(s => s.name == name)[0]
+      const name = event.target.innerText.trim()
+      this.config.theme = settings.themes.filter(s => s.name === name)[0]
     }
   }
 }
