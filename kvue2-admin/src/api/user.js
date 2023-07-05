@@ -1,11 +1,13 @@
 import { get, post } from '@/utils/request'
+import { encrypt } from '@/utils/encrypt'
 
 /**
  * 用户登录
  * @param {any} data 用户信息
  */
 export function login(data) {
-  return post("/auth/login", data)
+  // 加密
+  return post("/auth/login", { name: data.name, pwd: encrypt(data.pwd) })
 }
 
 /**

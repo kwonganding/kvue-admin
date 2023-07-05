@@ -11,7 +11,7 @@ import { list2Tree } from '@/utils/tree'
  * asyncRoutes：路由数据，挂载到框架页面下面（children），给路由组件用于路由
  */
 // const item = {
-//   name: 'home',       // 唯一编码，如果是组件（菜单视图），则为组件name
+//   name: 'home',       // 唯一编码，如果是组件（菜单视图），则为组件name。如果是目录，则会拼接到URL上（Path）
 //   title: '工作台',     // 标题
 //   url: 'views/home',  // 路由地址，目录、功能权限则不需要，不能斜杠开头
 //   type: 'view',       // dictionary(目录)、view(视图组件,菜单项)、permission(按钮、请求权限)
@@ -27,7 +27,7 @@ import { list2Tree } from '@/utils/tree'
  */
 const localResource = [
   {
-    name: 'dev-view', title: '开发调试',
+    name: 'dev', title: '开发调试',
     type: 'dictionary', url: '', show: true, sort: 1,
     icon: 'iconfont icon-code', parentName: '',
   },
@@ -35,19 +35,24 @@ const localResource = [
     name: 'components', title: '常用组件',
     url: 'views/dev-view/components',
     type: 'view', show: true, sort: 1,
-    icon: 'iconfont icon-compass', parentName: 'dev-view',
+    icon: 'iconfont icon-compass', parentName: 'dev',
     permissions: ['add', 'edit', 'delete']
   },
   {
     name: 'userlist', title: '富文本/上传',
     url: 'views/dev-view/file-editor',
     type: 'view', show: true, sort: 2,
-    icon: 'el-icon-document', parentName: 'dev-view',
+    icon: 'el-icon-document', parentName: 'tt1',
   },
   {
     name: 'tt', title: '空目录',
     type: 'dictionary', url: '', show: true, sort: 1,
     icon: 'el-icon-sunset', parentName: '',
+  },
+  {
+    name: 'tt1', title: '空目录1',
+    type: 'dictionary', url: '', show: true, sort: 1,
+    icon: 'el-icon-sunset', parentName: 'tt',
   },
 ]
 
@@ -101,7 +106,7 @@ export function buildRoutes(authResource) {
   // 4、构建菜单树，菜单树是包含了所有类型节点（目录、路由视图）
   menuRoutes = list2Tree(ritems, { key: 'name', parent: (n) => n.meta.parentName, children: 'children' })
   // 递归处理下path，递归父节点的name+自己的name，示例：user-center/user
-  buildPath(ritems)
+  buildPath(menuRoutes)
 
   // 5、筛选路由视图，添加到框架页下面，并返回
   const vitems = ritems.filter(r => r.meta.type === 'view')

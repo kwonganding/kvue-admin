@@ -62,11 +62,11 @@ export default {
       type: String,
       default: 'el-icon-setting'
     },
-    disabled: { // 是否禁用，默认fasle
+    disabled: { // 是否禁用，默认 fasle
       type: Boolean,
       default: false,
     },
-    hideOnSelected:  // 选中后是否隐藏，默认fasle，使用的属性为“hide-on-selected”
+    hideOnSelected:  // 选中后是否隐藏，默认 true ，使用的属性为“hide-on-selected”
       { type: Boolean, default: true }
   },
   data() {

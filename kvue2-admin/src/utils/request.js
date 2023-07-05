@@ -64,30 +64,36 @@ service.interceptors.response.use(
   error => {
     NProgress.done()
     console.error(error) // for debug
-    let message = "网络可能出现异常"
     const status = error?.response?.status
-    switch (status) {
-      case 500:
-        message = "服务器好像开小差了，重试下吧！"
-        break
-      case 503:
-        message = "服务不可用"
-        break
-      case 400:
-        message = "提交数据出错"
-        break
-      case 401:
-        message = "没有权限"
-        break
-      case 404:
-        message = "请求资源不存在"
-        break
-      default: return Promise.reject(error)
+    if (status === 401) {
+      // 未授权处理
     }
+    let message = HTTP_ERRORS[status]
+    message ??= `网络可能出现异常，错误代码：${status}`
+
     Message({ message, type: "error", duration: 4000 })
     // 这里应该不用返回了，都已经处理过了    // return Promise.reject(error)
   }
 )
+
+const HTTP_ERRORS = {
+  '400': '错误的请求语法或请求参数！',
+  '401': '未授权，无效凭据',
+  '403': '客户端没有访问内容的权限！',
+  '404': '404:请求资源不存在',
+  '405': '方法不允许，不支持该请求',
+  '408': '网络请求超时！',
+  '409': '该请求与服务器的当前状态冲突！',
+  '411': '服务端拒绝了该请求，Content-Length 头字段未定义',
+  '413': '请求实体大于服务器定义的限制！',
+  '414': '请求的 URI 比服务器愿意接收的长度长！',
+  '500': '服务器好像开小差了，重试下吧！',
+  '501': '服务器不支持请求方法！',
+  '502': '网关错误！',
+  '503': '服务不可用，服务器暂时过载或维护！',
+  '504': '网关超时，请重试！',
+  '505': '服务器不支持请求中使用的 HTTP 版本！',
+}
 
 function get(url, params) {
   return service.get(url, { params })
@@ -103,5 +109,10 @@ export {
   BASE_URL as baseURL,
   get, post
 }
+
+// vue全局绑定，使用：this.$api, this.$get
+// Vue.prototype.$api = service
+// Vue.prototype.$get = get
+// Vue.prototype.$post = post
 
 //默认情况下，axios 使用 application/json 格式来发送请求数据。如果服务端有其他要求，则需指定格式

@@ -1,4 +1,5 @@
 <!-- 下拉树形选择器 -->
+<!-- 使用示例 <TreeSelect :data="data" v-model="value" ></TreeSelect> -->
 <template>
   <!-- 代理所有属性、事件：v-bind="$attrs" v-on="$listeners" -->
   <el-select

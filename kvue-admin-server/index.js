@@ -7,6 +7,7 @@ let server = new express();
 //启用json解析支持，解析body数据
 server.use(express.json());
 
+
 //***** 静态资源  *****/
 // 使用内置的“express.static”实现静态文件代理，参数为资源地址。
 
@@ -15,25 +16,37 @@ server.use('/file', express.static('./file'));
 //兼容前端的跨域代理路径
 server.use('/api/file', express.static('./file'));
 
+
+
 //*****  加载api路由 *****/
-
 const path = '/api';
-// 基础api
-const base = require('./src/api/base.js');
-// 书籍模块api
-const book = require('./src/api/book.js');
-// 文件上传api
-const file = require('./src/api/file.js');
-// 订单管理api
-const order = require('./src/api/order.js');
-// 系统管理功能API
-const system = require('./src/api/system.js');
 
-server.use(path, base);
-server.use(path, book);
-server.use(path, order);
-server.use(path, system);
-server.use(file);
+// 用户模块（用户、角色、部门）
+const users = require('./src/users/index')
+server.use(path, ...users)
+
+// 系统管理模块（权限资源，字典，审计日志：登录日志、操作日志）
+
+// 
+
+
+// // 基础api
+// const base = require('./src/api/base.js');
+// // 书籍模块api
+// const book = require('./src/api/book.js');
+// // 文件上传api
+// const file = require('./src/api/file.js');
+// // 订单管理api
+// const order = require('./src/api/order.js');
+// // 系统管理功能API
+// const system = require('./src/api/system.js');
+
+// server.use(path, base);
+// server.use(path, book);
+// server.use(path, order);
+// server.use(path, system);
+// server.use(file);
+
 
 //管理后台"book_admin"的部署
 //静态资源
@@ -49,7 +62,8 @@ server.get('/bookadmin/*', function(req, res) {
 
 
 //*****  配置端口，启用监听端口 *****/
-server.listen(3000, err => {
+const port = 3000
+server.listen(port, err => {
   if (!err)
-    console.log('服务器启动成功，地址：http://localhost:3000')
+    console.log('服务器启动成功，地址：http://localhost:' + port)
 })

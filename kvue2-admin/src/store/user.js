@@ -11,7 +11,7 @@ const KEY_TOKEN = setting.title + '_TOKEN'
 // 存储用户信息
 const state = {
   token: sessionStorage.getItem(KEY_TOKEN),
-  userInfo: null,   // 用户基本信息{id,name,avatar},默认必须为null，会一次来判等更新
+  userInfo: null,   // 用户基本信息{id,name,avatar},默认必须为null，会以此来判断是否更新
 }
 
 // 同步mutations
@@ -22,7 +22,7 @@ const mutations = {
     sessionStorage.setItem(KEY_TOKEN, token)
   },
   SET_USERINFO: (state, user) => {
-    state.userInfo = user
+    state.userInfo = Object.freeze(user)
   },
 }
 
@@ -66,7 +66,7 @@ const actions = {
 
   /**
    * 退出登录，清除token、用户信息、保存的标签数据
-   * @param {} context 
+   * @param {} context
    */
   logout: (context) => {
     return new Promise((resolve, reject) => {
