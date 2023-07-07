@@ -10,9 +10,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {},
   "dependencies": {
     "@mapbox/node-pre-gyp": "^1.0.10",
+    "base64url": "^3.0.1",
     "express": "^4.18.2",
     "multer": "^1.4.5-lts.1",
     "sm-crypto-v2": "^1.5.1",

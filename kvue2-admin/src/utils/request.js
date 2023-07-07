@@ -26,7 +26,7 @@ service.interceptors.request.use(
     NProgress.start()
     // 请求头添加token
     if (store.getters.token) {
-      config.headers[JWT_HEADER_KEY] = store.token
+      config.headers[JWT_HEADER_KEY] = store.getters.token
     }
     return config
   },
@@ -48,13 +48,17 @@ service.interceptors.response.use(
     const newToken = response.headers[JWT_HEADER_KEY]
     if (newToken) {
       // 将该token设置到vuex以及本地存储中
-      store.commit('SET_TOKEN', newToken)
+      store.commit('user/SET_TOKEN', newToken)
     }
     // 处理自定义响应状态码，数据规范：{code:0,message:'',其他数据}
     switch (data.code) {
       case 0:           // 正常返回
         return data
-      case 4001:        //token过期
+      case 4001:        //token无效
+      case 4002:        //token过期
+        console.warn(data)
+        Message({ message: data.message, type: "error", duration: 4000 })
+        store.dispatch('user/logout')
         break
       default:
         throw new Error(data.message)

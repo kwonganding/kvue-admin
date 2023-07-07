@@ -23,7 +23,7 @@ export function logout() {
  * 获取用户信息
  * @param {any} token
  */
-export function getInfo(token) {
-  return get("/auth/getInfo", { id: token })
+export function getInfo() {
+  return get("/auth/getInfo")
 }
 

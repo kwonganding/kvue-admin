@@ -1,5 +1,7 @@
 # kvue2-admin
 
+vue2 + elementUI + vue-cli 版本
+
 ## Project setup
 ```
 npm install
@@ -22,3 +24,6 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+

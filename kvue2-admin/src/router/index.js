@@ -89,7 +89,7 @@ router.beforeEach(async (to, from, next) => {
     })
     .catch(err => {
       console.log('getInfo error: ', err)
-      next('/login')
+      store.dispatch('user/logout')
     })
 })
 // 全局守卫，每个路由导航后：更新标题

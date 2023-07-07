@@ -1,6 +1,6 @@
 
 import { login, getInfo, logout } from '@/api/user'
-import { resetRouter } from '@/router'
+import { resetRouter, default as router } from '@/router'
 import setting from '@/settings'
 
 /**
@@ -37,7 +37,7 @@ const actions = {
   login: (context, obj) => {
     return new Promise((resolve, reject) => {
       login(obj).then(data => {
-        context.commit('SET_TOKEN', data.token)
+        context.commit('SET_TOKEN', data.data)
         resolve(data.message)
       }).catch(err => {
         reject(err)
@@ -52,13 +52,12 @@ const actions = {
    */
   getInfo: (context) => {
     return new Promise((resolve, reject) => {
-      getInfo(context.state.token)
+      getInfo()
         .then(data => {
-          context.commit('SET_USERINFO', data.userInfo)
+          context.commit('SET_USERINFO', data.data)
           resolve()
         })
         .catch(err => {
-          console.log(err)
           reject(err)
         })
     })
@@ -76,6 +75,7 @@ const actions = {
         // 这里调用其他vuex模块的 mutation，注意带上参数{root:true}
         context.commit('tagsBar/CLEAR', null, { root: true })
         resetRouter()
+        router.push('/login')
       })
     })
   }
