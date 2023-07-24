@@ -6,17 +6,14 @@
     ref="select"
     v-model="currentText"
     @clear="handelClear"
+    @visible-change="visibleChanged"
     class="tree-select"
     v-bind="$attrs"
     v-on="$listeners"
     :filter-method="filter"
     :filterable="filterable"
   >
-    <el-option
-      class="tree-option view-scroll"
-      :value="selectedItem?.[option.value]"
-      :label="selectedItem?.[option.label]"
-    >
+    <el-option class="tree-option view-scroll" :value="selectedItem?.[option.value]" :label="selectedItem?.[option.label]">
       <!-- data：数据-->
       <!-- props：数据结构配置 -->
       <!-- node-key：唯一标识字段 -->
@@ -40,10 +37,10 @@ export default {
   name: 'TreeSelect',
   props: {
     value: { default: null }, //选中的值
-    data: { type: Array },  // 树形结构数据
+    data: { type: Array },    // 树形结构数据
     onlyLeaf: { type: Boolean, default: true },  //是否只能选择叶子节点，使用属性为“only-leaf”
-    filterable: { type: Boolean, default: true }, // 是否支持搜索
-    hideOnSelected:  // 选中后是否隐藏，默认fasle，使用的属性为 “hide-on-selected”
+    filterable: { type: Boolean, default: false }, // 是否支持搜索
+    hideOnSelected:  // 选中后是否隐藏，默认 true，使用的属性为 “hide-on-selected”
       { type: Boolean, default: true },
     //树形数据结构配置
     option: { type: Object, default: () => { return { value: 'id', label: 'name', children: 'children' } } }
@@ -62,7 +59,7 @@ export default {
   },
   watch: {
     value(nval) {
-      this.selectedItem = this.$refs.tree?.getNode(nval)?.data ?? null
+      this.selectedItem = nval ? this.$refs.tree?.getNode(nval)?.data ?? null : null
       this.$refs.tree.setCurrentKey(nval)
     }
   },
@@ -80,6 +77,11 @@ export default {
     handelClear() {
       this.emitValue(null)
       this.$refs.tree.setCurrentKey(null)
+    },
+    // 下拉框显示状态变化事件
+    visibleChanged(visible) {
+      // 手动清除tree的筛选状态
+      this.$refs.tree.filter(null)
     },
     // 更新值
     emitValue(data) {

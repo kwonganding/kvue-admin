@@ -45,10 +45,10 @@ const constantRoutes = [
         component: () => import('@/views/home.vue')
       },
       {
-        path: '/user',
-        name: 'user',
-        meta: { title: '个人中心', icon: 'el-icon-user-solid' },
-        component: () => import('@/views/user')
+        path: '/profile',
+        name: 'profile',
+        meta: { title: '个人中心', icon: 'el-icon-user' },
+        component: () => import('@/views/profile')
       },
     ],
   },
@@ -88,8 +88,7 @@ router.beforeEach(async (to, from, next) => {
       return next({ ...to, replace: true })
     })
     .catch(err => {
-      console.log('getInfo error: ', err)
-      store.dispatch('user/logout')
+      console.log('errrrrrrrrrrrr', err)
     })
 })
 // 全局守卫，每个路由导航后：更新标题

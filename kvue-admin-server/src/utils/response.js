@@ -1,4 +1,9 @@
-
+/*
+- 0：默认值，表示正常
+- 4001：授权token无效，请重新登录
+- 4002：授权token过期
+- 其他：都为异常错误
+ */
 
 /**
  * 响应数据标准结构
@@ -6,7 +11,7 @@
 class ResponseData {
   /**
  * 响应数据标准结构
- * @param {number} code 响应编码
+ * @param {number} code 响应编码，默认0表示正常
  * @param {any} error 异常错误
  */
   constructor(code = 0, error = null) {

@@ -9,7 +9,7 @@ const ResponseData = require('../utils/response');
 //执行sql： db.run(sql,para,callback)
 //查询数据： db.all(sql,para,callback)
 
-db.printError = function(error) {
+const logError = function(error) {
   if (error)
     console.error(error);
 }
@@ -18,7 +18,7 @@ db.printError = function(error) {
 db.queryData = function(sql, params, callback) {
   if (!params) params = {};
   db.all(sql, params, function(error, rows) {
-    db.printError(error);
+    logError(error);
     let resData = new ResponseData(0, error);
     callback(resData, rows);
   })
@@ -27,7 +27,7 @@ db.queryData = function(sql, params, callback) {
 //执行sql：增、删、修改
 db.executeSql = function(sql, params, callback) {
   db.run(sql, params, function(error) {
-    db.printError(error);
+    logError(error);
     let resData = new ResponseData(0, error);
     callback(resData);
   })

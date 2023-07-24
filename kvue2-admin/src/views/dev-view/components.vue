@@ -6,7 +6,7 @@
         <IconSelect v-model="icon" clearable></IconSelect>
       </div>
       <div class="m10">
-        <IconSelect v-model="icon" :disabled="disabled" :clearable="clearable" :hide-on-selected="hideOnSelected"></IconSelect>
+        <IconSelect v-model="icon" :disabled="setting.disabled" :clearable="setting.clearable" :hide-on-selected="setting.hideOnSelected"></IconSelect>
       </div>
     </el-card>
 
@@ -25,11 +25,11 @@
         <TreeSelect
           :data="tree.data"
           v-model="tree.value"
-          :disabled="disabled"
-          :clearable="clearable"
-          :hide-on-selected="hideOnSelected"
-          :only-leaf="onlyLeaf"
-          :filterable="filterable"
+          :disabled="setting.disabled"
+          :clearable="setting.clearable"
+          :hide-on-selected="setting.hideOnSelected"
+          :only-leaf="setting.onlyLeaf"
+          :filterable="setting.filterable"
           :options="{ value: 'id', label: 'name', children: 'children' }"
         ></TreeSelect>
       </div>
@@ -45,17 +45,18 @@
       </el-form>
     </el-card>
 
-    <el-card class="item" header="配置（第二排）">
-      <el-checkbox label="disabled" v-model="disabled" class="m10"></el-checkbox>
-      <el-checkbox label="clearable" v-model="clearable" class="m10"></el-checkbox>
-      <el-checkbox label="filterable-树支持搜索过滤" v-model="filterable" class="m10"></el-checkbox>
-      <el-checkbox label="only-leaf-树只能选择叶子节点" v-model="onlyLeaf" class="m10"></el-checkbox>
-      <el-checkbox label="hide-on-selected-选中后关闭" v-model="hideOnSelected" class="m10"></el-checkbox>
+    <el-card class="item" header="小组件配置（第二排有效）">
+      <el-checkbox label="disabled" v-model="setting.disabled" class="m10"></el-checkbox>
+      <el-checkbox label="clearable" v-model="setting.clearable" class="m10"></el-checkbox>
+      <el-checkbox label="hide-on-selected-选中后关闭" v-model="setting.hideOnSelected" class="m10"></el-checkbox>
+
+      <el-checkbox label="filterable（树选择器：开启搜索过滤）" v-model="setting.filterable" class="m10"></el-checkbox>
+      <el-checkbox label="only-leaf（树选择器：只能选择叶子节点）" v-model="setting.onlyLeaf" class="m10"></el-checkbox>
+
+      <el-button type="info" @click="setTreeDisable" class="m10">setTreeDisable（设置树选择器，第2个节点不可用）</el-button>
       <br />
-      <el-input v-model="text" class="m10" style="width: 120px" placeholder="树搜索"></el-input>
-      <el-button type="primary" @click="search" class="m10" icon="el-icon-search">搜索</el-button>
-      <el-button type="primary" @click="search" class="m10" icon="iconfont icon-search">搜索</el-button>
-      <el-button type="primary" @click="setTreeDisable" class="m10">setTreeDisable</el-button>
+      <el-input v-model="setting.text" clearable class="m10" style="width: 120px" placeholder="树搜索"></el-input>
+      <el-button type="primary" @click="searchTree" class="m10" icon="el-icon-search">搜索树</el-button>
     </el-card>
   </div>
 </template>
@@ -88,28 +89,33 @@ export default {
   components: { IconSelect, TreeSelect },
   data() {
     return {
-      disabled: false,
-      clearable: false,
-      filterable: true,
-      onlyLeaf: true,
-      hideOnSelected: true,
-      text: "",
+      setting: {
+        disabled: false,
+        clearable: false,
+        hideOnSelected: true,
+
+        filterable: false,
+        onlyLeaf: true,
+        text: '',
+      },
+      icon: 'el-icon-user-solid',
       tree: {
+        // 这里用 setTreeDisable是初始化下disable属性
         data: setTreeDisable(list2Tree(treeList)),
         value: null,
       },
-      icon: "el-icon-setting",
       form: {
         icon: "",
         city: 3,
       },
+
     }
   },
   methods: {
-    search() {
+    searchTree() {
       let data = this.tree.data
-      this.tree.data = filterTree(data, (item) => item.name.includes(this.text))
-      console.log(treeList)
+      let rdata = filterTree(data, (item) => item.name.includes(this.setting.text))
+      console.log(rdata)
     },
     setTreeDisable() {
       setTreeDisable(this.tree.data, this.tree.data[1])

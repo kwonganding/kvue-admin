@@ -8,18 +8,18 @@ const SM2_PRIVATEKEY = 'c46bc9568a31c5047591c81ce65afecb1070a0331cdac70808ce2613
 const SM2_PUBLICKEY = '04cca9a54d4b845bc99c7769ce117c867a3f182524969d97afe53c07a78116bf9008250f9f5d65d54e3db00ff9e30d202d2c30146c4db07ba54f05619e1252395b'
 
 /**
- * sm3签名/摘要+加盐
+ * sm3哈希/摘要+加盐
  * @param {string} text 待签名内容
  * @returns 签名值
  */
-function signatureWithSalt(text) {
+function sm3Hash(text) {
   if (!text) return text
   // salt：采用简单的固定规则
-  let sign = sm.sm3(text)
+  let hash = sm.sm3(text)
   const i = 7
-  let c = (15 - Number('0x' + sign[i])).toString(16)
-  sign = sign.slice(0, i) + c + sign.slice(i + 1)
-  return sign
+  let salt = (15 - Number('0x' + hash[i])).toString(16)
+  hash = hash.slice(0, i) + salt + hash.slice(i + 1)
+  return hash
 }
 
 /**
@@ -60,4 +60,4 @@ function sm2VerifySignature(text, signHash) {
 }
 
 
-module.exports = { signatureWithSalt, sm2Encrypt, sm2Decrypt, sm2Signature, sm2VerifySignature };
+module.exports = { sm3Hash, sm2Encrypt, sm2Decrypt, sm2Signature, sm2VerifySignature };

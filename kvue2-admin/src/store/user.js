@@ -58,7 +58,7 @@ const actions = {
           resolve()
         })
         .catch(err => {
-          reject(err)
+          console.error('getInfo error: ', err)
         })
     })
   },

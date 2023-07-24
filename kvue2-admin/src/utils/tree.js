@@ -48,7 +48,7 @@ export function tree2List(tree, option = { children: 'children' }) {
 }
 
 /**
- * 递归设置树形结构中数据的 disabled 属性值。使用场景：在修改父级时，不可选择自己及后代
+ * 递归设置树形结构中数据的 disabled 属性值为不可用。使用场景：在修改父级时，不可选择自己及后代
  * @param {*} tree 一颗大树
  * @param {*} disabledNode 需要禁用的节点，就是当前节点
  * @param {*} option 对象键配置，默认值{ children: 'children', disabled: 'disabled' }
@@ -78,7 +78,7 @@ export function setTreeDisable(tree, disabledNode, option = { children: 'childre
 /**
  * 递归搜索树，返回新的树形结构数据，只要子节点命中保留其所有上级节点
  * @param {Array|Tree} tree 一颗大树
- * @param {Function} func 过滤函数
+ * @param {Function} func 过滤函数，参数为节点对象
  * @param {Object} option 对象键配置，默认值{ children: 'children' }
  * @returns 过滤后的新 newTree
  */
@@ -88,7 +88,9 @@ export function filterTree(tree, func, option = { children: 'children' }) {
   tree.forEach(node => {
     if (func(node)) {
       // 当前节点命中
-      const newNode = { ...node, [option.children]: null }
+      const newNode = { ...node }
+      if (node[option.children])
+        newNode[option.children] = null //清空子节点，后面递归查询赋值
       const cnodes = filterTree(node[option.children], func, option)
       if (cnodes && cnodes.length > 0)
         newNode[option.children] = cnodes

@@ -13,12 +13,13 @@ import { list2Tree } from '@/utils/tree'
 // const item = {
 //   name: 'home',       // 唯一编码，如果是组件（菜单视图），则为组件name。如果是目录，则会拼接到URL上（Path）
 //   title: '工作台',     // 标题
-//   url: 'views/home',  // 路由地址，目录、功能权限则不需要，不能斜杠开头
+//   url: 'views/home',  // 路由地址，”views/“开头的相对路径，目录、功能权限则不需要，不能斜杠开头
 //   type: 'view',       // dictionary(目录)、view(视图组件,菜单项)、permission(按钮、请求权限)
 //   show: true,         // 是否显示到菜单
 //   sort: 1,            // 在菜单中的同级排序
 //   icon: '',           // 图标
 //   parentName: '',     // 父级name，根节点则为空
+//   cache: true,        // 是否缓存视图
 // }
 //#endregion
 
@@ -32,27 +33,46 @@ const localResource = [
     icon: 'iconfont icon-code', parentName: '',
   },
   {
-    name: 'components', title: '常用组件',
+    name: 'components', title: '小组件集合',
     url: 'views/dev-view/components',
     type: 'view', show: true, sort: 1,
     icon: 'iconfont icon-compass', parentName: 'dev',
     permissions: ['add', 'edit', 'delete']
   },
   {
-    name: 'userlist', title: '富文本/上传',
-    url: 'views/dev-view/file-editor',
+    name: 'fileupload', title: '图片/文件上传',
+    url: 'views/dev-view/fileupload',
     type: 'view', show: true, sort: 2,
-    icon: 'el-icon-document', parentName: 'tt1',
+    icon: 'el-icon-upload', parentName: 'dev',
   },
   {
-    name: 'tt', title: '空目录',
+    name: 'userlist', title: '富文本/上传',
+    url: 'views/dev-view/editor',
+    type: 'view', show: true, sort: 2,
+    icon: 'el-icon-document', parentName: 'dev',
+  },
+  {
+    name: 'utils', title: 'utils库',
+    url: 'views/dev-view/utils',
+    type: 'view', show: true, sort: 3,
+    icon: 'iconfont icon-codelibrary-fill', parentName: 'dev',
+  },
+  {
+    name: 'enums', title: '枚举EnumFactory',
+    url: 'views/dev-view/enums',
+    type: 'view', show: true, sort: 3,
+    icon: 'iconfont icon-codelibrary-fill', parentName: 'dev',
+  },
+
+  {
+    name: 'test-user', title: '用户管理',
     type: 'dictionary', url: '', show: true, sort: 1,
     icon: 'el-icon-sunset', parentName: '',
   },
   {
-    name: 'tt1', title: '空目录1',
-    type: 'dictionary', url: '', show: true, sort: 1,
-    icon: 'el-icon-sunset', parentName: 'tt',
+    name: 'profile', title: '用户账号',
+    type: 'view', url: 'views/profile', show: true, sort: 1,
+    icon: 'el-icon-user', parentName: 'test-user',
   },
 ]
 

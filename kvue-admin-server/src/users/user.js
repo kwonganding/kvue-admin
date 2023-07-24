@@ -12,7 +12,7 @@ router.post('/auth/login', (req, res) => {
   let sql = 'select id,name from user_info where name=? and pwd=?';
   // sm2解密，sm3哈希值
   let pwd = gm.sm2Decrypt(req.body.pwd)
-  pwd = gm.signatureWithSalt(pwd)
+  pwd = gm.sm3Hash(pwd)
   let params = [req.body.name, pwd];
   db.queryData(sql, params, function(resData, rows) {
     if (rows && rows.length > 0) {
@@ -26,10 +26,6 @@ router.post('/auth/login', (req, res) => {
   })
 })
 
-
-router.get('/auth/logout', (req, res) => {
-
-})
 
 // 获取用户信息，包括授权信息
 router.get('/auth/getInfo', (req, res) => {

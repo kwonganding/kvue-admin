@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Message } from 'element-ui'
+import { Message, MessageBox } from 'element-ui'
 import store from '@/store'
 import router from '@/router/index'
 import NProgress from 'nprogress'
@@ -57,21 +57,22 @@ service.interceptors.response.use(
       case 4001:        //token无效
       case 4002:        //token过期
         console.warn(data)
-        Message({ message: data.message, type: "error", duration: 4000 })
-        store.dispatch('user/logout')
+        // 提示错误，询问是否重新登录
+        MessageBox.confirm('登录失效或已过期，是否立即重新登录？', '系统提示', { confirmButtonText: '重新登录', cancelButtonText: '取消', type: 'warning' })
+          .then(() => {
+            store.dispatch('user/logout')
+          })
+          .catch(() => { })
         break
-      default:
-        throw new Error(data.message)
     }
+    Message({ message: data.message, type: "error", duration: 4000 })
+    return Promise.reject(data.message)
   },
   // 错误error，各种HTTP的异常状态码处理
   error => {
     NProgress.done()
     console.error(error) // for debug
     const status = error?.response?.status
-    if (status === 401) {
-      // 未授权处理
-    }
     let message = HTTP_ERRORS[status]
     message ??= `网络可能出现异常，错误代码：${status}`
 

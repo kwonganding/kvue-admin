@@ -19,17 +19,14 @@
       <span>
         <img :src="baseURL + $store.getters.userInfo.avatar" alt="头像" />
         [ {{ $store.getters.userInfo.name }} ]
-        <i
-          class="el-icon-arrow-down el-icon--right"
-          style="font-size:12px"
-        ></i>
+        <i class="el-icon-arrow-down el-icon--right" style="font-size:12px"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item command="about">
           <i class="el-icon-info"></i>关于
         </el-dropdown-item>
         <el-dropdown-item command="user">
-          <i class="el-icon-user-solid"></i>个人中心
+          <i class="el-icon-user"></i>个人中心
         </el-dropdown-item>
         <!-- <el-divider></el-divider> -->
         <el-dropdown-item command="logout" divided icon="el-icon-circle-close">退出登录</el-dropdown-item>
@@ -62,10 +59,10 @@ export default {
           }).catch(() => { })
           break
         case 'about':
-          this.$router.push('/doc')
+          // this.$router.push('/doc')
           break
         case 'user':
-          this.$router.push('/user')
+          this.$router.push('/profile')
           break
       }
     },
@@ -118,7 +115,6 @@ export default {
     opacity: 1;
   }
 }
-
 // 数字-徽章样式
 .badge-wrapper {
   position: relative;

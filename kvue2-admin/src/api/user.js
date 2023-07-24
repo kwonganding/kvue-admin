@@ -20,7 +20,7 @@ export function logout() {
 }
 
 /**
- * 获取用户信息
+ * 获取用户信息，包括权限信息
  * @param {any} token
  */
 export function getInfo() {

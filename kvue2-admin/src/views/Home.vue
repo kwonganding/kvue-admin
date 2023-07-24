@@ -1,21 +1,16 @@
 <template>
-  <div>
-    <h1>home</h1>
-  </div>
+  <p style="font-size:20px; text-align:center; margin-top:40px">欢迎进入 {{ title }}</p>
 </template>
 
 <script>
-
+import defaultSetting from '@/settings'
 export default {
   name: 'home',
-  data() {
-    return {
-
+  computed: {
+    title() {
+      return defaultSetting.title
     }
   },
-  methods: {
-
-  }
 }
 </script>
 

@@ -4,6 +4,8 @@
     <!-- 图标搜索框 -->
     <el-input
       v-model="searchText"
+      v-bind="$attrs"
+      v-on="$listeners"
       size="mini"
       clearable
       suffix-icon="el-icon-search"
@@ -14,14 +16,7 @@
     <!-- 图标列表 -->
     <el-collapse value="1" class="view-scroll icons-wrapper">
       <el-collapse-item title="element-icons" name="1">
-        <i
-          v-for="name in elementIcons"
-          class="icon-item"
-          :class="name"
-          :key="name"
-          @click="iconClick(name)"
-          :title="name"
-        ></i>
+        <i v-for="name in elementIcons" class="icon-item" :class="name" :key="name" @click="iconClick(name)" :title="name"></i>
       </el-collapse-item>
       <el-collapse-item title="iconfont-icons" name="2">
         <i
@@ -108,6 +103,8 @@ export default {
 .prefix-icon {
   font-size: 18px;
   color: initial;
+  width: 20px;
+  display: inline-block;
 }
 
 .icons-wrapper {
