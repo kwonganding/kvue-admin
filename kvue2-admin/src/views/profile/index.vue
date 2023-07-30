@@ -19,15 +19,15 @@
           <span>{{userInfo.name}}</span>
         </el-form-item>
         <el-form-item label="创建时间">
-          <span>{{userInfo.createTime}}</span>
+          <span>{{formatTime(userInfo.createTime)}}</span>
         </el-form-item>
         <el-form-item label="性别">
           <el-radio-group v-model="userInfo.gender">
-            <el-radio v-for="item in enumGender.entries" :key="item.key" :label="item.key">{{item.text}}</el-radio>
+            <el-radio v-for="item in enumGender.values" :key="item.key" :label="item.key">{{item.text}}</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="个人简介">
-          <el-input v-model="userInfo.gender" type="textarea" :rows="3"></el-input>
+          <el-input v-model="userInfo.gender" type="textarea" :rows="3" maxlength="500" show-word-limit></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary">保存修改</el-button>
@@ -42,13 +42,13 @@
       </template>
       <el-form :model="pwdInfo" class="content" label-width="100px" label-suffix="：">
         <el-form-item label="原有密码">
-          <el-input v-model="pwdInfo.pwd" placeholder="输入原有密码" show-password></el-input>
+          <el-input v-model="pwdInfo.pwd" placeholder="输入原有密码" show-password minlength="4" maxlength="30"></el-input>
         </el-form-item>
         <el-form-item label="新密码">
-          <el-input v-model="pwdInfo.npwd1" placeholder="输入新有密码" show-password></el-input>
+          <el-input v-model="pwdInfo.npwd1" placeholder="输入新有密码" show-password minlength="4" maxlength="30"></el-input>
         </el-form-item>
         <el-form-item label="确认新密码">
-          <el-input v-model="pwdInfo.npwd2" placeholder="输入新有密码" show-password></el-input>
+          <el-input v-model="pwdInfo.npwd2" placeholder="输入新有密码" show-password minlength="4" maxlength="30"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary">修改密码</el-button>
@@ -62,6 +62,7 @@
 import { getInfo } from '@/api/user'
 import { baseURL } from '@/utils/request'
 import { enumGender } from '@/model/enums.js'
+import { formatTime } from '@/utils/util.js'
 
 export default {
   name: 'profile',
@@ -74,6 +75,7 @@ export default {
         role: ['超级管理员', 'role-ss'],
         department: '技术管理部',
         avatar: '',
+        createTime: Date.now(),
         gender: 'female',
         sumary: '',
       },
@@ -85,6 +87,7 @@ export default {
     }
   },
   methods: {
+    formatTime,
     getUserInfo() {
       getInfo().then(data => console.log(data)).catch(err => console.error(err))
     }

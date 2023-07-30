@@ -11,20 +11,20 @@
           {{ JSON.stringify(item.enum.keys) }}
 
           <br />
-          <b>{{ item.name }}.entries：</b>
-          {{ JSON.stringify(item.enum.entries) }}
+          <b>{{ item.name }}.values：</b>
+          {{ JSON.stringify(item.enum.values) }}
 
           <br />
           <b>下拉框使用：</b>
           <pre>&lt;el-select v-model=&quot;value&quot;&gt;</pre>
           <pre
-            style="text-indent: 2em;">&lt;el-option v-for=&quot;e in {{ item.name }}.entries&quot; :key=&quot;e.key&quot; :value=&quot;e.key&quot; :label=&quot;e.text&quot;&gt;&lt;/el-option&gt;</pre>
+            style="text-indent: 2em;">&lt;el-option v-for=&quot;e in {{ item.name }}.values&quot; :key=&quot;e.key&quot; :value=&quot;e.key&quot; :label=&quot;e.text&quot;&gt;&lt;/el-option&gt;</pre>
           <pre>&lt;/el-select&gt;</pre>
 
           <b>单选组使用：</b>
           <pre>&lt;el-radio-group v-model=&quot;value&quot;&gt;</pre>
           <pre
-            style="text-indent: 2em;">&lt;el-radio-button v-for=&quot;e in {{ item.name }}.entries&quot; :key=&quot;e.key&quot; :label=&quot;e.key&quot;&gt;<code>&#123;&#123;</code> e.text <code>&#125;&#125;</code>&lt;/el-radio-button&gt;</pre>
+            style="text-indent: 2em;">&lt;el-radio-button v-for=&quot;e in {{ item.name }}.values&quot; :key=&quot;e.key&quot; :label=&quot;e.key&quot;&gt;<code>&#123;&#123;</code> e.text <code>&#125;&#125;</code>&lt;/el-radio-button&gt;</pre>
           <pre>&lt;/el-radio-group&gt;</pre>
 
           <b>标签使用：</b>
@@ -33,21 +33,21 @@
         <el-form>
           <el-form-item label="下拉选择">
             <el-select v-model="item.value">
-              <el-option v-for="e in item.enum.entries" :key="e.key" :value="e.key" :label="e.text"></el-option>
+              <el-option v-for="e in item.enum.values" :key="e.key" :value="e.key" :label="e.text"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="单选组1">
             <el-radio-group v-model="item.value">
-              <el-radio-button v-for="item in item.enum.entries" :key="item.key" :label="item.key">{{ item.text }}</el-radio-button>
+              <el-radio-button v-for="item in item.enum.values" :key="item.key" :label="item.key">{{ item.text }}</el-radio-button>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="单选组2">
             <el-radio-group v-model="item.value">
-              <el-radio v-for="item in item.enum.entries" :key="item.key" :label="item.key">{{ item.text }}</el-radio>
+              <el-radio v-for="item in item.enum.values" :key="item.key" :label="item.key">{{ item.text }}</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="状态标签-all">
-            <el-tag v-for="tag in item.enum.entries" :key="tag.key" :type="tag.type" style="margin-right: 10px;">
+            <el-tag v-for="tag in item.enum.values" :key="tag.key" :type="tag.type" style="margin-right: 10px;">
               {{tag.text }}
             </el-tag>
           </el-form-item>
@@ -58,6 +58,8 @@
       </el-tab-pane>
     </el-tabs>
     <el-divider></el-divider>
+
+
     <h3>表格中使用</h3>
     <br>
     <el-table :data="table">
@@ -84,7 +86,8 @@
 <script>
 import EnumFactory from '@/utils/enumFactory';
 import { enumGender, enumUse } from '@/model/enums.js'
-const enumAlign = new EnumFactory({ '0': '左', '1': '中', '2': '右' },parseInt)
+
+const enumAlign = new EnumFactory({ left: '左', middle: '中', right: '右' })
 
 // 1、element中表格绑定，用tableFormater格式化显示文本
 // 2、<el-tag>中使用，用text、type显示文本和状态
@@ -109,8 +112,8 @@ export default {
           name: 'enumGender',
           text: '性别枚举',
           enum: enumGender,
-          value: 'male',
-          code: `const enumGender = new EnumFactory({ male: { text: '男', type: 'priary' }, female: { text: '女', type: 'warning' }, other: { text: '其他', type: 'info' }, })`
+          value: 1,
+          code: `const enumGender = new EnumFactory({ 1: { text: '男', type: 'priary' }, 2: { text: '女', type: 'warning' }, 9: { text: '其他', type: 'info' }, }, parseInt)`
         },
         {
           name: 'enumUse',
@@ -121,12 +124,16 @@ export default {
         }
       ],
       table:[
-        {name:'张三',gender:'male',align:'0',use:'enable'},
-        {name:'刀刀狼',gender:'other',align:0,use:'disable'},
-        {name:'李四四',gender:'female',align:1,use:'enable'},
-        {name:'基辛格',gender:'male',align:2,use:'disable'},
+        {name:'张三',gender:1,align:'left',use:'enable'},
+        {name:'刀刀狼',gender:9,align:'middle',use:'disable'},
+        {name:'李四四',gender:'2',align:'middle',use:'enable'},
+        {name:'基辛格',gender:'1',align:'right',use:'disable'},
       ]
     }
+  },
+  created(){
+    console.log(JSON.stringify(enumGender))
+    console.log(JSON.stringify(enumUse))
   },
   methods: {
 
