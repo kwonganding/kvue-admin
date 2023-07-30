@@ -1,7 +1,5 @@
 // tree树形结构数据处理
 
-import { Function } from "core-js"
-
 /**
  * 集合数据转换为树形结构。option.parent支持函数，示例：(n) => n.meta.parentName
  * @param {Array} list 集合数据

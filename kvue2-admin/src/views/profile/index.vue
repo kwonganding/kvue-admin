@@ -62,7 +62,7 @@
 import { getInfo } from '@/api/user'
 import { baseURL } from '@/utils/request'
 import { enumGender } from '@/model/enums.js'
-import { formatTime } from '@/utils/util.js'
+import { formatTime } from '@/utils/date.js'
 
 export default {
   name: 'profile',

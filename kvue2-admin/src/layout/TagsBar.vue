@@ -1,40 +1,31 @@
 <template>
-  <div class="tagsbar-wrapper">
-    <router-link
-      class="item"
-      v-for="r in cacheRoutes"
-      :to="r"
-      :key="r.path"
-      :class="isActive(r) ? 'active' : ''"
-      @contextmenu.prevent.native="showMenu(r, $event)"
-    >
-      <i :class="r.meta.icon" class="icon"></i>
-      <span class="title ellipsis">{{ r.meta.title ?? r.name }}</span>
-      <i class="el-icon-close close" v-if="!isAffix(r)" @click.prevent.stop="handleClose(r)"></i>
-    </router-link>
+<div class="tagsbar-wrapper">
+  <router-link class="item" v-for="r in cacheRoutes" :to="r" :key="r.path" :class="isActive(r) ? 'active' : ''"
+    @contextmenu.prevent.native="showMenu(r, $event)">
+    <i :class="r.meta.icon" class="icon"></i>
+    <span class="title ellipsis">{{ r.meta.title ?? r.name }}</span>
+    <i class="el-icon-close close" v-if="!isAffix(r)" @click.prevent.stop="handleClose(r)"></i>
+  </router-link>
 
-    <!-- 页签按钮的右键菜单 -->
-    <el-card
-      class="context-menu"
-      v-show="tagMenu.visible"
-      :style="{ left: tagMenu.left + 'px', top: tagMenu.top + 'px' }"
-    >
-      <ul>
-        <li @click="refresh(selectedTag)" v-show="isActive(selectedTag)">
-          <i class="el-icon-refresh"></i> 刷新
-        </li>
-        <li @click="handleClose()" v-show="!isAffix(selectedTag)">
-          <i class="el-icon-close"></i> 关闭
-        </li>
-        <li @click="handleCloseOther()">
-          <i class="el-icon-circle-close"></i> 关闭其他
-        </li>
-        <li @click="handleCloseAll">
-          <i class="el-icon-error"></i> 关闭所有
-        </li>
-      </ul>
-    </el-card>
-  </div>
+  <!-- 页签按钮的右键菜单 -->
+  <el-card class="context-menu" v-show="tagMenu.visible"
+    :style="{ left: tagMenu.left + 'px', top: tagMenu.top + 'px' }">
+    <ul>
+      <li @click="refresh(selectedTag)" v-show="isActive(selectedTag)">
+        <i class="el-icon-refresh"></i> 刷新
+      </li>
+      <li @click="handleClose()" v-show="!isAffix(selectedTag)">
+        <i class="el-icon-close"></i> 关闭
+      </li>
+      <li @click="handleCloseOther()">
+        <i class="el-icon-circle-close"></i> 关闭其他
+      </li>
+      <li @click="handleCloseAll">
+        <i class="el-icon-error"></i> 关闭所有
+      </li>
+    </ul>
+  </el-card>
+</div>
 </template>
 
 <script>
@@ -146,9 +137,8 @@ export default {
 .tagsbar-wrapper {
   list-style-type: none;
   display: flex;
-  margin: 20px 20px 0 0px;
-  line-height: 32px;
-  font-size: 14px;
+  margin: 12px 20px 0 0px;
+  line-height: 38px;
 
   // 标签项
   .item {
@@ -180,6 +170,7 @@ export default {
       position: relative;
       left: 6px;
       border-radius: 2px;
+      padding: 1px
     }
 
     &:hover {
