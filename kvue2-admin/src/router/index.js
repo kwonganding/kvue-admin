@@ -88,7 +88,7 @@ router.beforeEach(async (to, from, next) => {
       return next({ ...to, replace: true })
     })
     .catch(err => {
-      console.log('errrrrrrrrrrrr', err)
+      console.log('user/getInfo', err)
     })
 })
 // 全局守卫，每个路由导航后：更新标题

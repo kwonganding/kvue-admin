@@ -14,7 +14,7 @@ module.exports = defineConfig({
     // 跨域代理
     proxy: {
       [process.env.VUE_APP_BASE_API]: { //用 “/api” 代理 target
-        target: 'http://localhost:3000' + process.env.VUE_APP_BASE_API, //代理的目标
+        target: 'http://localhost:3000/api', //代理的目标
         changeOrigin: true,
         pathRewrite: { ['^' + process.env.VUE_APP_BASE_API]: '', },
       },

@@ -6,7 +6,12 @@
         <IconSelect v-model="icon" clearable></IconSelect>
       </div>
       <div class="m10">
-        <IconSelect v-model="icon" :disabled="setting.disabled" :clearable="setting.clearable" :hide-on-selected="setting.hideOnSelected"></IconSelect>
+        <IconSelect
+          v-model="icon"
+          :disabled="setting.disabled"
+          :clearable="setting.clearable"
+          :hide-on-selected="setting.hideOnSelected"
+        ></IconSelect>
       </div>
     </el-card>
 
@@ -35,16 +40,6 @@
       </div>
     </el-card>
 
-    <el-card header="表单" class="item">
-      <el-form label-width="90px" v-model="form" class="m10">
-        <el-form-item label="菜单图标：">
-          <IconSelect v-model="form.icon"></IconSelect>
-        </el-form-item>
-
-        <el-form-item label="菜单图标："></el-form-item>
-      </el-form>
-    </el-card>
-
     <el-card class="item" header="小组件配置（第二排有效）">
       <el-checkbox label="disabled" v-model="setting.disabled" class="m10"></el-checkbox>
       <el-checkbox label="clearable" v-model="setting.clearable" class="m10"></el-checkbox>
@@ -57,6 +52,22 @@
       <br />
       <el-input v-model="setting.text" clearable class="m10" style="width: 120px" placeholder="树搜索"></el-input>
       <el-button type="primary" @click="searchTree" class="m10" icon="el-icon-search">搜索树</el-button>
+    </el-card>
+
+    <el-card header="消息提示" class="item">
+      <p class="m10">把ElementUI的常用提示组件($message、$alert、$confirm、$notify)的不同类型方法，都注册到了VUE原型上了，便于使用。</p>
+      <span class="m10">消息类型：</span>
+      <el-radio-group v-model="messageType" class="m10">
+        <el-radio-button label="success">success</el-radio-button>
+        <el-radio-button label="warning">warning</el-radio-button>
+        <el-radio-button label="info">info</el-radio-button>
+        <el-radio-button label="error">error</el-radio-button>
+      </el-radio-group>
+      <br />
+      <el-button type="text" class="m10" @click="$message[messageType]('消息内容', '消息标题')">$message.success(mes,title)</el-button>
+      <el-button type="text" class="m10" @click="$alert[messageType]('消息内容', '消息标题')">$alert.success(mes,title)</el-button>
+      <el-button type="text" class="m10" @click="$confirm[messageType]('消息内容', '消息标题')">$confirm.success(mes,title)</el-button>
+      <el-button type="text" class="m10" @click="$notify[messageType]('消息内容', '消息标题')">$notify.success(mes,title)</el-button>
     </el-card>
   </div>
 </template>
@@ -102,13 +113,13 @@ export default {
       tree: {
         // 这里用 setTreeDisable是初始化下disable属性
         data: setTreeDisable(list2Tree(treeList)),
-        value: null,
+        value: 21,
       },
       form: {
         icon: "",
         city: 3,
       },
-
+      messageType: 'success',
     }
   },
   methods: {

@@ -1,4 +1,4 @@
-//加载sqlite并创建数据库实例
+/** sqlite数据库操作服务类 */
 
 let sqlite3 = require('sqlite3').verbose();
 let db = new sqlite3.Database('./src/db/book_db.db');

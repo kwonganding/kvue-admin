@@ -11,7 +11,7 @@
 class ResponseData {
   /**
  * 响应数据标准结构
- * @param {number} code 响应编码，默认0表示正常
+ * @param {number} code 响应编码，默认0表示正常，4000默认错误码
  * @param {any} error 异常错误
  */
   constructor(code = 0, error = null) {

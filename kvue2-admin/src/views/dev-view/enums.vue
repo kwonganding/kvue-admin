@@ -120,15 +120,15 @@ export default {
           name: 'enumUse',
           text: '使用状态枚举',
           enum: enumUse,
-          value: 'disable',
+          value: 1,
           code: `const enumUse = new EnumFactory({ enable: { text: '启用', type: 'success' }, disable: { text: '禁用', type: 'error' } })`
         }
       ],
       table: [
-        { name: '张三', gender: 1, align: 'left', use: 'enable' },
-        { name: '刀刀狼', gender: 9, align: 'middle', use: 'disable' },
-        { name: '李四四', gender: '2', align: 'middle', use: 'enable' },
-        { name: '基辛格', gender: '1', align: 'right', use: 'disable' },
+        { name: '张三', gender: 1, align: 'left', use: 1 },
+        { name: '刀刀狼', gender: 9, align: 'middle', use: 0 },
+        { name: '李四四', gender: '2', align: 'middle', use: 1 },
+        { name: '基辛格', gender: '1', align: 'right', use: 0 },
       ]
     }
   },
@@ -138,41 +138,6 @@ export default {
 
   }
 }
-
-// const data = [
-//   { "id": 1, "name": "用户中心", "sort": 1, "pid": 0 },
-//   { "id": 2, "name": "订单中心", "sort": 2, "pid": 0 },
-//   { "id": 3, "name": "系统管理", "sort": 3, "pid": 0 },
-
-//   { "id": 12, "name": "所有订单", "sort": 1, "pid": 2 },
-//   { "id": 14, "name": "待发货", "sort": 1.2, "pid": 2 },
-//   { "id": 15, "name": "订单导出", "sort": 2, "pid": 2 },
-
-//   { "id": 18, "name": "菜单设置", "sort": 1, "pid": 3 },
-//   { "id": 19, "name": "权限管理", "sort": 2, "pid": 3 },
-//   { "id": 21, "name": "系统权限", "sort": 1, "pid": 19 },
-//   { "id": 22, "name": "角色设置", "sort": 2, "pid": 19 },
-// ]
-
-// //递归函数，pid默认0为根节点
-// function buildTree(items, pid = 0) {
-//   //查找pid子节点
-//   let pitems = items.filter(s => s.pid === pid)
-//   if (!pitems || pitems.length <= 0)
-//     return null
-//   //递归
-//   pitems.forEach(item => {
-//     const res = buildTree(items, item.id)
-//     if (res && res.length > 0)
-//       item.children = res
-//   })
-//   return pitems
-// }
-
-// import { list2Tree } from '@/utils/tree'
-// data.sort((a, b) => a.sort - b.sort)
-// const sdata = list2Tree(data)
-// console.log(sdata)
 
 
 </script>

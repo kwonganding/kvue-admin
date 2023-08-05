@@ -13,7 +13,11 @@
     :filter-method="filter"
     :filterable="filterable"
   >
-    <el-option class="tree-option view-scroll" :value="selectedItem?.[option.value]" :label="selectedItem?.[option.label]">
+    <el-option
+      class="tree-option view-scroll"
+      :value="selectedItem?.[option.value]"
+      :label="selectedItem?.[option.label]"
+    >
       <!-- data：数据-->
       <!-- props：数据结构配置 -->
       <!-- node-key：唯一标识字段 -->
@@ -59,11 +63,19 @@ export default {
   },
   watch: {
     value(nval) {
-      this.selectedItem = nval ? this.$refs.tree?.getNode(nval)?.data ?? null : null
-      this.$refs.tree.setCurrentKey(nval)
+      this.initialize(nval)
     }
   },
+  mounted() {
+    this.initialize(this.value)
+  },
   methods: {
+    // 初始化选中节点状态
+    initialize(value) {
+      this.selectedItem = value ? this.$refs.tree?.getNode(value)?.data ?? null : null
+      this.$refs.tree.setCurrentKey(value)
+    },
+    // 选中节点变更事件：判断节点是否可以被选中，更新选中节点值
     handleCurrentChange(data, node) {
       //如果只能选择叶子节点，或者节点不可用，则重置
       if ((this.onlyLeaf && !node.isLeaf) || node.disabled) {

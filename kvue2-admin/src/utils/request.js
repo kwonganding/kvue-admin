@@ -8,7 +8,7 @@ import 'nprogress/nprogress.css'
 
 // token在Header中的key
 const JWT_HEADER_KEY = 'authtoken'
-const BASE_URL = process.env.VUE_APP_BASE_API
+const BASE_URL = process.env.VUE_APP_BASE_API  // '/api'
 
 //配置一下NProgress，在顶部显示进度条
 NProgress.configure({ showSpinner: false, minimum: 0.2, easeing: 'swing', speed: 500, trickleRate: 0.2 })
@@ -20,7 +20,7 @@ const service = axios.create({
   timeout: 5000 // request timeout
 })
 
-// 请求拦截
+// 请求拦截：TOKEN处理
 service.interceptors.request.use(
   config => {
     NProgress.start()
@@ -38,7 +38,7 @@ service.interceptors.request.use(
   }
 )
 
-// 响应拦截
+// 响应拦截，处理HTTP异常、返回消息错误
 service.interceptors.response.use(
   // 正常响应response
   response => {
@@ -65,8 +65,11 @@ service.interceptors.response.use(
           .catch(() => { })
         break
     }
+    // 处理错误返回：消息提示+日志记录
+    console.error(data)
     Message({ message: data.message, type: "error", duration: 4000 })
-    return Promise.reject(data.message)
+    // 统一处理错误，暂时不返回，后续再看情况优化
+    // return Promise.reject(data.message)
   },
   // 错误error，各种HTTP的异常状态码处理
   error => {
@@ -116,7 +119,7 @@ export {
 }
 
 // vue全局绑定，使用：this.$api, this.$get
-// Vue.prototype.$api = service
+// Vue.prototype.$axios = service
 // Vue.prototype.$get = get
 // Vue.prototype.$post = post
 

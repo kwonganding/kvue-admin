@@ -4,6 +4,7 @@ import store from './store'
 import router from './router'
 import './directive/permission'
 import './plugins/element.js'
+import './utils/extends'
 import './styles/index.less'
 
 Vue.config.productionTip = false
@@ -13,7 +14,7 @@ import settings from '@/settings'
 
 //全局注入axios接口
 import { service, get, post } from './utils/request'
-Vue.prototype.$api = service
+Vue.prototype.$axios = service
 Vue.prototype.$get = get
 Vue.prototype.$post = post
 

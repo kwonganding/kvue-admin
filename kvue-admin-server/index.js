@@ -9,9 +9,20 @@ let server = new express();
 const jwt = require("./src/utils/jwt")
 server.use(jwt.varify)
 
-//启用json解析支持，解析body数据
+// 启用json解析支持，解析body数据
 server.use(express.json());
 
+
+//*****  加载api路由 *****/
+const baseAPI = '/api';
+
+// 用户模块（用户、角色、部门）
+const users = require('./src/users/index')
+server.use(baseAPI, ...users)
+
+// 文件上传
+const upload = require('./src/file/index')
+server.use(baseAPI, upload)
 
 
 //***** 静态资源  *****/
@@ -22,49 +33,16 @@ server.use('/file', express.static('./file'));
 //兼容前端的跨域代理路径
 server.use('/api/file', express.static('./file'));
 
-
-
-//*****  加载api路由 *****/
-const path = '/api';
-
-// 用户模块（用户、角色、部门）
-const users = require('./src/users/index')
-server.use(path, ...users)
-
-// 系统管理模块（权限资源，字典，审计日志：登录日志、操作日志）
-
-// 
-
-
-// // 基础api
-// const base = require('./src/api/base.js');
-// // 书籍模块api
-// const book = require('./src/api/book.js');
-// // 文件上传api
-// const file = require('./src/api/file.js');
-// // 订单管理api
-// const order = require('./src/api/order.js');
-// // 系统管理功能API
-// const system = require('./src/api/system.js');
-
-// server.use(path, base);
-// server.use(path, book);
-// server.use(path, order);
-// server.use(path, system);
-// server.use(file);
-
-
 //管理后台"book_admin"的部署
-//静态资源
-server.use('/bookadmin', express.static('./book_admin'));
+// server.use('/bookadmin', express.static('./book_admin'));
 
-const fs = require('fs')
-const rpath = require('path')
-//前端路由的重定向
-server.get('/bookadmin/*', function(req, res) {
-  const html = fs.readFileSync(rpath.resolve(__dirname, '../server/book_admin/index.html'), 'utf-8')
-  res.send(html)
-})
+// const fs = require('fs')
+// const rpath = require('path')
+// //前端路由的重定向
+// server.get('/bookadmin/*', function(req, res) {
+//   const html = fs.readFileSync(rpath.resolve(__dirname, '../server/book_admin/index.html'), 'utf-8')
+//   res.send(html)
+// })
 
 
 //*****  配置端口，启用监听端口 *****/

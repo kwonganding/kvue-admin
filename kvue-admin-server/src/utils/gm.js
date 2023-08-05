@@ -41,7 +41,7 @@ function sm2Decrypt(encrypted) {
 }
 
 /**
- * sm2私钥签名
+ * sm2私钥签名，原理就是先计算哈希值，然对哈希值加密，验签则相反的流程
  * @param {string} text 明文字符串
  * @returns 16进制签名值
  */
