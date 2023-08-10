@@ -36,7 +36,7 @@ const constantRoutes = [
       {
         path: '/redirect/:path(.*)',
         name: 'redirect',
-        component: () => import('@/views/redirect.vue')
+        component: () => import('@/layout/redirect.vue')
       },
       {
         path: '/home',

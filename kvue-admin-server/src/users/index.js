@@ -1,5 +1,6 @@
 // 统一导出
 
-const auth = require('./user')
+const auth = require('./auth')
+const user = require('./user')
 
-module.exports = [auth]
+module.exports = [auth, user]

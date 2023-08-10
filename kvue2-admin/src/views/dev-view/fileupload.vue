@@ -1,5 +1,6 @@
 <template>
   <el-form label-width="130px" label-suffix="：">
+    <p style="margin:20px">文件上传使用自定义的Axios接口实现，便于统一处理授权和异常</p>
     <el-form-item label="头像-单图+圆">
       <ImgUpload v-model="img" :limit="1" :round="true"></ImgUpload>
       <code>{{ img }}</code>

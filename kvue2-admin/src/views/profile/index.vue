@@ -7,7 +7,7 @@
       </template>
       <el-form :model="userInfo" class="content" label-width="100px" label-suffix="：">
         <el-form-item label="头像">
-          <img :src="baseURL + $store.getters.userInfo.avatar" alt="头像" width="100px" />
+          <ImgUpload v-model="userInfo.avatar" :limit="1" :round="true"></ImgUpload>
         </el-form-item>
         <el-form-item label="用户名">
           <span>{{userInfo.name}}</span>
@@ -63,9 +63,12 @@ import { getInfo } from '@/api/user'
 import { baseURL } from '@/utils/request'
 import { enumGender } from '@/model/enums.js'
 import { formatTime } from '@/utils/date.js'
+import ImgUpload from '@/components/ImgUpload.vue'
+
 
 export default {
   name: 'profile',
+  components: { ImgUpload },
   data() {
     return {
       baseURL,
@@ -74,7 +77,7 @@ export default {
         name: 'anidng',
         role: ['超级管理员', 'role-ss'],
         department: '技术管理部',
-        avatar: '',
+        avatar: '/file/f1.jpg',
         createTime: Date.now(),
         gender: 'female',
         sumary: '',

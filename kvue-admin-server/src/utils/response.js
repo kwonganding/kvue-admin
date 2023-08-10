@@ -5,8 +5,10 @@
 - 其他：都为异常错误
  */
 
+
+
 /**
- * 响应数据标准结构
+ * 响应数据标准结构  
  */
 class ResponseData {
   /**
@@ -36,9 +38,26 @@ class ResponseData {
   }
 
   setError = function(error) {
+    if (!error) return
     this.message = error
     this.code = 4000
   }
 }
 
 module.exports = ResponseData
+
+// responseData = {
+//   code: 0,
+//   message: '',
+//   data: {
+//     list: [],
+//     total: 100
+//   }
+// }
+
+// let query = {
+//   pageIndex: 1,
+//   pageSize: 2,
+//   orderBy: 'id',
+//   sortOrder: 'ASC', // DESC
+// }

@@ -1,4 +1,4 @@
-import { get, post } from '@/utils/request'
+import service, { get, post } from '@/utils/request'
 import { encrypt } from '@/utils/encrypt'
 
 /**
@@ -26,4 +26,6 @@ export function logout() {
 export function getInfo() {
   return get("/auth/getInfo")
 }
+
+
 

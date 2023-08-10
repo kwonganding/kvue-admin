@@ -13,7 +13,9 @@ let upload = multer({
     },
     //文件命名
     filename: function(req, file, callback) {
-      callback(null, Date.now() + '-' + file.originalname);
+      // 处理中文乱码 
+      const cname = Buffer.from(file.originalname, "latin1").toString("utf8")
+      callback(null, Date.now() + '-' + cname);
     }
   })
 });
@@ -25,10 +27,10 @@ router.post('/upload', upload.single('file'), function(req, res, next) {
     res.json(new ResponseData(4000, '文件上传错误：文件不存在'));
     return;
   }
-  //返回响应消息：文件的相对URL地址
+  // 返回响应消息：文件的相对URL地址  
   let resData = new ResponseData()
   resData.name = req.file.filename
-  resData.url = '/file/' + req.file.filename
+  resData.url = '/file/' + resData.name
   res.json(resData);
 });
 

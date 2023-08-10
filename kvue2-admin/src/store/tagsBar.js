@@ -44,7 +44,7 @@ export default {
       if (!state.cacheRoutes.some(s => s.path === obj.path))
         //添加打开的路由，只需要path、name、mata
         state.cacheRoutes.push({ path: obj.path, name: obj.name, meta: obj.meta })
-      state.cacheNames = state.cacheRoutes.map(s => s.name)
+      // state.cacheNames = state.cacheRoutes.map(s => s.name)
       saveSessionStorage(state)
     },
     REMOVE(state, obj) {

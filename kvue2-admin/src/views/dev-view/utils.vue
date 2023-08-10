@@ -85,7 +85,7 @@ export default {
     padding: 10px;
     margin: 10px 0;
     background: #000c;
-    color: #fff;
+    color: #f8951c;
     line-height: 1.8em;
     letter-spacing: 0.5px;
   }

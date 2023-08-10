@@ -46,7 +46,7 @@ const localResource = [
     icon: 'el-icon-upload', parentName: 'dev',
   },
   {
-    name: 'userlist', title: '富文本/上传',
+    name: 'editor', title: '富文本/上传',
     url: 'views/dev-view/editor',
     type: 'view', show: true, sort: 2,
     icon: 'el-icon-document', parentName: 'dev',
@@ -70,7 +70,12 @@ const localResource = [
     icon: 'el-icon-sunset', parentName: '',
   },
   {
-    name: 'profile', title: '用户账号',
+    name: 'profile1', title: '用户账号',
+    type: 'view', url: 'views/profile', show: true, sort: 1,
+    icon: 'el-icon-user', parentName: 'test-user',
+  },
+  {
+    name: 'profile2/:id', title: '用户账号2', query: { id: 1 },
     type: 'view', url: 'views/profile', show: true, sort: 1,
     icon: 'el-icon-user', parentName: 'test-user',
   },
@@ -113,7 +118,7 @@ export function buildRoutes(authResource) {
 
   // 2、先转换为标准路由数据结构
   const ritems = items.map(item => {
-    let route = { name: item.name, path: item.name, meta: item }
+    let route = { name: item.name, path: item.name, query: item.query, meta: item }
     if (item.url) {
       // 注意这里的坑，必须 “@/”开头，作为常量字符，不能放到动态参数里。大概原因是 动态导入需要首先确定路径
       route.component = () => import(`@/${item.url}`)

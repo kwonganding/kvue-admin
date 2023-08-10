@@ -7,7 +7,7 @@ let server = new express();
 
 // 注册jwt的中间件
 const jwt = require("./src/utils/jwt")
-server.use(jwt.varify)
+// server.use(jwt.varify)
 
 // 启用json解析支持，解析body数据
 server.use(express.json());
@@ -18,7 +18,7 @@ const baseAPI = '/api';
 
 // 用户模块（用户、角色、部门）
 const users = require('./src/users/index')
-server.use(baseAPI, ...users)
+server.use(baseAPI, users)
 
 // 文件上传
 const upload = require('./src/file/index')
