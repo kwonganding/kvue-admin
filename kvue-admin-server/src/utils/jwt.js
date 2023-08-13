@@ -8,7 +8,7 @@
 // 用于jwt的base64编码
 const base64url = require('base64url');
 // 国密
-const { sm3Hash } = require("./gm.js");
+const { sm2Signature, sm2VerifySignature } = require("./gm.js");
 
 const ResponseData = require('./response.js');
 const JWT_HEADER_KEY = 'authtoken'
@@ -39,7 +39,7 @@ function createJWT(userName) {
   const header = JSON.stringify(jwt.header)
   const payload = JSON.stringify(jwt.payload)
   // sm3签名
-  const signature = sm3Hash(header + '.' + payload)
+  const signature = sm2Signature(header + '.' + payload)
   // base64编码header、payload，并组装
   const encoded = base64url.encode(header) + '.' + base64url.encode(payload) + '.' + signature
   return encoded
@@ -63,7 +63,7 @@ function varifyJWT(req, res, next) {
   const header = base64url.decode(arrs[0])
   const payload = base64url.decode(arrs[1])
   // 验证签名 
-  if (arrs[2] !== sm3Hash(header + '.' + payload)) {
+  if (sm2VerifySignature(header + '.' + payload, arrs[2])) {
     return res.send(new ResponseData(4001))
   }
   // 验证过期时间

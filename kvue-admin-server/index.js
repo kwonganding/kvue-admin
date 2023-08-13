@@ -17,8 +17,8 @@ server.use(express.json());
 const baseAPI = '/api';
 
 // 用户模块（用户、角色、部门）
-const users = require('./src/users/index')
-server.use(baseAPI, users)
+const users = require('./src/system/index')
+server.use(baseAPI + '/system', users)
 
 // 文件上传
 const upload = require('./src/file/index')

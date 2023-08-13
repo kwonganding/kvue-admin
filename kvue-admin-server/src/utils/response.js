@@ -8,7 +8,7 @@
 
 
 /**
- * 响应数据标准结构  
+ * 响应数据标准结构，支持链式操作
  */
 class ResponseData {
   /**
@@ -16,12 +16,10 @@ class ResponseData {
  * @param {number} code 响应编码，默认0表示正常，4000默认错误码
  * @param {any} error 异常错误
  */
-  constructor(code = 0, error = null) {
-    this.setCode(code)
-    if (error) {
-      this.message = error
-      this.code = code > 0 ? code : 4000
-    }
+  constructor(data = null, message = null) {
+    this.code = 0
+    this.message = message ?? ''
+    if (data) this.data = data
   }
 
   setCode = function(code) {
@@ -38,9 +36,11 @@ class ResponseData {
   }
 
   setError = function(error) {
-    if (!error) return
-    this.message = error
-    this.code = 4000
+    if (error) {
+      this.message = error
+      this.code = 4000
+    }
+    return this
   }
 }
 
