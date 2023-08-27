@@ -122,7 +122,6 @@ export default {
 
 // option容器
 .tree-option {
-  min-height: 100px;
   height: auto;
   overflow-y: auto;
   background: none;

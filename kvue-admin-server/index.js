@@ -7,7 +7,7 @@ let server = new express();
 
 // 注册jwt的中间件
 const jwt = require("./src/utils/jwt")
-// server.use(jwt.varify)
+server.use(jwt.varify)
 
 // 启用json解析支持，解析body数据
 server.use(express.json());

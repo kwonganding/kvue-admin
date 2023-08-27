@@ -8,7 +8,7 @@ const ResponseData = require('../utils/response');
 // 登录页：登录，密码加密传输
 router.post('/auth/login', (req, res) => {
   //构造sql查询
-  const sql = 'select id,name,state from system_user where name=? and pwd=?';
+  const sql = 'select id,name,state from sys_user where name=? and pwd=?';
   // sm2解密，sm3哈希值
   let pwd = gm.sm2Decrypt(req.body.pwd)
   pwd = gm.sm3Hash(pwd)
@@ -16,6 +16,7 @@ router.post('/auth/login', (req, res) => {
 
   queryData(sql, params)
     .then(rows => {
+      const resData = new ResponseData()
       if (!rows || rows.length <= 0) {
         resData.setError('用户名或密码错误');
       }
@@ -37,7 +38,7 @@ router.post('/auth/login', (req, res) => {
 // 获取用户信息，包括授权信息
 router.get('/auth/getInfo', (req, res) => {
   //构造sql查询
-  const sql = 'select id,name,avatar from user_info where name=? '
+  const sql = 'select id,name,avatar from sys_user where name=? '
   const rsql = ''
   const psql = ''
 

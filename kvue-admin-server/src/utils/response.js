@@ -13,8 +13,8 @@
 class ResponseData {
   /**
  * 响应数据标准结构
- * @param {number} code 响应编码，默认0表示正常，4000默认错误码
- * @param {any} error 异常错误
+ * @param {object} data 返回的数据data
+ * @param {string} message 消息message
  */
   constructor(data = null, message = null) {
     this.code = 0
@@ -22,6 +22,10 @@ class ResponseData {
     if (data) this.data = data
   }
 
+  /**
+   * @param {number} code 响应编码，0表示正常，其它皆为异常
+   * @returns 返回ResponseData对象，方便链式调用
+   */
   setCode = function(code) {
     this.code = code
     switch (code) {
@@ -35,6 +39,10 @@ class ResponseData {
     return this
   }
 
+    /**
+   * @param {object} error 异常错误内容
+   * @returns 返回ResponseData对象，方便链式调用
+   */
   setError = function(error) {
     if (error) {
       this.message = error

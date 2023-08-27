@@ -7,7 +7,7 @@ import { encrypt } from '@/utils/encrypt'
  */
 export function login(data) {
   // 加密
-  return post("/auth/login", { name: data.name, pwd: encrypt(data.pwd) })
+  return post("/system/auth/login", { name: data.name, pwd: encrypt(data.pwd) })
 }
 
 /**
@@ -24,7 +24,7 @@ export function logout() {
  * @param {any} token
  */
 export function getInfo() {
-  return get("/auth/getInfo")
+  return get("/system/auth/getInfo")
 }
 
 
