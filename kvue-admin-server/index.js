@@ -25,6 +25,8 @@ const upload = require('./src/file/index')
 server.use(baseAPI, upload)
 
 
+
+
 //***** 静态资源  *****/
 // 使用内置的“express.static”实现静态文件代理，参数为资源地址。
 

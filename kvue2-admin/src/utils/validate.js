@@ -66,6 +66,50 @@ export function validEmail(email) {
 }
 
 /**
+ * elementui表单的验证器-验证邮箱
+ * @param {*} value 值
+ * @param {*} callback 回调
+ */
+export function checkEmail(rule, value, callback) {
+  if (!value) {
+    callback()
+    return
+  }
+  if (validEmail(value))
+    callback()
+  else
+    callback(new Error('不是合法的邮箱地址'))
+}
+
+/**
+ * @param {string} phone
+ * @returns {Boolean}
+ */
+export function validPhone(phone) {
+  const reg = /^(1[3-9])\d{9}$/
+  console.log(phone)
+  return reg.test(phone)
+}
+
+/**
+ * elementui表单的验证器-验证手机号码
+ * @param {*} value 值
+ * @param {*} callback 回调
+ */
+export function checkPhone(rule, value, callback) {
+  if (!value) {
+    callback()
+    return
+  }
+  if (validPhone(value))
+    callback()
+  else
+    callback(new Error('不是合法的手机号码'))
+}
+
+
+
+/**
  * @param {string} str
  * @returns {Boolean}
  */
@@ -86,3 +130,4 @@ export function isArray(arg) {
   }
   return Array.isArray(arg)
 }
+

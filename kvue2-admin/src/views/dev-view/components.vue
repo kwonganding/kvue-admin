@@ -73,9 +73,10 @@
 </template>
 
 <script>
+
 import IconSelect from "@/components/IconSelect"
 import TreeSelect from "@/components/TreeSelect"
-import { list2Tree, filterTree, setTreeDisable } from "@/utils/tree"
+import { list2Tree, filterTree, setTreeDisable } from "@/utils/tree.js"
 
 const treeList = [
   { id: 1, name: "北京", pid: 0 },

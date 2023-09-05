@@ -62,15 +62,18 @@ router.post('/user', async (req, res) => {
   const data = req.body
   const keyId = data.id  // 主键id
   const params = [data.name, data.state, data.remark]
-  let error = null  // 缓存异常信息，提前退出
+  let resData = null
   // 修改-update
   if (keyId)
-    await update(res, keyId, params).catch((err) => { error = err; console.error(err) })
+    resData = await update(res, keyId, params).catch((err) => { error = err; console.error(err) })
   // 新增-INSERT
   else
-    await insert(res, params).catch((err) => { error = err; console.error(err) })
-  // 返回状态
-  if (error) return
+    resData = await insert(res, params).catch((err) => { error = err; console.error(err) })
+  // 出错退出，没有回滚。。。
+  if (resData.code != 0) {
+    res.send(resData)
+    return
+  }
   res.send(new ResponseData(`${MODULE_NAME}[${keyId}]保存成功！`))
 })
 async function update(res, keyId, params) {
@@ -79,20 +82,20 @@ async function update(res, keyId, params) {
         last_time = ${Date.now()}
     WHERE id = ? `
   params.push(keyId)
-  await executeSql(sql, params).catch(err => {
+  return executeSql(sql, params).catch(err => {
     // 发生异常中止
     res.send(new ResponseData().setError(`${MODULE_NAME}[${keyId}]保存（UPDATE）发生异常：${err}`))
-    Promise.reject(err)
+    Promise.resolve(err)
   })
 }
 async function insert(res, params) {
   const sql = `INSERT INTO ${TABLE_NAME}
     (name,state,remark,create_time,last_time)
     values(?,?,?,${Date.now()},${Date.now()}) `
-  await executeSql(sql, params).catch(err => {
+  return executeSql(sql, params).catch(err => {
     // 发生异常中止
     res.send(new ResponseData().setError(`${MODULE_NAME}[${keyId}]保存（INSERT）发生异常：${err}`))
-    Promise.reject(err)
+    Promise.resolve(err)
   })
 }
 

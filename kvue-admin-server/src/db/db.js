@@ -72,7 +72,7 @@ function executeSql(sql, params) {
         if (error) {
           reject(error)
         }
-        else resolve()
+        else resolve(new ResponseData())
       })
     }
     catch (err) {

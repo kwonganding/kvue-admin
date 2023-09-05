@@ -49,9 +49,9 @@ export default {
 <style lang='less' scoped>
 // 主内容区容器
 .main-wrapper {
-  margin: 10px;
+  margin: 7px;
   border: 1px solid #ebeef5;
-  padding: 10px 12px;
+  padding: 7px 8px;
   height: 100%;
   position: relative;
   overflow: hidden auto;

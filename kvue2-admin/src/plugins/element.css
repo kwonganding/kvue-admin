@@ -28,6 +28,7 @@
 .el-radio-button--medium .el-radio-button__inner {
   padding: 8px 14px;
 }
+
 .el-radio-button:first-child .el-radio-button__inner {
   border-radius: 2px 0 0 2px;
 }
@@ -70,6 +71,24 @@
   line-height: 15px;
 }
 
+/* 日期范围 */
+.el-range-editor--medium.el-input__inner {
+  height: 32px;
+  line-height: 32px;
+}
+
+.el-date-editor .el-range-separator {
+  padding: 0;
+  margin: 0 5px;
+}
+
+.el-form-item--medium .el-form-item__content,
+.el-form-item--medium .el-form-item__label {
+  line-height: 32px;
+}
+
+
+
 /* el-card */
 .el-card__header {
   padding: 10px 15px;
@@ -103,7 +122,7 @@
 }
 
 .el-dialog__body {
-  padding: 20px 20px 10px;
+  padding: 20px 30px 10px 20px;
 }
 
 /* el-popover */
@@ -113,11 +132,24 @@
 
 /* el-table */
 .el-table--medium .el-table__cell {
-  padding: 8px 0;
+  padding: 6px 0;
 }
 
 .el-table th.el-table__cell {
   background-color: #01010106;
+}
+
+/* 表格排序符号的高度样式 */
+.el-table .caret-wrapper {
+  height: 24px;
+}
+
+.el-table .sort-caret.ascending {
+  top: 0px;
+}
+
+.el-table .sort-caret.descending {
+  bottom: 2px;
 }
 
 /* el-drawer */

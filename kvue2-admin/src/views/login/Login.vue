@@ -10,7 +10,14 @@
       </el-form-item>
 
       <el-form-item prop="pwd" required>
-        <el-input v-model="formData.pwd" placeholder="请输入密码" prefix-icon="el-icon-lock" maxlength="30" show-password @keyup.enter.native="login"></el-input>
+        <el-input
+          v-model="formData.pwd"
+          placeholder="请输入密码"
+          prefix-icon="el-icon-lock"
+          maxlength="30"
+          show-password
+          @keyup.enter.native="login"
+        ></el-input>
       </el-form-item>
 
       <el-button
@@ -37,8 +44,8 @@ export default {
         pwd: ''
       },
       formRules: {
-        name: [{ required: true, message: '用户名不能为空' }, { min: 3, max: 8, message: "长度应为3-8" }],
-        pwd: [{ required: true, message: '密码不能为空' }, { min: 3, max: 8, message: "长度应为3-8" }],
+        name: [{ required: true, message: '用户名不能为空' }, { min: 3, max: 16, message: "长度应为3-16" }],
+        pwd: [{ required: true, message: '密码不能为空' }, { min: 3, max: 16, message: "长度应为4-16" }],
       }
     }
   },

@@ -3,6 +3,7 @@ import App from "./App.vue"
 import store from './store'
 import router from './router'
 import './directive/permission'
+import './directive/throttle'
 import './plugins/element.js'
 import './utils/extends'
 import './styles/index.less'

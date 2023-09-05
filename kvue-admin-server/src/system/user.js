@@ -14,6 +14,7 @@ const TABLE_NAME = 'sys_user'    // 数据库表明
  * 查询参数query：用户名/昵称、部门（左树）、手机号、邮箱、注册时间段
  */
 router.get('/user/list', (req, res) => {
+
   let totalSql = `select count(id) as total from ${TABLE_NAME} WHERE 1=1 `
   let listSql = `SELECT
     id,name,avatar,nickname,gender,phone,email,department_id as departmentId,remark,state,create_time as createTime ,last_time as lastTime
@@ -40,17 +41,18 @@ router.get('/user/list', (req, res) => {
     where += " and phone like ?";
     params.push("%" + query.phone + "%");
   }
+  if (query.state) {
+    where += " and state = ?";
+    params.push(query.state);
+  }
   if (query.email) {
     where += " and phone like ?";
     params.push("%" + query.email + "%");
   }
-  if (query.startTime) {
-    where += " and create_time >= ?";
-    params.push(query.startTime);
-  }
-  if (query.endTime) {
-    where += " and create_time <= ?";
-    params.push(query.endTime);
+  if (query.createTime && query.createTime?.length > 0) {
+    where += " and create_time >= ?  and create_time <= ?";
+    params.push(query.createTime[0]);
+    params.push(query.createTime[1]);
   }
   // 继续组装sql
   listSql += where
@@ -108,7 +110,6 @@ router.get('/user/:id', (req, res) => {
 router.post('/user', async (req, res) => {
   const data = req.body
   let userId = data.id
-  let error = null
   // 密码处理，修改时不设置密码则不会更新密码值
   let pwd = null
   if (data.pwd) {
@@ -117,30 +118,38 @@ router.post('/user', async (req, res) => {
   }
   let params = [data.name, data.nickname, pwd, data.avatar, data.gender, data.phone, data.email
     , data.departmentId, data.remark, data.state];
+  let resData = null
   // 修改-update
   if (userId) {
-    await update(res, userId, params, pwd).catch((err) => { error = err; console.error(err) })
+    resData = await update(userId, params, pwd)
   }
   // 新增-insert 
   else {
-    await insert(res, params).catch((err) => { error = err; console.error(err) })
-    if (error) return
-    // 获取刚刚插入数据的id
-    const idrows = await queryData('SELECT last_insert_rowid() as id  from system_user LIMIT 1;')
-    userId = idrows?.[0]?.id
+    resData = await insert(params)
+    if (resData.code == 0) {
+      // 获取刚刚插入数据的id
+      const idrows = await queryData(`SELECT last_insert_rowid() as id  from ${TABLE_NAME} LIMIT 1;`)
+      userId = idrows?.[0]?.id
+    }
   }
-  if (error) return
+  // 出错退出，没有回滚。。。
+  if (resData.code != 0) {
+    res.send(resData)
+    return
+  }
   // 保存用户角色信息
   saveUserRoles(userId, data.roleIds)
     .then(() => {
-      res.send(new ResponseData(userId, '用户信息保存成功：' + userId))
+      resData.message = '用户信息保存成功：' + userId
+      resData.data = userId
     })
     .catch(err => {
-      res.send(new ResponseData().setError('保存用户信息（角色）发生异常：' + err))
+      resData.setError('保存用户信息（角色）发生异常：' + err)
     })
+    .finally(() => res.send(resData))
 })
 
-async function update(res, keyId, params, pwd) {
+async function update(keyId, params, pwd) {
   let sql = `UPDATE ${TABLE_NAME}
     SET name = ?, nickname = ?, pwd = ?, avatar = ?, gender = ?, phone = ?, email = ?, department_id = ?, remark = ?, state = ?,
         last_time = ${Date.now()} 
@@ -151,27 +160,27 @@ async function update(res, keyId, params, pwd) {
     params.splice(2, 1)
     sql = sql.replace('pwd = ?,', '')
   }
-  await executeSql(sql, params).catch(err => {
+  return executeSql(sql, params).catch(err => {
     // 发生异常中止
-    res.send(new ResponseData().setError(`${MODULE_NAME}[${keyId}]保存（UPDATE）发生异常：${err}`))
-    Promise.reject(err)
+    const resData = new ResponseData().setError(`${MODULE_NAME}[${keyId}]保存（UPDATE）发生异常：${err}`)
+    Promise.resolve(resData)
   })
 }
-async function insert(res, params) {
+async function insert(params) {
   const sql = `INSERT INTO ${TABLE_NAME}
     (name,nickname,pwd,avatar,gender,phone,email,department_id,remark,state,create_time,last_time)
     values(?,?,?,?,?,?,?,?,?,?,${Date.now()},${Date.now()}) `
-  await executeSql(sql, params).catch(err => {
-    // 发生异常中止
-    let errs = err.toString()
-    const resData = new ResponseData()
-    if (errs.indexOf('UNIQUE constraint failed') >= 0)
-      resData.setError('用户名已存在！')
-    else
-      resData.setError(`${MODULE_NAME}保存（INSERT）发生异常：${err}`)
-    res.send(resData)
-    Promise.reject(err)
-  })
+  return executeSql(sql, params)
+    .catch(err => {
+      // 发生异常中止
+      let errs = err.toString()
+      const resData = new ResponseData()
+      if (errs.indexOf('UNIQUE constraint failed') >= 0)
+        resData.setError('用户名已存在！')
+      else
+        resData.setError(`${MODULE_NAME}保存（INSERT）发生异常：${err}`)
+      return resData
+    })
 }
 
 // 保存用户角色：差异更新用户-角色关联表
@@ -179,6 +188,7 @@ async function saveUserRoles(userId, roleIds) {
   if (!userId) {
     return Promise.reject('saveUserRoles Error, userId is invalid:' + userId)
   }
+  roleIds ??= []
   // 先获取原有角色
   let rsql = 'SELECT GROUP_CONCAT(role_id) as ids FROM sys_user_role WHERE user_id = ? ORDER BY role_id'
   const oldRows = await queryData(rsql, [userId])
@@ -213,6 +223,7 @@ async function saveUserRoles(userId, roleIds) {
  * 删除指定id的数据，支持单个、多个（多个id逗号隔开）
  */
 router.delete('/user/:id', (req, res) => {
+  console.log(req)
   deleteByIds(res, TABLE_NAME, req.params.id, MODULE_NAME)
 })
 
@@ -236,7 +247,7 @@ router.post('/user/profile', (req, res) => {
 })
 
 // 个人中心：修改密码
-router.post('/user/profile', (req, res) => {
+router.post('/user/pwd', (req, res) => {
   const now = Date.now()
   // 密码处理
   let pwd = gm.sm2Decrypt(req.body.pwd)

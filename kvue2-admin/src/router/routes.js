@@ -19,7 +19,7 @@ import { list2Tree } from '@/utils/tree'
 //   sort: 1,            // 在菜单中的同级排序
 //   icon: '',           // 图标
 //   parentName: '',     // 父级name，根节点则为空
-//   cache: true,        // 是否缓存视图
+//   nocache: true,        // 是否缓存视图
 // }
 //#endregion
 
@@ -65,19 +65,14 @@ const localResource = [
   },
 
   {
-    name: 'test-user', title: '用户管理',
+    name: 'system', title: '系统管理',
     type: 'dictionary', url: '', show: true, sort: 1,
     icon: 'el-icon-sunset', parentName: '',
   },
   {
-    name: 'profile1', title: '用户账号',
-    type: 'view', url: 'views/profile', show: true, sort: 1,
-    icon: 'el-icon-user', parentName: 'test-user',
-  },
-  {
-    name: 'profile2/:id', title: '用户账号2', query: { id: 1 },
-    type: 'view', url: 'views/profile', show: true, sort: 1,
-    icon: 'el-icon-user', parentName: 'test-user',
+    name: 'user', title: '用户管理',
+    type: 'view', url: 'views/system/user', show: true, sort: 1,
+    icon: 'el-icon-user', parentName: 'system',
   },
 ]
 

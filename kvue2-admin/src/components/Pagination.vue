@@ -1,9 +1,10 @@
 <!-- // 分页组件,使用示例： -->
 <!-- <Pagination :total="total" :size.sync="search.size" :page.sync="search.page" @pagination="loadData"></Pagination> -->
+<!-- <Pagination :total="dataList.total" :size.sync="query.pageSize" :page.sync="query.pageIndex" @pagination="loadData" ></Pagination> -->
 
 <template>
   <el-pagination
-    style="text-align:right; margin-top:5px"
+    style="text-align:right;"
     background
     :total="total"
     :current-page.sync="currentPage"

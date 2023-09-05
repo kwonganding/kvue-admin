@@ -1,12 +1,24 @@
 /* 容器类样式 */
 
-/* view页面视图区域样式，主要目的是控制页面内容的滚动，让主页框架不会滚动 */
-// view跟容器用view-page， 
-.view-page {
-  display: flex;
-  flex-flow: column;
+// 标准crud列表页面的布局，上中下模式，中间表格区域内容填满+滚动条
+.list-view-layout {
   height: 100%;
+
+  // 头部 功能操作、搜索
+  .el-header {
+    padding: 3px 0;
+  }
+
+  .el-main {
+    padding: 5px 0;
+  }
+
+  // 底部-分页
+  .el-footer {
+    padding: 0px 5px 0 0;
+  }
 }
+
 
 /* 容器内容 "view-scroll" ，滚动条样式 */
 .view-scroll {
@@ -26,17 +38,6 @@
   }
 }
 
-
-/* ********** 表格内容列的滚动样式 ************/
-.table-scroll.el-table {
-  height: 100%;
-
-  .el-table__body-wrapper {
-    overflow-y: auto;
-    /* 标题40px */
-    height: calc(100% - 40px);
-  }
-}
 
 /* ********** 最大化弹框样式，以及内容溢出滚动 ************/
 .dialogPlus {

@@ -40,6 +40,7 @@ function createJWT(userName) {
   const payload = JSON.stringify(jwt.payload)
   // sm3签名
   const signature = sm2Signature(header + '.' + payload)
+
   // base64编码header、payload，并组装
   const encoded = base64url.encode(header) + '.' + base64url.encode(payload) + '.' + signature
   return encoded
@@ -59,17 +60,19 @@ function varifyJWT(req, res, next) {
   token ??= ''
   const arrs = token.split('.')
   if (!arrs || arrs.length !== 3)  // jwt无效
-    return res.send(new ResponseData(4001))
+    return res.send(new ResponseData().setCode(4001))
   const header = base64url.decode(arrs[0])
   const payload = base64url.decode(arrs[1])
+
   // 验证签名 
-  if (sm2VerifySignature(header + '.' + payload, arrs[2])) {
-    return res.send(new ResponseData(4001))
+  if (!sm2VerifySignature(header + '.' + payload, arrs[2])) {
+    return res.send(new ResponseData().setCode(4001))
   }
+
   // 验证过期时间
   const payloadObj = JSON.parse(payload)
   if (payloadObj.exp <= Date.now()) {
-    return res.send(new ResponseData(4002))
+    return res.send(new ResponseData().setCode(4002))
   }
   // 都没问题，更新jwt(主要是时间),
   let njwt = createJWT(payloadObj.name)
