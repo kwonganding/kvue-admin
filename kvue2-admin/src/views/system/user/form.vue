@@ -3,7 +3,7 @@
   <el-dialog
     append-to-body
     v-bind="$attrs"
-    :visible.sync="visible"
+    :visible="visible"
     :show-close="false"
     :fullscreen="fullscreen"
     width="800px"
