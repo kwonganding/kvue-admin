@@ -3,7 +3,6 @@
   <el-dialog
     append-to-body
     v-bind="$attrs"
-    v-loading="loading"
     :visible.sync="visible"
     :show-close="false"
     :fullscreen="fullscreen"
@@ -17,13 +16,20 @@
         {{title}} 用户信息
       </span>
       <span style="float:right;margin-top:-5px">
-        <el-button icon="el-icon-full-screen" type="text" @click="fullscreen=!fullscreen" title="全屏"></el-button>
-        <el-button icon="el-icon-close" type="text" @click="close" title="关闭" style="color:red"></el-button>
+        <el-button
+          icon="el-icon-full-screen"
+          type="text"
+          @click="fullscreen=!fullscreen"
+          title="全屏"
+          style="font-size: 16px;"
+        ></el-button>
+        <el-button icon="el-icon-close" type="text" @click="close" title="关闭" style="color:red;font-size: 16px;"></el-button>
       </span>
     </template>
 
     <!-- form表单 -->
     <el-form
+      v-loading="loading"
       ref="form"
       :model="formData"
       :rules="formRules"
@@ -120,16 +126,24 @@
     <!-- 底部操作按钮 -->
     <div slot="footer" style="text-align:center">
       <el-button @click="close" icon="el-icon-circle-close">取消</el-button>
-      <el-button @click="save" type="primary" icon="el-icon-success" :loading="saveLoading" v-throttle>保存</el-button>
+      <el-button
+        @click="save"
+        type="primary"
+        icon="el-icon-success"
+        :disabled="loading"
+        :loading="saveLoading"
+        v-throttle
+      >保存</el-button>
     </div>
   </el-dialog>
 </template>
 
 <script>
+import { form } from '@/mixins/crud.js'
+
+import { getList, getById, saveOrUpdate, deleteById } from '@/api/user.js'
 
 import TreeSelect from '@/components/TreeSelect.vue'
-import { getList, getById, saveOrUpdate, deleteById } from '@/api/user.js'
-import { form } from '@/mixins/crud.js'
 import { enumUse, enumGender } from '@/model/enums'
 import { checkPhone, checkEmail } from '@/utils/validate'
 
@@ -162,9 +176,9 @@ export default {
     // 虚方法（按需实现）：弹窗加载后执行
     afterOpen() {
       if (!this.keyId) {
-        this.formData = {}
         this.formData.gender = enumGender.values[0].key
         this.formData.state = enumUse.values[0].key
+        this.formRules.pwd[0].required = true
       }
       else {
         this.formRules.pwd[0].required = false

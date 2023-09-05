@@ -69,7 +69,7 @@
         <el-table-column type="selection" width="39"></el-table-column>
         <el-table-column label="ID" width="80" prop="id" align="center"></el-table-column>
         <el-table-column label="用户名" min-width="120" prop="name" align="left" show-overflow-tooltip>
-          <el-link slot-scope="scope" @click="$refs.detailDrawer.open(scope.row)" type="primary">{{scope.row.name}}</el-link>
+          <el-link slot-scope="scope" @click="$refs.detailDrawer.open(scope.row?.id)" type="primary">{{scope.row.name}}</el-link>
         </el-table-column>
         <el-table-column label="昵称" min-width="120" prop="nickname" align="left" show-overflow-tooltip></el-table-column>
         <el-table-column label="性别" width="90" prop="gender" align="center">
@@ -114,17 +114,15 @@
 </template>
 
 <script>
-
+import { list } from '@/mixins/crud.js'
 import Pagination from '@/components/Pagination'
 import ListViewToolbar from '@/components/ListViewToolbar'
 import FormDialog from './form.vue'
 import DetailDrawer from './detail.vue'
-import { enumUse, enumGender } from '@/model/enums'
-
-import { list } from '@/mixins/crud.js'
 
 import { getList, getById, saveOrUpdate, deleteById } from '@/api/user.js'
-import { Form } from 'element-ui'
+
+import { enumUse, enumGender } from '@/model/enums'
 
 export default {
   name: 'user',

@@ -67,7 +67,7 @@ export const list = {
     },
 
     /**
-     * 删除选中项的主键，支持多个，多个逗号隔开
+     * 删除选中项数据（参数为id），支持多个，多个逗号隔开
      */
     handleDelete(ids) {
       if (!ids) return
@@ -89,18 +89,14 @@ export const list = {
 export const form = {
   data() {
     return {
-      loading: false,     //页面数据加载状态
-      saveLoading: false, //保存状态
-      // 标题
-      title: '',
-      // 存储当前对象form数据
-      formData: {},
-      formRules: {},
-      keyId: null,   // 主键id值，可据此判断新增、修改
-      // 是否全屏
-      fullscreen: false,
-      // 是否显示
-      visible: false,
+      loading: false,      // 页面数据加载状态
+      saveLoading: false,  // 保存状态
+      title: '',           // 标题
+      formData: {},        // 当前表单数据
+      formRules: {},       // 表单的验证规则
+      keyId: null,         // 主键id值，可据此判断新增、修改
+      fullscreen: false,   // 是否全屏
+      visible: false,      // 是否显示
     }
   },
   methods: {
@@ -125,6 +121,7 @@ export const form = {
       this.keyId = id
       this.title = id ? "修改" : "新建"
       if (!this.keyId) {
+        this.formData = {}
         this.afterOpen()
         return
       }
@@ -140,8 +137,11 @@ export const form = {
 
     // 执行保存
     save() {
-      if (!this.beforeSave())
+      if (!this.beforeSave()) {
+        console.warn('beforeSave() return false')
         return
+      }
+
       this.$refs.form.validate((valid, mes) => {
         if (!valid) {
           this.$message.error('输入有误，请修改后重新提交！')
@@ -159,9 +159,10 @@ export const form = {
 
     // 更新后操作，关闭、更新
     afterSave() {
-      this.close()
       this.$emit('updated')
+      this.close()
     },
+
     // 关闭
     close() {
       this.visible = false
@@ -176,11 +177,9 @@ export const form = {
 export const detail = {
   data() {
     return {
-      loading: false,     //页面数据加载状态
-      // 存储当前对象form数据
-      formData: {},
-      // 是否显示
-      visible: false,
+      loading: false,     // 页面数据加载状态
+      data: {},           // 详情数据对象
+      visible: false,     // 是否显示
     }
   },
   methods: {
@@ -197,9 +196,9 @@ export const detail = {
       this.visible = true
       // 获取最新数据
       this.loading = true
-      this.getById(this.keyId)
+      this.getById(id)
         .then(res => {
-          this.formData = res.data
+          this.data = res.data
           this.afterOpen()
         })
         .finally(() => this.loading = false)
