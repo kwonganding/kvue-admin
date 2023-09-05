@@ -33,8 +33,8 @@
           <el-form-item label="手机号码" prop="phone">
             <el-input v-model="query.phone" maxlength="30"></el-input>
           </el-form-item>
-          <el-form-item prop="gander" label="性别">
-            <el-radio-group v-model="query.gander">
+          <el-form-item prop="gender" label="性别">
+            <el-radio-group v-model="query.gender">
               <el-radio-button border label>All</el-radio-button>
               <el-radio-button v-for="e in enumGender.values" :label="e.key" :key="e.key">{{e.text}}</el-radio-button>
             </el-radio-group>
