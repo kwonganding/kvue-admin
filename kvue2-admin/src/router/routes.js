@@ -28,7 +28,7 @@ import { list2Tree } from '@/utils/tree'
  */
 const localResource = [
   {
-    name: 'dev', title: '开发调试',
+    name: 'dev', title: '开发组件',
     type: 'dictionary', url: '', show: true, sort: 1,
     icon: 'iconfont icon-code', parentName: '',
   },
@@ -65,6 +65,24 @@ const localResource = [
   },
 
   {
+    name: 'crud', title: 'crud模板',
+    type: 'dictionary', url: '', show: true, sort: 1,
+    icon: 'iconfont icon-codepen-square-fill', parentName: '',
+  },
+  {
+    name: 'list1', title: '列表1-简单',
+    url: 'views/crud-template/list1',
+    type: 'view', show: true, sort: 1,
+    icon: 'iconfont icon-unorderedlist', parentName: 'crud',
+  },
+  {
+    name: 'list2', title: '列表2-也算简单',
+    url: 'views/crud-template/list2',
+    type: 'view', show: true, sort: 2,
+    icon: 'el-icon-s-operation', parentName: 'crud',
+  },
+
+  {
     name: 'system', title: '系统管理',
     type: 'dictionary', url: '', show: true, sort: 1,
     icon: 'el-icon-sunset', parentName: '',
@@ -73,6 +91,11 @@ const localResource = [
     name: 'user', title: '用户管理',
     type: 'view', url: 'views/system/user', show: true, sort: 1,
     icon: 'el-icon-user', parentName: 'system',
+  },
+  {
+    name: 'role', title: '用户角色',
+    type: 'view', url: 'views/system/role', show: true, sort: 1,
+    icon: 'el-icon-coordinate', parentName: 'system',
   },
 ]
 

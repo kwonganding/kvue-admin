@@ -42,7 +42,7 @@
     </el-upload>
     <!-- 嵌套的dialog，预览图片，需要设置append-to-body，嵌入自身到body元素 -->
     <el-dialog :visible.sync="dialogVisible" append-to-body custom-class="imgupload-dialog" top="none">
-      <img :src="proxyURL(dialogImageUrl)" alt style="max-width: 100%;max-heigt: 100%;object-fit:contain" />
+      <img :src="proxyURL(dialogImageUrl)" alt />
     </el-dialog>
   </div>
 </template>
@@ -57,7 +57,7 @@ export default {
     value: { type: String, default: '' },     //文件路径(集合)字符串，多个逗号隔开
     limit: { type: Number, default: 5 },      //数量限制
     maxSize: { type: Number, default: 2048 }, //文件大小限制（单位KB)
-    round: { type: Boolean, default: false }  //文件大小限制（单位KB)
+    round: { type: Boolean, default: false }  //显示为圆形（50%border-radius）
   },
   data() {
     return {
@@ -190,13 +190,18 @@ export default {
 }
 </style>
 
-<style>
+<style lang="less">
 .imgupload-dialog {
   width: max-content;
   height: max-content;
   max-width: 90vw;
   max-height: 90vh;
   transform: translateY(calc(50vh - 50%));
+  img {
+    max-width: 100%;
+    max-height: calc(90vh - 60px);
+    object-fit: contain;
+  }
 }
 
 .imgupload-dialog .el-dialog__header {
@@ -209,6 +214,7 @@ export default {
 }
 
 /* 圆角样式 */
+.img-upload-round .el-upload--picture-card,
 .img-upload-round .el-upload-list__item {
   border-radius: 50%;
 }

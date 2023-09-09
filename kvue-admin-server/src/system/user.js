@@ -126,11 +126,7 @@ router.post('/user', async (req, res) => {
   // 新增-insert 
   else {
     resData = await insert(params)
-    if (resData.code == 0) {
-      // 获取刚刚插入数据的id
-      const idrows = await queryData(`SELECT last_insert_rowid() as id  from ${TABLE_NAME} LIMIT 1;`)
-      userId = idrows?.[0]?.id
-    }
+    userId = resData.data
   }
   // 出错退出，没有回滚。。。
   if (resData.code != 0) {
@@ -257,13 +253,14 @@ router.post('/user/pwd', (req, res) => {
   //构造sql查询
   const sql = `UPDATE ${TABLE_NAME} SET pwd =?,last_time=${now} WHERE id =? and pwd =?`;
   const params = [npwd, req.body.id, pwd]
+
   // 执行SQL
   executeSql(sql, params)
     .then(() => {
       res.send(new ResponseData(null, '用户密码更新成功！'))
     })
     .catch(err => {
-      res.send(new ResponseData().setError(err))
+      res.send(new ResponseData().setError("更新失败，可能是旧密码错误。"+err))
     })
 })
 

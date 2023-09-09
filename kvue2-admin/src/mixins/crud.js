@@ -69,7 +69,9 @@ export const list = {
     /**
      * 删除选中项数据（参数为id），支持多个，多个逗号隔开
      */
-    handleDelete(ids) {
+    handleDelete(id) {
+      // 如果id为空，则取选中项
+      let ids = id ?? this.$refs.dataTable?.selection?.map(r => r.id).join(',')
       if (!ids) return
       this.$confirm.warning(`确定要删除所选数据[${ids}]吗？删除后将无法恢复，请再次确认！`, "删除提醒").then(() => {
         this.loading = true
@@ -79,6 +81,11 @@ export const list = {
         }).finally(() => this.loading = false)
       }).catch(() => { this.$message.info("取消删除！") })
     },
+
+    // 编辑数据（新增、修改）
+    handleEdit(row) {
+      this.$refs.fromDialog.open(row?.id)
+    }
   },
 }
 
@@ -119,7 +126,7 @@ export const form = {
     open(id) {
       this.visible = true
       this.keyId = id
-      this.title = id ? "修改" : "新建"
+      this.title = id ? "修改-" : "新建-"
       if (!this.keyId) {
         this.formData = {}
         this.afterOpen()
@@ -137,6 +144,7 @@ export const form = {
 
     // 执行保存
     save() {
+      if (this.loading) return
       if (!this.beforeSave()) {
         console.warn('beforeSave() return false')
         return

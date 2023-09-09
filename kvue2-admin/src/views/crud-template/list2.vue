@@ -3,7 +3,24 @@
   <el-container v-loading="loading">
     <!-- 左侧部门树，独立视图 -->
     <el-aside width="210px" class="view view-left">
-      <div>1111</div>
+      <div style="line-height:60px">
+        1111
+        <p>33333</p>
+        <p>33333</p>
+        <p>33333</p>
+        <p>33333</p>
+        <p>33333</p>
+        <p>33333</p>
+        <p>33333</p>
+        <p>33333</p>
+        <p>33333</p>
+        <p>33333</p>
+        <p>33333</p>
+        <p>33333</p>
+        <p>33333</p>
+        <p>33333</p>
+        <p>33333</p>
+      </div>
     </el-aside>
 
     <!-- 右侧列表区域视图 -->
@@ -24,7 +41,7 @@
 
           <!-- 固定常用搜索，默认插槽 -->
           <el-form-item prop="name">
-            <el-input placeholder="用户名或昵称" v-model="query.name" maxlength="30"></el-input>
+            <el-input placeholder="名称关键词" v-model="query.name" maxlength="30"></el-input>
           </el-form-item>
           <el-form-item prop="state">
             <el-radio-group v-model="query.state">
@@ -35,15 +52,6 @@
 
           <!-- 更多高级搜索 -->
           <template #more>
-            <el-form-item label="手机号码" prop="phone">
-              <el-input v-model="query.phone" maxlength="30"></el-input>
-            </el-form-item>
-            <el-form-item prop="gender" label="性别">
-              <el-radio-group v-model="query.gender">
-                <el-radio-button border :label="null">All</el-radio-button>
-                <el-radio-button v-for="e in enumGender.values" :label="e.key" :key="e.key">{{e.text}}</el-radio-button>
-              </el-radio-group>
-            </el-form-item>
             <el-form-item label="创建日期" prop="createTime">
               <el-date-picker
                 v-model="query.createTime"
@@ -81,16 +89,14 @@
             >{{scope.row.name}}</el-link>
           </el-table-column>
           <el-table-column label="昵称" min-width="120" prop="nickname" align="left" show-overflow-tooltip></el-table-column>
-          <el-table-column label="性别" width="90" prop="gender" align="center">
-            <template slot-scope="scope">
-              <el-tag :type="enumGender[scope.row.gender]?.type">{{ enumGender[scope.row.gender]?.text }}</el-tag>
-            </template>
-          </el-table-column>
           <el-table-column label="电话号码" min-width="180" prop="phone" align="left" show-overflow-tooltip></el-table-column>
           <el-table-column label="邮箱" min-width="180" prop="email" align="left" show-overflow-tooltip></el-table-column>
           <el-table-column label="状态" width="100" prop="state" align="center">
             <template slot-scope="scope">
-              <el-tag :type="enumState[scope.row.state]?.type">{{ enumState[scope.row.state]?.text }}</el-tag>
+              <el-tag
+                v-if="scope.row.state"
+                :type="enumState[scope.row.state]?.type"
+              >{{ enumState[scope.row.state]?.text }}</el-tag>
             </template>
           </el-table-column>
           <el-table-column label="创建日期" width="160" prop="createTime" align="center" sortable="custom">
@@ -98,7 +104,7 @@
           </el-table-column>
 
           <!-- 操作列，按需固定：fixed="right"-->
-          <el-table-column label="操作" class-name="table-link-btton" width="130" align="center" fixed="right">
+          <el-table-column label="操作" class-name="table-link-btton" width="130" align="center">
             <template slot-scope="scope">
               <el-link @click="handleEdit(scope.row)" type="primary" icon="el-icon-edit">修改</el-link>
               <el-link @click="handleDelete(scope.row.id)" type="warning" icon="el-icon-delete">删除</el-link>
@@ -127,27 +133,23 @@
 import { list } from '@/mixins/crud.js'
 import Pagination from '@/components/Pagination'
 import ListViewToolbar from '@/components/ListViewToolbar'
-import FormDialog from './form.vue'
+import FormDialog from './formplus.vue'
 import DetailDrawer from './detail.vue'
 
 import { getList, getById, saveOrUpdate, deleteById } from '@/api/user.js'
 
-import { enumState, enumGender } from '@/model/enums'
+import { enumState } from '@/model/enums'
 
 export default {
-  name: 'user',
+  name: 'list2',
   components: { Pagination, ListViewToolbar, FormDialog, DetailDrawer },
   mixins: [list],
   data() {
     return {
       enumState,
-      enumGender,
       // 搜索条件，分页参数通过混合复用
       query: {
         name: '',
-        gander: '',
-        phone: '',
-        email: '',
         createTime: null, //时间范围数组
         state: null,
       },
@@ -159,6 +161,10 @@ export default {
   methods: {
     getList,
     deleteById,
+
+    handleDelete(id) {
+      this.$message.warning('模板页面，删掉该方法即可')
+    }
   }
 }
 </script>

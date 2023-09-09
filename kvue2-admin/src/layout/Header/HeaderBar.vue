@@ -18,8 +18,11 @@
     <el-dropdown class="header-userbox" @command="handleCommand">
       <span>
         <img :src="baseURL + $store.getters.userInfo.avatar" alt="头像" />
-        [ {{ $store.getters.userInfo.name }} ]
-        <i class="el-icon-arrow-down el-icon--right" style="font-size:12px"></i>
+        [ {{ $store.getters.userInfo.nickname }} ]
+        <i
+          class="el-icon-arrow-down el-icon--right"
+          style="font-size:12px"
+        ></i>
       </span>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item command="about">

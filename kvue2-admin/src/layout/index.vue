@@ -1,6 +1,6 @@
 <!-- 框架主页面 -->
 <template>
-  <el-container style="height:100%">
+  <el-container style="height:100%;background-color: var(--main-bbgcolor);">
     <!-- 左侧菜单工具栏 -->
     <Sidebar></Sidebar>
 
@@ -13,7 +13,7 @@
       </HeaderBar>
 
       <!-- 主容器 -->
-      <el-container class="main-wrapper view-scroll">
+      <el-container class="main-wrapper scroll" style="overflow-x: hidden;">
         <transition mode="out-in" :name="config.routerAnimation ? 'fade-transform' : ''">
           <keep-alive :include="cacheNames">
             <router-view></router-view>
@@ -47,17 +47,6 @@ export default {
 </script>
 
 <style lang='less' scoped>
-// 主内容区容器
-.main-wrapper {
-  margin: 7px;
-  border: 1px solid #ebeef5;
-  padding: 7px 8px;
-  height: 100%;
-  position: relative;
-  overflow: hidden auto;
-  flex-flow: column;
-}
-
 // 路由切换动画
 /* fade-transform */
 .fade-transform-leave-active,

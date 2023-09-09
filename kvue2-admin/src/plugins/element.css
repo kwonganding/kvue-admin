@@ -3,7 +3,7 @@
 
 /* el-button：高32px */
 .el-button {
-  border-radius: 2px;
+  border-radius: var(--border-radius);
 }
 
 .el-button--medium.is-circle {
@@ -21,7 +21,7 @@
 
 /* .el-tag */
 .el-tag {
-  border-radius: 2px;
+  border-radius: var(--border-radius);
 }
 
 /* radio */
@@ -30,21 +30,22 @@
 }
 
 .el-radio-button:first-child .el-radio-button__inner {
-  border-radius: 2px 0 0 2px;
+  border-radius: var(--border-radius) 0 0 var(--border-radius);
 }
 
 .el-radio-button:last-child .el-radio-button__inner {
-  border-radius: 0 2px 2px 0;
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
 }
 
 /* el-link */
 .el-link [class*=el-icon-]+span {
-  margin-left: 2px;
+  margin-left: var(--border-radius);
+  ;
 }
 
 /* el-input：高32px */
 .el-input__inner {
-  border-radius: 2px;
+  border-radius: var(--border-radius);
 }
 
 .el-input--medium .el-input__icon {
@@ -58,7 +59,7 @@
 
 .el-input-group__append,
 .el-input-group__prepend {
-  border-radius: 2px;
+  border-radius: var(--border-radius);
 }
 
 /* input-number */
@@ -87,7 +88,11 @@
   line-height: 32px;
 }
 
-
+/* form表单中label的样式 */
+.el-form-item__label {
+  color: #92959b;
+  /* font-weight: 600; */
+}
 
 /* el-card */
 .el-card__header {
@@ -114,7 +119,7 @@
 /* el-dialog */
 .el-dialog__header {
   padding: 10px 15px;
-  background-color: #0001;
+  background-color: var(--dialog-header-bgcolor);
 }
 
 .el-dialog__headerbtn {
@@ -122,7 +127,7 @@
 }
 
 .el-dialog__body {
-  padding: 20px 30px 10px 20px;
+  padding: 25px 25px 10px;
 }
 
 /* el-popover */
@@ -154,9 +159,10 @@
 
 /* el-drawer */
 .el-drawer__header {
-  background-color: #0001;
+  background-color: var(--dialog-header-bgcolor);
   margin: 0px;
   padding: 10px 15px;
+  font-weight: 600;
 }
 
 .el-drawer__body {
@@ -182,7 +188,7 @@
 /* ///////////////备选 */
 .el-radio--medium.is-bordered {
   padding: 8px 16px 0 8px;
-  border-radius: 2px;
+  border-radius: var(--border-radius);
   height: 32px;
 }
 
@@ -192,6 +198,6 @@
 
 .el-checkbox.is-bordered.el-checkbox--medium {
   padding: 6px 12px 0 6px;
-  border-radius: 2px;
+  border-radius: var(--border-radius);
   height: 28px;
 }

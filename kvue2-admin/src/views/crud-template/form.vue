@@ -13,34 +13,13 @@
     <el-form v-loading="loading" ref="form" :model="formData" :rules="formRules" label-width="100px" label-suffix="：">
       <el-row>
         <el-col :span="12">
-          <el-form-item label="用户名" prop="name">
+          <el-form-item label="名称" prop="name">
             <el-input v-model.trim="formData.name" maxlength="32" clearable></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="昵称" prop="nickname">
             <el-input v-model.trim="formData.nickname" maxlength="32" clearable></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-
-      <el-row>
-        <el-col :span="12">
-          <el-form-item label="性别" prop="gender">
-            <el-radio-group v-model="formData.gender">
-              <el-radio-button v-for="e in enumGender.values" :key="e.key" :label="e.key">{{ e.text }}</el-radio-button>
-            </el-radio-group>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="密码" prop="pwd">
-            <el-input
-              v-model="formData.pwd"
-              maxlength="32"
-              show-password
-              clearable
-              :placeholder="keyId?'修改密码才需要填写':'请设置初始密码'"
-            ></el-input>
           </el-form-item>
         </el-col>
       </el-row>
@@ -60,16 +39,14 @@
 
       <el-row>
         <el-col :span="12">
-          <el-form-item label="所属部门" prop="departmentId">
-            <TreeSelect v-model="formData.departmentId" :data="departments"></TreeSelect>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="用户状态" prop="state">
+          <el-form-item label="状态" prop="state">
             <el-radio-group v-model="formData.state">
               <el-radio border v-for="e in enumState.values" :key="e.key" :label="e.key">{{ e.text }}</el-radio>
             </el-radio-group>
           </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="所属部门" prop="departmentId"></el-form-item>
         </el-col>
       </el-row>
 
@@ -104,29 +81,20 @@ import { form } from '@/mixins/crud.js'
 import FormDialog from '@/components/FormDialog.vue'
 
 import { getList, getById, saveOrUpdate, deleteById } from '@/api/user.js'
-
-import TreeSelect from '@/components/TreeSelect.vue'
-import { enumState, enumGender } from '@/model/enums'
-import { checkPhone, checkEmail } from '@/utils/validate'
+import { enumState } from '@/model/enums'
 
 export default {
   name: 'UserForm',
-  components: { FormDialog, TreeSelect },
+  components: { FormDialog },
   mixins: [form],
   data() {
     return {
       enumState,
-      enumGender,
       roles: [{ id: 1, name: 'ssss1' }, { id: 2, name: 'ssss2' }], // 所有角色集合
       departments: [], //部门集合树
       formRules: {
         name: [{ required: true, message: '必填' }],
         nickname: [{ required: true, message: '必填' }],
-        departmentId: [{ required: false, message: '必填' }],
-        pwd: [{ required: true, message: '必须设置初始密码' },
-        { min: 4, max: 16, message: '长度应为4-16', trigger: 'blur' }],
-        phone: [{ validator: checkPhone, trigger: "blur" }],
-        email: [{ validator: checkEmail, trigger: "blur" }],
       },
     }
   },
@@ -138,16 +106,13 @@ export default {
     // 虚方法（按需实现）：弹窗加载后执行
     afterOpen() {
       if (!this.keyId) { //新增
-        this.formData.gender = enumGender.values[0].key
         this.formData.state = enumState.values[0].key
-        this.formRules.pwd[0].required = true
-      }
-      else { //修改
-        this.formRules.pwd[0].required = false
-        // 强制验证一次，更新校验状态
-        this.$refs.form.validate()
       }
     },
+
+    save() {
+      this.$message.warning('模板页面，删掉该方法即可')
+    }
   }
 }
 </script>

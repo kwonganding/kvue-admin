@@ -63,15 +63,17 @@ router.get('/department/:id', (req, res) => {
  */
 router.post('/department', async (req, res) => {
   const data = req.body
-  const keyId = data.id  // 主键id
+  let keyId = data.id  // 主键id
   const params = [data.name, data.orderNum, data.pid, data.manager, data.remark, data.state]
   let resData = null
   // 修改-update
   if (keyId)
     resData = await update(res, keyId, params).catch((err) => { error = err; console.error(err) })
   // 新增-INSERT
-  else
+  else {
     resData = await insert(res, params).catch((err) => { error = err; console.error(err) })
+    keyId = resData.data
+  }
   // 出错退出，没有回滚。。。
   if (resData.code != 0) {
     res.send(resData)
@@ -87,8 +89,7 @@ async function update(res, keyId, params) {
   params.push(keyId)
   return executeSql(sql, params).catch(err => {
     // 发生异常中止
-    res.send(new ResponseData().setError(`${MODULE_NAME}[${keyId}]保存（UPDATE）发生异常：${err}`))
-    Promise.resolve(err)
+    return new ResponseData().setError(`${MODULE_NAME}[${keyId}]保存（UPDATE）发生异常：${err}`)
   })
 }
 async function insert(res, params) {
@@ -97,8 +98,7 @@ async function insert(res, params) {
     values(?,?,?,?,?,?,${Date.now()},${Date.now()}) `
   return executeSql(sql, params).catch(err => {
     // 发生异常中止
-    res.send(new ResponseData().setError(`${MODULE_NAME}保存（INSERT）发生异常：${err}`))
-    Promise.resolve(err)
+    return new ResponseData().setError(`${MODULE_NAME}保存（INSERT）发生异常：${err}`)
   })
 }
 

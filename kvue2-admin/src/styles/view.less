@@ -1,4 +1,36 @@
-/* 容器类样式 */
+/* 容器类样式，主要是页面view的布局样式 */
+
+// 主内容区容器
+.main-wrapper {
+  margin: 10px 8px 8px 8px;
+  padding: 0px;
+  height: 100%;
+  position: relative;
+  overflow: hidden auto;
+}
+
+// 路由视图页面：独立的视图区域
+.view {
+  background-color: var(--main-bgcolor);
+  padding: 5px 8px;
+  border-radius: var(--border-radius);
+  height: max-content;
+  width: 100%;
+
+  &.el-aside {
+    height: 100%;
+  }
+}
+
+// 路由视图页面：放在左侧的内容区域，配合上面view使用
+.view-left {
+  margin-right: 8px;
+}
+
+// 路由视图页面：放在右侧的内容区域，配合上面view使用
+.view-right {
+  margin-left: 8px;
+}
 
 // 标准crud列表页面的布局，上中下模式，中间表格区域内容填满+滚动条
 .list-view-layout {
@@ -9,6 +41,7 @@
     padding: 3px 0;
   }
 
+  // 主内容：表格区域
   .el-main {
     padding: 5px 0;
   }
@@ -19,39 +52,52 @@
   }
 }
 
-
-/* 容器内容 "view-scroll" ，滚动条样式 */
-.view-scroll {
+/* 容器内容 "scroll" ，滚动条样式 */
+.scroll {
   max-height: 100%;
   overflow: auto;
+}
 
-  &::-webkit-scrollbar {
-    /*滚动条整体部分，*/
-    width: 6px;
-    height: 7px;
+/* ********** dialog布局样式 ************/
+.form-dialg-title {
+  display: flex;
+  justify-content: space-between;
+  height: 28px;
+  line-height: 30px;
+  margin-top: -5px;
+
+  span:nth-child(1) {
+    font-weight: bold;
   }
 
-  &::-webkit-scrollbar-thumb {
-    /*滚动条里面可以拖动的那部分（位置5）*/
-    background: #ccc;
-    border-radius: 4px;
+  .el-button--text {
+    font-size: 16px;
   }
 }
 
+.from-dialog {
+  .el-form {
+    margin: 10px 10px -10px 0;
+  }
+}
 
-/* ********** 最大化弹框样式，以及内容溢出滚动 ************/
-.dialogPlus {
+.form-dialog-plus {
   position: absolute;
   overflow: inherit;
+
+  .el-form {
+    margin: 10px 10px -10px 0;
+  }
 
   .el-dialog {
     min-height: 100% !important;
     max-height: 100%;
     display: flex;
     flex-flow: column;
+    box-shadow: initial;
 
     .el-dialog__header {
-      padding: 4px 10px;
+      border-radius: var(--border-radius) var(--border-radius) 0 0;
     }
 
     .el-dialog__body {

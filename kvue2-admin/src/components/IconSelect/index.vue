@@ -14,7 +14,7 @@
     ></el-input>
 
     <!-- 图标列表 -->
-    <el-collapse value="1" class="view-scroll icons-wrapper">
+    <el-collapse value="1" class="scroll icons-wrapper">
       <el-collapse-item title="element-icons" name="1">
         <i v-for="name in elementIcons" class="icon-item" :class="name" :key="name" @click="iconClick(name)" :title="name"></i>
       </el-collapse-item>

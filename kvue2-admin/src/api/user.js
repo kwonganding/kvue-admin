@@ -31,15 +31,21 @@ export function getInfo() {
  * @param {object} 用户信息
  */
 export function updateProfile(data) {
-  return post("/system/user/profile", data)
+  // 只保存部分信息
+  const { avatar, nickname, gender, phone, email, remark, id } = data
+  let pdata = { avatar, nickname, gender, remark, id }
+  return post("/system/user/profile", pdata)
 }
 
 /**
  * 个人中心：修改密码
  * @param {object} 查询对象
  */
-export function updatePwd(data) {
-  return post("/system/user/pwd", data)
+export function updatePwd(data, id) {
+  // 加密一下
+  const pwd = encrypt(data.pwd)
+  const npwd = encrypt(data.npwd1)
+  return post("/system/user/pwd", { pwd, npwd, id })
 }
 
 /*****************  crud ****************** */

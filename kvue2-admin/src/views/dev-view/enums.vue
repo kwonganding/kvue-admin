@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="view">
   <el-tabs>
     <el-tab-pane v-for="item in enums" :key="item.name" :label="item.name + '-' + item.text">
       <p class="code">
@@ -73,7 +73,7 @@
     <el-table-column label="方向" prop="align" :formatter="enumAlign.formatter" width="120px"></el-table-column>
     <el-table-column label="状态" prop="use" align="center" width="120px">
       <template slot-scope="scope">
-        <el-tag :type="enumUse[scope.row.use]?.type">{{ enumUse[scope.row.use]?.text }}</el-tag>
+        <el-tag :type="enumState[scope.row.use]?.type">{{ enumState[scope.row.use]?.text }}</el-tag>
       </template>
     </el-table-column>
   </el-table>
@@ -86,7 +86,7 @@
 
 <script>
 import EnumFactory from '@/utils/enumFactory'
-import { enumGender, enumUse } from '@/model/enums.js'
+import { enumGender, enumState } from '@/model/enums.js'
 
 const enumAlign = new EnumFactory({ left: '左', middle: '中', right: '右' })
 
@@ -99,7 +99,7 @@ export default {
   name: 'enums',
   data() {
     return {
-      enumAlign, enumGender, enumUse,
+      enumAlign, enumGender, enumState,
       value: '',
       enums: [
         {
@@ -117,11 +117,11 @@ export default {
           code: `const enumGender = new EnumFactory({ 1: { text: '男', type: 'priary' }, 2: { text: '女', type: 'warning' }, 9: { text: '其他', type: 'info' }, }, parseInt)`
         },
         {
-          name: 'enumUse',
+          name: 'enumState',
           text: '使用状态枚举',
-          enum: enumUse,
+          enum: enumState,
           value: 1,
-          code: `const enumUse = new EnumFactory({ enable: { text: '启用', type: 'success' }, disable: { text: '禁用', type: 'error' } })`
+          code: `const enumState = new EnumFactory({ enable: { text: '启用', type: 'success' }, disable: { text: '禁用', type: 'error' } })`
         }
       ],
       table: [

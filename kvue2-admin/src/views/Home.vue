@@ -1,5 +1,7 @@
 <template>
-  <p style="font-size:20px; text-align:center; margin-top:40px">欢迎进入 {{ title }}</p>
+  <div class="view" style="height: 100%;">
+    <p style="font-size:20px; text-align:center; margin-top:40px;">欢迎进入 {{ title }}</p>
+  </div>
 </template>
 
 <script>

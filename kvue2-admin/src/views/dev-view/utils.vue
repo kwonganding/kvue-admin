@@ -1,7 +1,7 @@
 <template>
-<div class="cards">
+<div class="cards view">
 
-  <el-card header="时间格式化" class="item">
+  <el-card header="时间格式化" class="item" shadow="never">
     <p class="code">
       <b>formatTime：格式化日期时间</b>
     <pre>
@@ -17,7 +17,7 @@ let tn3 = formatNow(new Date(1988, 11, 12, 4, 15, 33) - 100 * 1000) //1988-12-12
     </p>
   </el-card>
 
-  <el-card header="时间格式化示例" class="item">
+  <el-card header="时间格式化示例" class="item" shadow="never">
     <el-table :data="times">
       <el-table-column label="日期时间" prop="text"></el-table-column>
 

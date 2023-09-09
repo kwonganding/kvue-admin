@@ -1,6 +1,6 @@
 <!-- 小组件测试 -->
 <template>
-  <div class="cards">
+  <div class="cards view">
     <el-card :header="`图标选择器：${icon}`" class="item">
       <div class="m10">
         <IconSelect v-model="icon" clearable></IconSelect>
@@ -143,7 +143,6 @@ export default {
   flex-flow: row wrap;
   align-items: start;
   width: 100%;
-  height: max-content;
 
   .item {
     min-width: 200px;

@@ -44,3 +44,20 @@ a:hover {
 div:focus {
   outline: none;
 }
+
+//* 滚动条样式 **/
+::-webkit-scrollbar {
+  /*滚动条整体部分，*/
+  width: 7px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  /*滚动条里面可以拖动的那部分（位置5）*/
+  background-color: #ccc;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: #aaa;
+  }
+}

@@ -38,7 +38,7 @@ router.post('/auth/login', (req, res) => {
 // 获取用户信息，包括授权信息
 router.get('/auth/getInfo', (req, res) => {
   //构造sql查询
-  const sql = 'select id,name,avatar from sys_user where name=? '
+  const sql = 'select id,name,avatar,nickname from sys_user where name=? '
   const rsql = ''
   const psql = ''
 

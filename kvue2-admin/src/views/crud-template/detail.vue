@@ -19,12 +19,6 @@
       <dd>{{ data.nickname }}</dd>
       <br />
 
-      <dt>性别：</dt>
-      <dd>
-        <el-tag :type="enumGender[data.gender]?.type">{{ enumGender[data.gender]?.text }}</el-tag>
-      </dd>
-      <br />
-
       <dt>电话号码：</dt>
       <dd>{{ data.phone }}</dd>
       <br />
@@ -37,15 +31,9 @@
       <dd>{{ data.departmentName }}</dd>
       <br />
 
-      <dt>分配角色：</dt>
-      <dd>
-        <el-tag v-for="r in data.roleNames" :key="r" style="margin-right: 5px;">{{ r }}</el-tag>
-      </dd>
-      <br />
-
       <dt>用户状态：</dt>
       <dd>
-        <el-tag :type="enumState[data.state]?.type">{{ enumState[data.state]?.text }}</el-tag>
+        <el-tag v-if="data.state" :type="enumState[data.state]?.type">{{ enumState[data.state]?.text }}</el-tag>
       </dd>
       <br />
 
@@ -67,7 +55,7 @@ import { detail } from '@/mixins/crud.js'
 
 import { getList, getById, saveOrUpdate, deleteById } from '@/api/user.js'
 
-import { enumState, enumGender } from '@/model/enums'
+import { enumState } from '@/model/enums'
 
 export default {
   name: 'UserDetail',
@@ -75,7 +63,6 @@ export default {
   data() {
     return {
       enumState,
-      enumGender,
     }
   },
   methods: {

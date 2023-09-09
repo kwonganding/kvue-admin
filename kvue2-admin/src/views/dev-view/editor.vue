@@ -1,5 +1,5 @@
 <template>
-  <el-form label-width="130px" label-suffix="：">
+  <el-form label-width="130px" label-suffix="：" class="view">
     <div style="margin:20px">
       <p>主要封装了图片处理逻辑（自定义axios上传）</p>
       <pre class="code">

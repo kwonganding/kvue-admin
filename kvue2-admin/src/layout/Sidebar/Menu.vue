@@ -1,7 +1,7 @@
 <template>
   <el-menu
     router
-    class="sidebar-menu view-scroll"
+    class="sidebar-menu scroll"
     :collapse="collapse"
     :default-active="$route.path"
     :active-text-color="config.theme.backgroundColor"

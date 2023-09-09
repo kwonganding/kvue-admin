@@ -198,7 +198,7 @@ export default {
 
   // 标签项-激活
   .item.active {
-    background-color: #fff;
+    background-color: var(--main-bbgcolor);
     color: var(--theme-hcolor);
     margin-right: -1px; //遮住分隔符“⋮”
     position: relative;
@@ -215,7 +215,7 @@ export default {
       position: absolute;
       left: -5px;
       bottom: 0;
-      background: radial-gradient(circle at 0 0, transparent 5px, #fff 6px);
+      background: radial-gradient(circle at 0 0, transparent 5px, var(--main-bbgcolor) 6px);
     }
 
     &::after {
@@ -225,7 +225,7 @@ export default {
       position: absolute;
       right: -5px;
       bottom: 0;
-      background: radial-gradient(circle at 100% 0, transparent 5px, #fff 6px);
+      background: radial-gradient(circle at 100% 0, transparent 5px, var(--main-bbgcolor) 6px);
     }
   }
 }

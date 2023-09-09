@@ -18,7 +18,7 @@ export const enumGender = new EnumFactory({
 /**
  * 使用状态
  */
-export const enumUse = new EnumFactory({
+export const enumState = new EnumFactory({
   normal: { text: '启用', type: 'success' },
   disable: { text: '禁用', type: 'danger' }
 })

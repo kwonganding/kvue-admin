@@ -13,11 +13,7 @@
     :filter-method="filter"
     :filterable="filterable"
   >
-    <el-option
-      class="tree-option view-scroll"
-      :value="selectedItem?.[option.value]"
-      :label="selectedItem?.[option.label]"
-    >
+    <el-option class="tree-option scroll" :value="selectedItem?.[option.value]" :label="selectedItem?.[option.label]">
       <!-- data：数据-->
       <!-- props：数据结构配置 -->
       <!-- node-key：唯一标识字段 -->

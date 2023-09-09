@@ -69,10 +69,15 @@ function executeSql(sql, params) {
   return new Promise((resolve, reject) => {
     try {
       db.run(sql, params, function(error) {
+        // this: { lastID: 0, changes: 0 }
         if (error) {
-          reject(error)
+          let e = error.toString().replace('Error: SQLITE_CONSTRAINT: UNIQUE constraint failed','值已存在')
+          reject(e)
         }
-        else resolve(new ResponseData())
+        if (this.changes > 0)
+          resolve(new ResponseData(this.lastID))
+        else
+          reject('执行影响行数为0')
       })
     }
     catch (err) {
@@ -81,6 +86,11 @@ function executeSql(sql, params) {
     }
   })
 }
+/**
+ * https://github.com/TryGhost/node-sqlite3/wiki/API#runparam---callback
+ * If execution was successful, the this object will contain two properties named lastID and changes 
+ * which contain the value of the last inserted row ID and the number of rows affected by this query respectively.
+ */
 
 /************************** 下面为通用数据表操作封装 *********************************/
 

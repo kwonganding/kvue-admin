@@ -7,7 +7,7 @@
     </div>
 
     <!-- 菜单 -->
-    <Menu :collapse="config.menuCollapse" class="sidebar-menu"></Menu>
+    <Menu :collapse="config.menuCollapse" class="sidebar-menu" style="border-right:initial"></Menu>
 
     <!-- 底部收缩按钮 -->
     <el-button
@@ -56,6 +56,10 @@ export default {
     // 浮在菜单上，主要是为了动画一致（共用一条右侧外框线）
     position: absolute;
     bottom: 0px;
+    background-color: #fffe;
+    &:hover {
+      background-color: #0001;
+    }
   }
 }
 
@@ -81,7 +85,7 @@ export default {
     white-space: nowrap;
     overflow: hidden;
     // 动画必须设置初始值
-    width: @sidemenu-widht - @header-height - 10;
+    width: @sidemenu-widht - @header-height - 15;
     opacity: 1;
     transition: all 0.3s;
     z-index: 1;
