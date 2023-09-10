@@ -139,11 +139,25 @@ export default {
   methods: {
     getById, saveOrUpdate,
 
+    // 虚方法（必须实现）：创建一个空的表单对象
+    newFromData() {
+      return {
+        name: undefined,
+        nickname: undefined,
+        gender: enumGender.values[0].key,
+        pwd: undefined,
+        phone: undefined,
+        email: undefined,
+        departmentId: undefined,
+        roleIds: [],
+        remark: undefined,
+        state: enumState.values[0].key,
+      }
+    },
+
     // 虚方法（按需实现）：弹窗加载后执行
     afterOpen() {
       if (!this.keyId) { //新增
-        this.formData.gender = enumGender.values[0].key
-        this.formData.state = enumState.values[0].key
         this.formRules.pwd[0].required = true
       }
       else { //修改
@@ -156,7 +170,7 @@ export default {
     // 复用部门列表
     beforeOpen([departments]) {
       this.departments = departments
-    }
+    },
   }
 }
 </script>

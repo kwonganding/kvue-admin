@@ -1,6 +1,7 @@
 // crud 列表页面的复用代码
 
 import { formatTime } from "@/utils/date"
+import { to_names } from "@/utils/util"
 
 /**
  * crud 通用列表处理-mixin
@@ -60,7 +61,10 @@ export const list = {
         this.query.orderBy = this.query.sortOrder = null
       }
       else {
-        this.query.orderBy = sort.prop
+        this.query.orderBy = to_names(sort.prop)
+
+        console.log(sort.prop, this.query.orderBy)
+
         this.query.sortOrder = sort.order == 'ascending' ? "ASC" : "DESC"
       }
       this.loadData()
@@ -118,6 +122,8 @@ export const form = {
     beforeOpen(args) { },
     // 虚方法（按需实现）：弹窗加载后执行，参数为open方法的剩余参数
     afterOpen(args) { },
+    // 虚方法（必须实现）：创建一个空的表单对象
+    newFromData() { },
 
     // 保存前的动作，返回bool，false则不执行保存
     beforeSave() {
@@ -127,12 +133,12 @@ export const form = {
     // 打开窗口，获取最新数据
     // 剩余参数传入需自定义调用处理，使用通过beforeOpen、afterOpen
     open(id, ...args) {
+      this.keyId = id
       this.beforeOpen(args)
       this.visible = true
-      this.keyId = id
       this.title = id ? "修改-" : "新建-"
       if (!this.keyId) {
-        this.formData = {}
+        this.formData = this.newFromData()
         this.afterOpen(args)
         return
       }

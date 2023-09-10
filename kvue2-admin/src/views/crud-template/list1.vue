@@ -3,7 +3,8 @@
   <el-container class="list-view-layout view" v-loading="loading">
     <!-- 头部区域：操作按钮、搜索 -->
     <el-header height="max-content">
-      <ListViewToolbar :form="query" @search="doSearch" @onreset="doSearch" &#x26;#x3C;!-- 左侧-功能按钮区 -->
+      <ListViewToolbar :form="query" @search="doSearch" @onreset="doSearch">
+        <!-- 左侧-功能按钮区 -->
         <template #left>
           <el-button type="primary" icon="el-icon-plus" @click="handleEdit()">新增</el-button>
           <el-button
@@ -98,7 +99,7 @@ export default {
       // 搜索条件，分页参数通过混合复用
       query: {
         name: '',
-        state: null,
+        state: undefined,
       },
     }
   },

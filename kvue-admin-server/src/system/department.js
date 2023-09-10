@@ -30,6 +30,10 @@ router.get('/department/list', (req, res) => {
   }
   // 继续组装sql
   listSql += where
+  // 排序字段，默认id排序
+  if (query.orderBy) {
+    listSql += ` ORDER BY ${query.orderBy} ${query.sortOrder ?? 'ASC'}`
+  }
   // 执行查询
   queryData(listSql, params)
     .then(data => {

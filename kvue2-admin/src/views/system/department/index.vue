@@ -32,12 +32,13 @@
         border
         stripe
         :default-expand-all="isExpansion"
+        @sort-change="handleSortChange"
         height="100%"
       >
-        <el-table-column label="ID" width="200" prop="id" align="left"></el-table-column>
+        <!-- <el-table-column label="ID" width="200" prop="id" align="left"></el-table-column> -->
         <el-table-column label="名称" min-width="150" prop="name" align="left" show-overflow-tooltip></el-table-column>
 
-        <el-table-column label="排序号" width="100" prop="orderNum" align="center"></el-table-column>
+        <el-table-column label="排序号" width="100" prop="orderNum" align="center" sortable="custom"></el-table-column>
         <el-table-column label="管理员" width="140" prop="manager" align="left"></el-table-column>
         <el-table-column label="备注" min-width="180" prop="remark" align="left" show-overflow-tooltip></el-table-column>
 
@@ -89,7 +90,7 @@ export default {
       // 搜索条件，分页参数通过混合复用
       query: {
         name: '',
-        state: null,
+        state: undefined,
       },
       // 注意：部门数据没有分页
       dataList: [],

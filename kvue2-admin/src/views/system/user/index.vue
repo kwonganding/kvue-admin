@@ -192,8 +192,8 @@ export default {
         gander: '',
         phone: '',
         email: '',
-        createTime: null, //时间范围数组
-        state: null,
+        createTime: undefined, //时间范围数组
+        state: undefined,
       },
     }
   },

@@ -52,7 +52,6 @@
 
       <el-form-item label="分配角色" prop="roleIds">
         <el-select v-model="formData.roleIds" multiple clearable placeholder="选择角色，支持多个" style="width:100%">
-          <el-option v-for="r in roles" :key="r.id" :value="r.id" :label="r.name"></el-option>
         </el-select>
       </el-form-item>
 
@@ -90,8 +89,6 @@ export default {
   data() {
     return {
       enumState,
-      roles: [{ id: 1, name: 'ssss1' }, { id: 2, name: 'ssss2' }], // 所有角色集合
-      departments: [], //部门集合树
       formRules: {
         name: [{ required: true, message: '必填' }],
         nickname: [{ required: true, message: '必填' }],
@@ -101,10 +98,13 @@ export default {
   methods: {
     getById, saveOrUpdate,
 
-    // 虚方法（按需实现）：弹窗加载后执行
-    afterOpen() {
-      if (!this.keyId) { //新增
-        this.formData.state = enumState.values[0].key
+    // 虚方法（必须实现）：创建一个空的表单对象
+    newFromData() {
+      return {
+        name: undefined,
+        roleIds: undefined,
+        remark: undefined,
+        state: enumState.values[0].key,
       }
     },
 

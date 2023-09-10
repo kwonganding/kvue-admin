@@ -1,5 +1,5 @@
 /**
- * 值校验
+ * 值校验、值转换
  * Created by PanJiaChen on 16/11/18.
  */
 
@@ -106,8 +106,6 @@ export function checkPhone(rule, value, callback) {
     callback(new Error('不是合法的手机号码'))
 }
 
-
-
 /**
  * @param {string} str
  * @returns {Boolean}
@@ -129,4 +127,5 @@ export function isArray(arg) {
   }
   return Array.isArray(arg)
 }
+
 

@@ -27,7 +27,8 @@
     <el-container class="view list-view-layout">
       <!-- 头部区域：操作按钮、搜索 -->
       <el-header height="max-content">
-        <ListViewToolbar :form="query" @search="doSearch" @onreset="doSearch" &#x3C;!-- 左侧-功能按钮区 -->
+        <ListViewToolbar :form="query" @search="doSearch" @onreset="doSearch">
+          <!-- 左侧-功能按钮区 -->
           <template #left>
             <el-button type="primary" icon="el-icon-plus" @click="handleEdit()">新增</el-button>
             <el-button
@@ -149,8 +150,8 @@ export default {
       // 搜索条件，分页参数通过混合复用
       query: {
         name: '',
-        createTime: null, //时间范围数组
-        state: null,
+        createTime: undefined, //时间范围数组
+        state: undefined,
       },
     }
   },

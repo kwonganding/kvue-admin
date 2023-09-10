@@ -69,8 +69,8 @@ export default {
   data() {
     return {
       enumState,
-      roles: [{ id: 1, name: 'ssss1' }, { id: 2, name: 'ssss2' }], // 所有角色集合
-      departments: [], //部门集合树
+      departments: [], // 部门集合树
+      pid: undefined,  // 父级id，缓存一下
       formRules: {
         name: [{ required: true, message: '必填' }],
         orderNum: [{ type: 'number', message: '数字值' }],
@@ -80,6 +80,18 @@ export default {
   methods: {
     getById, saveOrUpdate,
 
+    // 虚方法（必须实现）：创建一个空的表单对象
+    newFromData() {
+      return {
+        name: undefined,
+        pid: 0,
+        orderNum: 1,
+        manager: undefined,
+        remark: undefined,
+        state: enumState.values[0].key,
+      }
+    },
+
     // 虚方法（按需实现）：弹窗加载前执行
     // 每次加载部门数据
     beforeOpen() {
@@ -87,19 +99,21 @@ export default {
         const list = res.data
         this.departments = list2Tree(list)
 
-        // 不能选择自己及后代
+        // 修改时，不能选择自己及后代
         if (this.keyId)
           setTreeDisable(this.departments, list.filter(s => s.id === this.keyId)?.[0])
+
+        // 指定父级
+        if (!this.keyId) { //新增
+          this.$nextTick(() => {
+            this.formData.pid = this.pid
+          })
+        }
       })
     },
     // 虚方法（按需实现）：弹窗加载后执行
     afterOpen([pid]) {
-      if (!this.keyId) { //新增
-        this.formData.state = enumState.values[0].key
-        this.formData.orderNum = 1
-        // 指定父级
-        this.formData.pid = pid
-      }
+      this.pid = pid
     },
 
   }

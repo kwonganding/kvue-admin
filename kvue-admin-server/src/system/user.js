@@ -73,7 +73,7 @@ router.get('/user/list', (req, res) => {
  */
 router.get('/user/:id', (req, res) => {
   const sql = `SELECT
-    u.id,u.name,u.avatar,u.nickname,u.gender,u.phone,u.email,u.department_id,dep.name as departmentName,u.remark,u.state,u.create_time as createTime ,u.last_time as lastTime,
+    u.id,u.name,u.avatar,u.nickname,u.gender,u.phone,u.email,u.department_id as departmentId,dep.name as departmentName,u.remark,u.state,u.create_time as createTime ,u.last_time as lastTime,
     GROUP_CONCAT(r.name) AS roleNames,GROUP_CONCAT(r.id) AS roleIds
   FROM
     ${TABLE_NAME} AS u
@@ -91,7 +91,7 @@ router.get('/user/:id', (req, res) => {
       if (rows && rows.length > 0) {
         resData.data = rows[0]
         // 角色值转换为数组
-        resData.data.roleIds = resData.data.roleIds?.split(',')
+        resData.data.roleIds = resData.data.roleIds?.split(',').map(s=>parseInt(s))
         resData.data.roleNames = resData.data.roleNames?.split(',')
       }
       else

@@ -11,7 +11,7 @@
             {{title}}
           </span>
           <!-- 按钮 -->
-          <span>
+          <span style="margin: 1px 6px">
             <el-button @click="onClose" icon="el-icon-circle-close">取消</el-button>
             <el-button @click="onSave" type="primary" icon="el-icon-success" :loading="saveLoading" v-throttle>保存</el-button>
           </span>

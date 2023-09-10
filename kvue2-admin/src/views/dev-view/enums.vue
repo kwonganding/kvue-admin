@@ -121,14 +121,14 @@ export default {
           text: '使用状态枚举',
           enum: enumState,
           value: 1,
-          code: `const enumState = new EnumFactory({ enable: { text: '启用', type: 'success' }, disable: { text: '禁用', type: 'error' } })`
+          code: `const enumState = new EnumFactory({ normal: { text: '启用', type: 'success' }, disable: { text: '禁用', type: 'error' } })`
         }
       ],
       table: [
-        { name: '张三', gender: 1, align: 'left', use: 1 },
-        { name: '刀刀狼', gender: 9, align: 'middle', use: 0 },
-        { name: '李四四', gender: '2', align: 'middle', use: 1 },
-        { name: '基辛格', gender: '1', align: 'right', use: 0 },
+        { name: '张三', gender: 1, align: 'left', use: 'normal' },
+        { name: '刀刀狼', gender: 9, align: 'middle', use: 'normal' },
+        { name: '李四四', gender: '2', align: 'middle', use: 'disable' },
+        { name: '基辛格', gender: '1', align: 'right', use: 'normal' },
       ]
     }
   },
