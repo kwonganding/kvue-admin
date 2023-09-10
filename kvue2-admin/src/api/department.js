@@ -7,7 +7,7 @@ import service, { get, post } from '@/utils/request'
  * @param {object} 查询对象
  */
 export function getList(query) {
-  return get("/system/role/list", query)
+  return get("/system/department/list", query)
 }
 
 /**
@@ -15,7 +15,7 @@ export function getList(query) {
  * @param {string} 主键id
  */
 export function getById(id) {
-  return get("/system/role/" + id)
+  return get("/system/department/" + id)
 }
 
 /**
@@ -23,7 +23,9 @@ export function getById(id) {
  * @param {object} 保存的数据对象
  */
 export function saveOrUpdate(data) {
-  return post("/system/role", data)
+  // 父级pid默认0
+  data.pid ??= 0
+  return post("/system/department", data)
 }
 
 /**
@@ -31,14 +33,14 @@ export function saveOrUpdate(data) {
  * @param {Array} 主键id集合
  */
 export function deleteById(ids) {
-  return service.delete("/system/role/" + ids)
+  return service.delete("/system/department/" + ids)
 }
 
 
 /**
- * 查询可用角色列表
+ * 查询可用部门列表
  * @param {object} 查询对象
  */
-export function getRoles() {
-  return get("/system/role/list", { state: 'normal' })
+export function getDepartments() {
+  return get("/system/department/list", { state: 'normal' })
 }

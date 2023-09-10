@@ -6,13 +6,8 @@
       <ListViewToolbar :form="query" @on-search="doSearch" @on-reset="doSearch">
         <!-- 左侧-功能按钮区 -->
         <template #left>
-          <el-button type="primary" icon="el-icon-plus" @click="handleEdit()">新增</el-button>
-          <el-button
-            icon="el-icon-delete"
-            type="warning"
-            @click="handleDelete()"
-            :disabled="$refs.dataTable?.selection.length<1"
-          >删除</el-button>
+          <el-button type="primary" icon="el-icon-plus" @click="handleAdd()">新增</el-button>
+          <el-button icon="el-icon-sort" type="info" @click="expandTreeTable">展开/收缩</el-button>
         </template>
 
         <!-- 固定常用搜索，默认插槽 -->
@@ -32,18 +27,21 @@
     <el-main>
       <el-table
         ref="dataTable"
-        :data="dataList.list"
+        :data="treeData"
         row-key="id"
         border
         stripe
+        :default-expand-all="isExpansion"
         height="100%"
-        @sort-change="handleSortChange"
       >
-        <el-table-column type="selection" width="39"></el-table-column>
-        <el-table-column label="ID" width="80" prop="id" align="center"></el-table-column>
-        <el-table-column label="名称" min-width="120" prop="name" align="left" show-overflow-tooltip></el-table-column>
+        <el-table-column label="ID" width="200" prop="id" align="left"></el-table-column>
+        <el-table-column label="名称" min-width="150" prop="name" align="left" show-overflow-tooltip></el-table-column>
 
-        <el-table-column label="状态" width="160" prop="state" align="center">
+        <el-table-column label="排序号" width="100" prop="orderNum" align="center"></el-table-column>
+        <el-table-column label="管理员" width="140" prop="manager" align="left"></el-table-column>
+        <el-table-column label="备注" min-width="180" prop="remark" align="left" show-overflow-tooltip></el-table-column>
+
+        <el-table-column label="状态" width="100" prop="state" align="center">
           <template slot-scope="scope">
             <el-tag
               v-if="scope.row.state"
@@ -51,13 +49,14 @@
             >{{ enumState[scope.row.state]?.text }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="创建日期" width="200" prop="createTime" align="center" sortable="custom">
+        <el-table-column label="创建日期" width="180" prop="createTime" align="center">
           <template slot-scope="scope">{{ formatTime(scope.row.createTime) }}</template>
         </el-table-column>
 
         <!-- 操作列，按需固定：fixed="right"-->
-        <el-table-column label="操作" class-name="table-link-btton" width="190" align="center">
+        <el-table-column label="操作" class-name="table-link-btton" width="200" align="center">
           <template slot-scope="scope">
+            <el-link @click="handleAdd(scope.row)" type="primary" icon="el-icon-plus">新增</el-link>
             <el-link @click="handleEdit(scope.row)" type="primary" icon="el-icon-edit">修改</el-link>
             <el-link @click="handleDelete(scope.row.id)" type="warning" icon="el-icon-delete">删除</el-link>
           </template>
@@ -65,42 +64,36 @@
       </el-table>
     </el-main>
 
-    <!-- 底部区域-分页 -->
-    <el-footer height="auto">
-      <Pagination
-        :total="dataList.total"
-        :size.sync="query.pageSize"
-        :page.sync="query.pageIndex"
-        @pagination="loadData"
-      ></Pagination>
-    </el-footer>
-
     <FormDialog ref="fromDialog" @updated="loadData"></FormDialog>
   </el-container>
 </template>
 
 <script>
 import { list } from '@/mixins/crud.js'
-import Pagination from '@/components/Pagination'
 import ListViewToolbar from '@/components/ListViewToolbar'
 import FormDialog from './form.vue'
 
-import { getList, getById, saveOrUpdate, deleteById } from '@/api/role.js'
+import { getList, getById, saveOrUpdate, deleteById } from '@/api/department.js'
 
 import { enumState } from '@/model/enums'
+import { list2Tree } from '@/utils/tree'
 
 export default {
-  name: 'role',
-  components: { Pagination, ListViewToolbar, FormDialog },
+  name: 'department',
+  components: { ListViewToolbar, FormDialog },
   mixins: [list],
   data() {
     return {
       enumState,
+      isExpansion: true, // 展开表格树
       // 搜索条件，分页参数通过混合复用
       query: {
         name: '',
         state: null,
       },
+      // 注意：部门数据没有分页
+      dataList: [],
+      treeData: [],
     }
   },
   created() {
@@ -109,6 +102,25 @@ export default {
   methods: {
     getList,
     deleteById,
+
+    afterLoadData() {
+      this.treeData = list2Tree(this.dataList)
+    },
+    // 展开收缩
+    expandTreeTable() {
+      this.isExpansion = !this.isExpansion
+      // 只处理第一级
+      const list = this.dataList.filter(s => !s.pid)
+      list.forEach(item => {
+        this.$refs.dataTable.toggleRowExpansion(item, this.isExpansion)
+      })
+    },
+
+    // 新增，指定父级
+    handleAdd(prow) {
+      const pid = prow?.id
+      this.$refs.fromDialog.open(null, pid)
+    }
   }
 }
 </script>

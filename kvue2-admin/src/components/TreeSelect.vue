@@ -26,7 +26,7 @@
         @current-change="handleCurrentChange"
         :filter-node-method="filterNode"
         :highlight-current="true"
-        check-on-click-node
+        :expand-on-click-node="onlyLeaf"
       ></el-tree>
     </el-option>
   </el-select>
@@ -38,7 +38,7 @@ export default {
   props: {
     value: { default: null }, //选中的值
     data: { type: Array },    // 树形结构数据
-    onlyLeaf: { type: Boolean, default: true },  //是否只能选择叶子节点，使用属性为“only-leaf”
+    onlyLeaf: { type: Boolean, default: true },    //是否只能选择叶子节点，使用属性为“only-leaf”
     filterable: { type: Boolean, default: false }, // 是否支持搜索
     hideOnSelected:  // 选中后是否隐藏，默认 true，使用的属性为 “hide-on-selected”
       { type: Boolean, default: true },

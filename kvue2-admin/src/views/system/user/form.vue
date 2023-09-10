@@ -61,7 +61,7 @@
       <el-row>
         <el-col :span="12">
           <el-form-item label="所属部门" prop="departmentId">
-            <TreeSelect v-model="formData.departmentId" :data="departments"></TreeSelect>
+            <TreeSelect v-model="formData.departmentId" :data="departments" clearable :only-leaf="false"></TreeSelect>
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -80,7 +80,7 @@
       </el-form-item>
 
       <el-form-item label="备注" prop="remark">
-        <el-input v-model="formData.remark" type="textarea" :rows="4" maxlength="500"></el-input>
+        <el-input v-model="formData.remark" type="textarea" :rows="3" maxlength="500"></el-input>
       </el-form-item>
 
       <el-row v-show="keyId">
@@ -104,6 +104,7 @@ import { form } from '@/mixins/crud.js'
 import FormDialog from '@/components/FormDialog.vue'
 
 import { getList, getById, saveOrUpdate, deleteById } from '@/api/user.js'
+import { getRoles } from '@/api/role.js'
 
 import TreeSelect from '@/components/TreeSelect.vue'
 import { enumState, enumGender } from '@/model/enums'
@@ -117,7 +118,7 @@ export default {
     return {
       enumState,
       enumGender,
-      roles: [{ id: 1, name: 'ssss1' }, { id: 2, name: 'ssss2' }], // 所有角色集合
+      roles: [], // 所有角色集合
       departments: [], //部门集合树
       formRules: {
         name: [{ required: true, message: '必填' }],
@@ -130,7 +131,10 @@ export default {
       },
     }
   },
-  watch: {
+  created() {
+    getRoles().then(res => {
+      this.roles = res.data.list
+    })
   },
   methods: {
     getById, saveOrUpdate,
@@ -148,6 +152,11 @@ export default {
         this.$refs.form.validate()
       }
     },
+
+    // 复用部门列表
+    beforeOpen([departments]) {
+      this.departments = departments
+    }
   }
 }
 </script>

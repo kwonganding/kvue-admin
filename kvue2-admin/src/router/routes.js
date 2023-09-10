@@ -85,7 +85,7 @@ const localResource = [
   {
     name: 'system', title: '系统管理',
     type: 'dictionary', url: '', show: true, sort: 1,
-    icon: 'el-icon-sunset', parentName: '',
+    icon: 'el-icon-s-tools', parentName: '',
   },
   {
     name: 'user', title: '用户管理',
@@ -94,8 +94,13 @@ const localResource = [
   },
   {
     name: 'role', title: '用户角色',
-    type: 'view', url: 'views/system/role', show: true, sort: 1,
+    type: 'view', url: 'views/system/role', show: true, sort: 2,
     icon: 'el-icon-coordinate', parentName: 'system',
+  },
+  {
+    name: 'department', title: '组织机构',
+    type: 'view', url: 'views/system/department', show: true, sort: 3,
+    icon: 'iconfont icon-cluster', parentName: 'system',
   },
 ]
 

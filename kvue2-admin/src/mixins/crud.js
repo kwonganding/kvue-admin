@@ -47,7 +47,7 @@ export const list = {
     /**
      * 执行搜索，页码归1
      */
-    onSearch() {
+    doSearch() {
       this.query.pageIndex = 1
       this.loadData()
     },
@@ -114,8 +114,10 @@ export const form = {
     // 接口（待覆盖）：更新数据
     saveOrUpdate() { },
 
-    // 虚方法（按需实现）：弹窗加载后执行
-    afterOpen() { },
+    // 虚方法（按需实现）：弹窗加载前执行，参数为open方法的剩余参数
+    beforeOpen(args) { },
+    // 虚方法（按需实现）：弹窗加载后执行，参数为open方法的剩余参数
+    afterOpen(args) { },
 
     // 保存前的动作，返回bool，false则不执行保存
     beforeSave() {
@@ -123,13 +125,15 @@ export const form = {
     },
 
     // 打开窗口，获取最新数据
-    open(id) {
+    // 剩余参数传入需自定义调用处理，使用通过beforeOpen、afterOpen
+    open(id, ...args) {
+      this.beforeOpen(args)
       this.visible = true
       this.keyId = id
       this.title = id ? "修改-" : "新建-"
       if (!this.keyId) {
         this.formData = {}
-        this.afterOpen()
+        this.afterOpen(args)
         return
       }
       // 获取最新数据
@@ -137,7 +141,7 @@ export const form = {
       this.getById(this.keyId)
         .then(res => {
           this.formData = res.data
-          this.afterOpen()
+          this.afterOpen(args)
         })
         .finally(() => this.loading = false)
     },

@@ -50,11 +50,11 @@ export default {
     resetForm() {
       this.$refs.queryForm.resetFields()
       // 触发查询事件
-      this.$emit('search')
+      this.$emit('on-reset')
     },
     doSearch() {
       // 触发查询事件
-      this.$emit('search')
+      this.$emit('on-search')
     }
   }
 }

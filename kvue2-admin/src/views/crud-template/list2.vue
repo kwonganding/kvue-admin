@@ -27,8 +27,7 @@
     <el-container class="view list-view-layout">
       <!-- 头部区域：操作按钮、搜索 -->
       <el-header height="max-content">
-        <ListViewToolbar :form="query" @search="onSearch">
-          <!-- 左侧-功能按钮区 -->
+        <ListViewToolbar :form="query" @search="doSearch" @onreset="doSearch" &#x3C;!-- 左侧-功能按钮区 -->
           <template #left>
             <el-button type="primary" icon="el-icon-plus" @click="handleEdit()">新增</el-button>
             <el-button

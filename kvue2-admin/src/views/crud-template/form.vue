@@ -57,7 +57,7 @@
       </el-form-item>
 
       <el-form-item label="备注" prop="remark">
-        <el-input v-model="formData.remark" type="textarea" :rows="4" maxlength="500"></el-input>
+        <el-input v-model="formData.remark" type="textarea" :rows="2" maxlength="500"></el-input>
       </el-form-item>
 
       <el-row v-show="keyId">
@@ -84,7 +84,7 @@ import { getList, getById, saveOrUpdate, deleteById } from '@/api/user.js'
 import { enumState } from '@/model/enums'
 
 export default {
-  name: 'UserForm',
+  name: 'Form',
   components: { FormDialog },
   mixins: [form],
   data() {
@@ -97,8 +97,6 @@ export default {
         nickname: [{ required: true, message: '必填' }],
       },
     }
-  },
-  watch: {
   },
   methods: {
     getById, saveOrUpdate,

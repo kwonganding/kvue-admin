@@ -87,7 +87,6 @@ export function checkEmail(rule, value, callback) {
  */
 export function validPhone(phone) {
   const reg = /^(1[3-9])\d{9}$/
-  console.log(phone)
   return reg.test(phone)
 }
 

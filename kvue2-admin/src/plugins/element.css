@@ -157,6 +157,10 @@
   bottom: 2px;
 }
 
+.el-tree-node__content {
+  height: 28px;
+}
+
 /* el-drawer */
 .el-drawer__header {
   background-color: var(--dialog-header-bgcolor);

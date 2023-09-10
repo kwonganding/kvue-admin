@@ -58,7 +58,7 @@ import { getList, getById, saveOrUpdate, deleteById } from '@/api/user.js'
 import { enumState } from '@/model/enums'
 
 export default {
-  name: 'UserDetail',
+  name: 'Detail',
   mixins: [detail],
   data() {
     return {

@@ -1,16 +1,44 @@
 <template>
   <!-- 主内容：树+列表 -->
-  <el-container v-loading="loading">
+  <el-container>
     <!-- 左侧部门树，独立视图 -->
-    <el-aside width="210px" class="view view-left">
-      <div>1111</div>
+    <el-aside width="210px" class="view view-left aside-tree">
+      <el-header height="32px">
+        <span style="line-height:32px">
+          <i class="iconfont icon-cluster"></i> 组织机构树
+        </span>
+        <span>
+          <el-button
+            icon="el-icon-circle-close"
+            type="text"
+            v-throttle
+            title="清除选中"
+            @click="onTreeCurrentChange(null)"
+            :disabled="!tree.currentNode"
+          ></el-button>
+          <el-button icon="el-icon-refresh-left" type="text" v-throttle title="刷新" @click="loadTreeData"></el-button>
+        </span>
+      </el-header>
+      <el-main>
+        <el-tree
+          ref="tree"
+          :data="tree.data"
+          v-loading="tree.loading"
+          node-key="id"
+          highlight-current
+          :expand-on-click-node="false"
+          @current-change="onTreeCurrentChange"
+          :default-expanded-keys="tree.expandKeys"
+          :props="{ value: 'id', label: 'name', children: 'children' }"
+        ></el-tree>
+      </el-main>
     </el-aside>
 
     <!-- 右侧列表区域视图 -->
-    <el-container class="view list-view-layout">
+    <el-container class="view list-view-layout" v-loading="loading">
       <!-- 头部区域：操作按钮、搜索 -->
       <el-header height="max-content">
-        <ListViewToolbar :form="query" @search="onSearch">
+        <ListViewToolbar :form="query" @on-search="doSearch" @on-reset="doSearch">
           <!-- 左侧-功能按钮区 -->
           <template #left>
             <el-button type="primary" icon="el-icon-plus" @click="handleEdit()">新增</el-button>
@@ -20,6 +48,13 @@
               @click="handleDelete()"
               :disabled="$refs.dataTable?.selection.length<1"
             >删除</el-button>
+            <el-tag
+              type="success"
+              v-show="tree.currentNode"
+              closable
+              @close="onTreeCurrentChange(null)"
+              style="margin:0 10px"
+            >{{ tree.currentNode?.name }}</el-tag>
           </template>
 
           <!-- 固定常用搜索，默认插槽 -->
@@ -131,8 +166,10 @@ import FormDialog from './form.vue'
 import DetailDrawer from './detail.vue'
 
 import { getList, getById, saveOrUpdate, deleteById } from '@/api/user.js'
+import { getDepartments } from '@/api/department.js'
 
 import { enumState, enumGender } from '@/model/enums'
+import { list2Tree } from '@/utils/tree'
 
 export default {
   name: 'user',
@@ -142,6 +179,13 @@ export default {
     return {
       enumState,
       enumGender,
+      tree: {  //左侧的树-组织机构
+        data: [],
+        currentNode: null,
+        loading: false,
+        expandKeys: null,
+      },
+
       // 搜索条件，分页参数通过混合复用
       query: {
         name: '',
@@ -155,11 +199,60 @@ export default {
   },
   created() {
     this.loadData()
+    this.loadTreeData()
   },
   methods: {
     getList,
     deleteById,
+
+    // 编辑数据（新增、修改）
+    handleEdit(row) {
+      // 传入部门树
+      this.$refs.fromDialog.open(row?.id, this.tree.data)
+    },
+    // 加载树列表数据：组织机构树
+    loadTreeData() {
+      this.tree.loading = true
+      getDepartments().then(res => {
+        this.tree.data = list2Tree(res.data)
+        // 默认展开一级
+        this.tree.expandKeys = this.tree.data.map(s => s.id)
+      }).finally(() => this.tree.loading = false)
+    },
+    // tree选中节点：更新列表数据
+    onTreeCurrentChange(item) {
+      this.tree.currentNode = item
+      this.query.departmentId = this.tree.currentNode?.id
+      // 清除选中
+      if (!item) {
+        this.$refs.tree.setCurrentKey(null)
+      }
+
+      // 触发重新搜索
+      this.doSearch()
+    },
   }
 }
 </script>
 
+<style lang="less" scoped>
+.aside-tree {
+  overflow: initial;
+  padding: 5px;
+  header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1px;
+    border-bottom: 1px dashed #0001;
+
+    button {
+      margin: 0 2px;
+    }
+  }
+
+  .el-main {
+    padding: 2px 0;
+    max-height: calc(100% - 32px);
+  }
+}
+</style>

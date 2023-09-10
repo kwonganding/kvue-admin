@@ -86,7 +86,7 @@ router.post('/role', async (req, res) => {
   }
   saveRolePermission(keyId, data.permissionIds)
     .then(() => {
-      res.send(new ResponseData(`${MODULE_NAME}[${keyId ?? ''}]保存成功！`))
+      res.send(new ResponseData(keyId,`${MODULE_NAME}[${keyId ?? ''}]保存成功！`))
     })
     .catch(err => {
       res.send(new ResponseData().setError(`${MODULE_NAME}[${keyId ?? ''}]（权限资源）保存发生异常：${err}`))

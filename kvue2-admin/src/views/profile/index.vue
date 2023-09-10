@@ -27,13 +27,7 @@
           </el-row>
 
           <el-form-item label="角色">
-            <el-tag
-              type="primary"
-              v-for="tag in formData.roleNames"
-              v-once
-              :key="tag"
-              style="margin-right: 5px;"
-            >{{ tag }}</el-tag>
+            <el-tag v-for="r in formData.roleNames" :key="r" style="margin-right: 5px;">{{ r }}</el-tag>
           </el-form-item>
 
           <el-row>
@@ -150,10 +144,9 @@ export default {
       const id = this.$store.getters.userInfo?.id
       // 获取最新数据
       this.loading = true
-      getById(id)
-        .then(res => {
-          this.formData = res.data
-        })
+      getById(id).then(res => {
+        this.formData = res.data
+      })
         .finally(() => this.loading = false)
     },
     // 保存个人信息

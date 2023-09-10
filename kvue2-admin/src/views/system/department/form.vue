@@ -1,26 +1,36 @@
 <!-- 表单编辑-dialog弹框 -->
 <template>
-  <FormDrawer
-    :title="title+'角色'"
-    size="660px"
+  <FormDialog
+    :title="title+'用户'"
+    width="700px"
+    top="10vh"
     @save="save"
     @close="close"
     :save-loading="saveLoading"
     :visible="visible"
   >
     <!-- form表单 -->
-    <el-form v-loading="loading" ref="form" :model="formData" :rules="formRules" label-width="90px" label-suffix="：">
+    <el-form v-loading="loading" ref="form" :model="formData" :rules="formRules" label-width="100px" label-suffix="：">
       <el-form-item label="名称" prop="name">
         <el-input v-model.trim="formData.name" maxlength="32" clearable></el-input>
       </el-form-item>
+
+      <el-form-item label="上级部门" prop="pid">
+        <TreeSelect :data="departments" v-model="formData.pid" clearable :only-leaf="false"></TreeSelect>
+      </el-form-item>
+
+      <el-form-item label="排序号" prop="orderNum">
+        <el-input v-model.number.trim="formData.orderNum" maxlength="8" clearable :precision="2"></el-input>
+      </el-form-item>
+
+      <el-form-item label="负责人" prop="manager">
+        <el-input v-model.trim="formData.manager" maxlength="32" clearable></el-input>
+      </el-form-item>
+
       <el-form-item label="状态" prop="state">
         <el-radio-group v-model="formData.state">
           <el-radio border v-for="e in enumState.values" :key="e.key" :label="e.key">{{ e.text }}</el-radio>
         </el-radio-group>
-      </el-form-item>
-
-      <el-form-item label="分配权限" prop="roleIds">
-        <el-tree multiple style="width:100%"></el-tree>
       </el-form-item>
 
       <el-form-item label="备注" prop="remark">
@@ -40,19 +50,21 @@
         </el-col>
       </el-row>
     </el-form>
-  </FormDrawer>
+  </FormDialog>
 </template>
 
 <script>
 import { form } from '@/mixins/crud.js'
-import FormDrawer from '@/components/FormDrawer.vue'
+import FormDialog from '@/components/FormDialog.vue'
+import TreeSelect from '@/components/TreeSelect.vue'
 
-import { getList, getById, saveOrUpdate, deleteById } from '@/api/role.js'
+import { getList, getById, saveOrUpdate, getDepartments } from '@/api/department.js'
 import { enumState } from '@/model/enums'
+import { list2Tree, setTreeDisable } from '@/utils/tree'
 
 export default {
-  name: 'RoleForm',
-  components: { FormDrawer },
+  name: 'DepartmentForm',
+  components: { FormDialog, TreeSelect },
   mixins: [form],
   data() {
     return {
@@ -61,18 +73,35 @@ export default {
       departments: [], //部门集合树
       formRules: {
         name: [{ required: true, message: '必填' }],
+        orderNum: [{ type: 'number', message: '数字值' }],
       },
     }
   },
   methods: {
     getById, saveOrUpdate,
 
+    // 虚方法（按需实现）：弹窗加载前执行
+    // 每次加载部门数据
+    beforeOpen() {
+      getDepartments().then(res => {
+        const list = res.data
+        this.departments = list2Tree(list)
+
+        // 不能选择自己及后代
+        if (this.keyId)
+          setTreeDisable(this.departments, list.filter(s => s.id === this.keyId)?.[0])
+      })
+    },
     // 虚方法（按需实现）：弹窗加载后执行
-    afterOpen() {
+    afterOpen([pid]) {
       if (!this.keyId) { //新增
         this.formData.state = enumState.values[0].key
+        this.formData.orderNum = 1
+        // 指定父级
+        this.formData.pid = pid
       }
     },
+
   }
 }
 </script>
