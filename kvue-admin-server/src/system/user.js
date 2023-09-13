@@ -33,9 +33,9 @@ router.get('/user/list', (req, res) => {
     where += " and gender = ?";
     params.push(query.gender);
   }
-  if (query.departmentId) {
-    where += " and department_id = ?";
-    params.push(query.departmentId);
+  if (query.departmentIds) {
+    // 传入所有子级节点id，因为sqlite不支持递归sql，暂时只能这样实现了
+    where += ` and department_id in (${query.departmentIds}) `;
   }
   if (query.phone) {
     where += " and phone like ?";

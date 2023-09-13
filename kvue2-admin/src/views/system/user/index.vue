@@ -169,7 +169,7 @@ import { getList, getById, saveOrUpdate, deleteById } from '@/api/user.js'
 import { getDepartments } from '@/api/department.js'
 
 import { enumState, enumGender } from '@/model/enums'
-import { list2Tree } from '@/utils/tree'
+import { list2Tree, map } from '@/utils/tree'
 
 export default {
   name: 'user',
@@ -222,7 +222,8 @@ export default {
     // tree选中节点：更新列表数据
     onTreeCurrentChange(item) {
       this.tree.currentNode = item
-      this.query.departmentId = this.tree.currentNode?.id
+      // 传入所有子级节点id，因为sqlite不支持递归sql，暂时只能这样实现了
+      this.query.departmentIds = map([item], n => n.id)?.join(',')
       // 清除选中
       if (!item) {
         this.$refs.tree.setCurrentKey(null)

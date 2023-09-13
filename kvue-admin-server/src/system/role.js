@@ -58,7 +58,7 @@ router.get('/role/:id', async (req, res) => {
   if (data) {
     const prows = await queryData(`SELECT GROUP_CONCAT(per_id) as ids FROM sys_role_permission WHERE role_id = ?`, params)
       .catch(err => error = err)
-    data.permissionIds = prows?.[0]?.ids?.split(',').split(',').map(s=>parseInt(s))
+    data.permissionIds = prows?.[0]?.ids?.split(',').map(s=>parseInt(s))
   }
   // 返回
   if (error)

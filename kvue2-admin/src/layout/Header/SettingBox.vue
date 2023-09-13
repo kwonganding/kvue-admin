@@ -1,15 +1,9 @@
 <template>
-  <el-drawer
-    title="用户配置"
-    :visible.sync="visible"
-    size="320px"
-    :modal="false"
-    class="drawer-box"
-    style="line-height: initial;"
-  >
+  <el-drawer title="用户配置" :visible.sync="visible" size="320px" :modal="false" style="line-height: initial;">
     <!-- 主题 -->
     <dl class="dl-blueline">
       <dt>主题</dt>
+      <br />
       <dd>
         <ul class="teama-box" @click="handleThemaClick($event)">
           <li
@@ -20,13 +14,17 @@
           >{{ t.name }}</li>
         </ul>
       </dd>
+      <br />
 
       <dt>页面切换动画</dt>
+      <br />
       <dd>
         <el-switch v-model="config.routerAnimation" class="config-box" active-text="启用"></el-switch>
       </dd>
+      <br />
 
       <dt>收起侧边栏</dt>
+      <br />
       <dd>
         <el-switch v-model="config.menuCollapse" class="config-box" active-text="启用"></el-switch>
       </dd>
@@ -95,13 +93,5 @@ export default {
       content: "☑";
     }
   }
-}
-</style>
-
-<style lang='less'>
-@import url("@/styles/var.less");
-
-.drawer-box .el-drawer__header {
-  height: @header-height !important;
 }
 </style>

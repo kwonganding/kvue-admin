@@ -57,6 +57,7 @@ export default {
     position: absolute;
     bottom: 0px;
     background-color: #fffe;
+    border-top: 1px dashed #0001;
     &:hover {
       background-color: #0001;
     }

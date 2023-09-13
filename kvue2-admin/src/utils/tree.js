@@ -107,5 +107,27 @@ export function filterTree(tree, func, option = { children: 'children' }) {
   return resTree
 }
 
+//callback(node)
+
+/**
+ * 类似Array.prototype.map()，对树进行递归map，返回依然是一个数组
+ * @param {Array} tree 树形结构数据
+ * @param {Function} callback callback(node)每个节点递归执行的函数，callback返回值组合为数组返回
+ * @param {Object} option 对象键配置，默认值{ children: 'children' }
+ * @returns
+ */
+export function map(tree, callback, option = { children: 'children' }) {
+  const result = []
+  if (!tree || tree?.length <= 0) return null
+  tree.forEach(node => {
+    if (!node) return null
+    result.push(callback(node))
+    if (node[option.children] && node[option.children].length > 0) {
+      const res = map(node[option.children], callback, option)
+      if (res) result.push(...res)
+    }
+  })
+  return result
+}
 
 
