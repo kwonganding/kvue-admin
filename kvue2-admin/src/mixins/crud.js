@@ -108,6 +108,14 @@ export const form = {
       keyId: null,         // 主键id值，可据此判断新增、修改
       fullscreen: false,   // 是否全屏
       visible: false,      // 是否显示
+      isModified: false,   // 表单值是否已修改
+    }
+  },
+  watch: {
+    // 监听表单值是否已修改
+    formData: {
+      handler() { this.isModified = true },
+      deep: true
     }
   },
   methods: {
@@ -140,6 +148,10 @@ export const form = {
       if (!this.keyId) {
         this.formData = this.newFromData()
         this.afterOpen(args)
+        this.$nextTick(() => {
+          this.isModified = false
+        })
+
         return
       }
       // 获取最新数据
@@ -148,6 +160,9 @@ export const form = {
         .then(res => {
           this.formData = res.data
           this.afterOpen(args)
+          this.$nextTick(() => {
+            this.isModified = false
+          })
         })
         .finally(() => this.loading = false)
     },

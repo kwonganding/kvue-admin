@@ -7,7 +7,8 @@
     @save="save"
     @close="close"
     :save-loading="saveLoading"
-    :visible="visible"
+    :is-modified="isModified"
+    :visible.sync="visible"
   >
     <!-- form表单 -->
     <el-form v-loading="loading" ref="form" :model="formData" :rules="formRules" label-width="100px" label-suffix="：">
@@ -164,6 +165,8 @@ export default {
         this.formRules.pwd[0].required = false
         // 强制验证一次，更新校验状态
         this.$refs.form.validate()
+
+
       }
     },
 

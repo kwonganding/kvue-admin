@@ -7,7 +7,8 @@
     @save="save"
     @close="close"
     :save-loading="saveLoading"
-    :visible="visible"
+    :is-modified="isModified"
+    :visible.sync="visible"
   >
     <!-- form表单 -->
     <el-form v-loading="loading" ref="form" :model="formData" :rules="formRules" label-width="100px" label-suffix="：">
@@ -51,8 +52,7 @@
       </el-row>
 
       <el-form-item label="分配角色" prop="roleIds">
-        <el-select v-model="formData.roleIds" multiple clearable placeholder="选择角色，支持多个" style="width:100%">
-        </el-select>
+        <el-select v-model="formData.roleIds" multiple clearable placeholder="选择角色，支持多个" style="width:100%"></el-select>
       </el-form-item>
 
       <el-form-item label="备注" prop="remark">

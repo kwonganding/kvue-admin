@@ -2,6 +2,7 @@
 
 <template>
   <el-dialog
+    ref="dialog"
     append-to-body
     v-bind="$attrs"
     :visible="visible"
@@ -46,6 +47,7 @@ export default {
   name: 'FormDialog',
   props: {
     visible: { default: false, type: Boolean },     // 是否显示
+    isModified: { default: true, type: Boolean },   // 表单值是否已修改
     saveLoading: { default: false, type: Boolean }, // 保存状态
     title: { type: String },                        // 标题
     icon: { default: 'el-icon-edit', type: String } // 标题图标
@@ -54,6 +56,13 @@ export default {
     return {
       fullscreen: false,   // 是否全屏
     }
+  },
+  mounted() {
+    this.$refs.dialog.$on('update:visible', (value) => {
+      // 如果表单值已修改，则不支持内部关闭，只能用户手动关闭
+      if (!this.isModified)
+        this.$emit('update:visible', value)
+    })
   },
   methods: {
     onSave() {

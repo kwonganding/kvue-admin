@@ -1,7 +1,7 @@
 <!-- 用于表单的编辑-抽屉弹框 -->
 
 <template>
-  <el-drawer append-to-body v-bind="$attrs" :visible="visible" class="form-drawer" :show-close="false">
+  <el-drawer ref="dialog" append-to-body v-bind="$attrs" :visible="visible" class="form-drawer" :show-close="false">
     <!-- 标题栏：标题+窗体按钮 -->
     <template #title>
       <slot name="title">
@@ -28,9 +28,17 @@ export default {
   name: 'FormDrawer',
   props: {
     visible: { default: false, type: Boolean },     // 是否显示
+    isModified: { default: true, type: Boolean },   // 表单值是否已修改
     saveLoading: { default: false, type: Boolean }, // 保存状态
     title: { type: String },                        // 标题
     icon: { default: 'el-icon-edit', type: String } // 标题图标
+  },
+  mounted() {
+    this.$refs.dialog.$on('update:visible', (value) => {
+      // 如果表单值已修改，则不支持内部关闭，只能用户手动关闭
+      if (!this.isModified)
+        this.$emit('update:visible', value)
+    })
   },
   methods: {
     onSave() {

@@ -2,6 +2,7 @@
 
 <template>
   <el-dialog
+    ref="dialog"
     v-bind="$attrs"
     :visible="visible"
     :show-close="false"
@@ -37,6 +38,7 @@ export default {
   name: 'FormDialogPlus',
   props: {
     visible: { default: false, type: Boolean },     // 是否显示
+    isModified: { default: true, type: Boolean },   // 表单值是否已修改
     saveLoading: { default: false, type: Boolean }, // 保存状态
     title: { type: String },                        // 标题
     icon: { default: 'el-icon-edit', type: String } // 标题图标

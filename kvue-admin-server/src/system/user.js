@@ -1,5 +1,53 @@
 // 登录授权
 
+class Base {
+  tableName = undefined
+  name = undefined
+  title = undefined
+  listSql = undefined
+  getIdSql = undefined
+  insertSql = undefined
+  updateSql = undefined
+
+  getList(req, res) {
+    console.log('base')
+  }
+  buildWhere(req, where, params) {
+
+  }
+
+
+  getById(req, res) {
+    console.log('base')
+  }
+  saveOrUpdate(req, res) {
+    console.log('base')
+  }
+  afterSave() {
+
+  }
+
+  deleteById(req, res) {
+    console.log('base')
+  }
+
+  route(router) {
+    router.get(`/${this.name}/list`, this.getList)
+    router.get(`/${this.name}/:id`, this.getById)
+    router.post(`/${this.name}`, this.saveOrUpdate)
+    router.delete(`/${this.name}/:id`, this.deleteById)
+  }
+}
+
+class User extends Base {
+  getList(req, res) {
+    super.getList()
+    console.log('user')
+  }
+}
+
+
+
 let express = require('express');
 let router = express.Router();
 const { queryPageData, executeSql, queryData, deleteByIds } = require('../db/db.js');
@@ -91,7 +139,7 @@ router.get('/user/:id', (req, res) => {
       if (rows && rows.length > 0) {
         resData.data = rows[0]
         // 角色值转换为数组
-        resData.data.roleIds = resData.data.roleIds?.split(',').map(s=>parseInt(s))
+        resData.data.roleIds = resData.data.roleIds?.split(',').map(s => parseInt(s))
         resData.data.roleNames = resData.data.roleNames?.split(',')
       }
       else
@@ -260,7 +308,7 @@ router.post('/user/pwd', (req, res) => {
       res.send(new ResponseData(null, '用户密码更新成功！'))
     })
     .catch(err => {
-      res.send(new ResponseData().setError("更新失败，可能是旧密码错误。"+err))
+      res.send(new ResponseData().setError("更新失败，可能是旧密码错误。" + err))
     })
 })
 
