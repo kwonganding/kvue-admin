@@ -1,61 +1,54 @@
-// 登录授权
-
-class Base {
-  tableName = undefined
-  name = undefined
-  title = undefined
-  listSql = undefined
-  getIdSql = undefined
-  insertSql = undefined
-  updateSql = undefined
-
-  getList(req, res) {
-    console.log('base')
-  }
-  buildWhere(req, where, params) {
-
-  }
-
-
-  getById(req, res) {
-    console.log('base')
-  }
-  saveOrUpdate(req, res) {
-    console.log('base')
-  }
-  afterSave() {
-
-  }
-
-  deleteById(req, res) {
-    console.log('base')
-  }
-
-  route(router) {
-    router.get(`/${this.name}/list`, this.getList)
-    router.get(`/${this.name}/:id`, this.getById)
-    router.post(`/${this.name}`, this.saveOrUpdate)
-    router.delete(`/${this.name}/:id`, this.deleteById)
-  }
-}
-
-class User extends Base {
-  getList(req, res) {
-    super.getList()
-    console.log('user')
-  }
-}
-
-
+/*           用户信息                */
 
 let express = require('express');
 let router = express.Router();
-const { queryPageData, executeSql, queryData, deleteByIds } = require('../db/db.js');
-const gm = require('../utils/gm.js')
-const ResponseData = require('../utils/response.js')
+const { queryPageData, executeSql, queryData } = require('../db/db.js');
+const ResponseData = require('../utils/response.js');
+const Table = require('../utils/Table.js')
+const Base = require('../utils/Base.js')
 
-const MODULE_NAME = '用户信息' // 下面用于构造友好的提示信息
-const TABLE_NAME = 'sys_user'    // 数据库表明
+const gm = require('../utils/gm.js')
+// 密码解密-哈希
+function pwdConverter(pwd) {
+  return gm.sm3Hash(gm.sm2Decrypt(pwd))
+}
+
+/**
+ * User 用户管理接口
+ */
+class User extends Base {
+  constructor() {
+    super()
+    this.table = new Table('sys_user', 'user', '用户信息')
+    this.config(this.table)
+  }
+  config(table) {
+    super.config(table)
+    // name/nickname自定义构造where
+    table.add('name', '%').set({ where: false })
+    table.add('nickname', '%').set({ where: false })
+    table.add('gender')
+    table.add('pwd').set({ select: false, converter: pwdConverter })
+    table.add('phone', '%')
+    table.add('email', '%')
+    table.add('department_id', 'in')
+    table.add('remark', '%')
+  }
+
+  /**
+ * 追加where条件，按需重写即可
+ */
+  appendWhere(query, params, where) {
+    if (query.name) {
+      where += " and (name like ? or id like ?)";
+      params.push("%" + query.name + "%");
+      params.push("%" + query.name + "%");
+    }
+    return where
+  }
+
+  
+}
 
 /**
  * 查询列表数据，

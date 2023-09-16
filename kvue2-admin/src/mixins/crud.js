@@ -1,7 +1,6 @@
 // crud 列表页面的复用代码
 
 import { formatTime } from "@/utils/date"
-import { to_names } from "@/utils/util"
 
 /**
  * crud 通用列表处理-mixin
@@ -61,10 +60,7 @@ export const list = {
         this.query.orderBy = this.query.sortOrder = null
       }
       else {
-        this.query.orderBy = to_names(sort.prop)
-
-        console.log(sort.prop, this.query.orderBy)
-
+        this.query.orderBy = sort.prop
         this.query.sortOrder = sort.order == 'ascending' ? "ASC" : "DESC"
       }
       this.loadData()

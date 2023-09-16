@@ -137,11 +137,3 @@ export function param2Obj(url) {
   )
 }
 
-/**
- * 小驼峰转_下换线小写（数据库表）命名
- */
-export function to_names(str) {
-  return str.replace(/[A-Z]/g, function(i) {
-    return '_' + i.toLowerCase()
-  })
-}

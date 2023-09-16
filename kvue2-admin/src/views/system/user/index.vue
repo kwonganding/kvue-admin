@@ -223,7 +223,7 @@ export default {
     onTreeCurrentChange(item) {
       this.tree.currentNode = item
       // 传入所有子级节点id，因为sqlite不支持递归sql，暂时只能这样实现了
-      this.query.departmentIds = map([item], n => n.id)?.join(',')
+      this.query.departmentIds = map([item], n => n.id)
       // 清除选中
       if (!item) {
         this.$refs.tree.setCurrentKey(null)
