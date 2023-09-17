@@ -98,7 +98,7 @@ export default {
       enumState,
       // 搜索条件，分页参数通过混合复用
       query: {
-        name: '',
+        name: undefined,
         state: undefined,
       },
     }

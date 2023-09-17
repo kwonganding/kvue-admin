@@ -1,5 +1,5 @@
 
-/*           部门-管理接口                */
+/*           数据字典-类型-管理接口                */
 
 let express = require('express');
 let router = express.Router();
@@ -11,19 +11,20 @@ const Base = require('../utils/Base.js')
 const sqlHelper = require('../utils/sql-helper.js');
 
 
-class Departmet extends Base {
+class DictData extends Base {
   constructor() {
     super()
-    this.table = new Table('sys_department', 'department', '组织结构')
+    this.table = new Table('sys_dictdata', 'dict-data', '字典数据')
     this.config(this.table)
   }
   config(table) {
-    super.config(table)
+    table.add('id', '=').set({ pk: true })
     table.add('name', '%')
+    table.add('code')
+    table.add('type')
     table.add('order_num')
+    table.add('state')
     table.add('pid')
-    table.add('manager', '%')
-    table.add('remark', '%')
   }
 
   //绑定路由信息
@@ -33,5 +34,5 @@ class Departmet extends Base {
     router.get(`/${this.table.code}/list`, (req, res) => this.getList(req, res))
   }
 }
-new Departmet().route(router)
+new DictData().route(router)
 module.exports = router

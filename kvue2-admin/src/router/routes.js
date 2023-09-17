@@ -102,6 +102,11 @@ const localResource = [
     type: 'view', url: 'views/system/department', show: true, sort: 3,
     icon: 'iconfont icon-cluster', parentName: 'system',
   },
+  {
+    name: 'dict', title: '数据字典',
+    type: 'view', url: 'views/system/dict', show: true, sort: 6,
+    icon: 'el-icon-s-order', parentName: 'system',
+  },
 ]
 
 /**

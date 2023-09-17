@@ -2,7 +2,7 @@
   <!-- 主内容：树+列表 -->
   <el-container>
     <!-- 左侧部门树，独立视图 -->
-    <el-aside width="210px" class="view view-left aside-tree">
+    <el-aside width="240px" class="view aside-view-layout">
       <el-header height="32px">
         <span style="line-height:32px">
           <i class="iconfont icon-cluster"></i> 组织机构树
@@ -235,25 +235,3 @@ export default {
   }
 }
 </script>
-
-<style lang="less" scoped>
-.aside-tree {
-  overflow: initial;
-  padding: 5px;
-  header {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 1px;
-    border-bottom: 1px dashed #0001;
-
-    button {
-      margin: 0 2px;
-    }
-  }
-
-  .el-main {
-    padding: 2px 0;
-    max-height: calc(100% - 32px);
-  }
-}
-</style>

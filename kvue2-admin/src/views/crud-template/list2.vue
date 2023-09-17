@@ -2,25 +2,34 @@
   <!-- 主内容：树+列表 -->
   <el-container v-loading="loading">
     <!-- 左侧部门树，独立视图 -->
-    <el-aside width="210px" class="view view-left">
-      <div style="line-height:60px">
-        1111
-        <p>33333</p>
-        <p>33333</p>
-        <p>33333</p>
-        <p>33333</p>
-        <p>33333</p>
-        <p>33333</p>
-        <p>33333</p>
-        <p>33333</p>
-        <p>33333</p>
-        <p>33333</p>
-        <p>33333</p>
-        <p>33333</p>
-        <p>33333</p>
-        <p>33333</p>
-        <p>33333</p>
-      </div>
+    <el-aside width="210px" class="view aside-view-layout">
+      <el-header height="32px">
+        <span style="line-height:32px">
+          <i class="iconfont icon-cluster"></i> 组织机构树
+        </span>
+        <span>
+          <el-button icon="el-icon-plus" type="text" title="新增"></el-button>
+          <el-button icon="el-icon-refresh-left" type="text" v-throttle title="刷新" @click="loadTreeData"></el-button>
+        </span>
+      </el-header>
+      <el-main>
+        <div style="line-height:36px">
+          <p>33333</p>
+          <p>33333</p>
+          <p>33333</p>
+          <p>33333</p>
+          <p>33333</p>
+          <p>33333</p>
+          <p>33333</p>
+          <p>33333</p>
+          <p>33333</p>
+          <p>33333</p>
+          <p>33333</p>
+          <p>33333</p>
+          <p>33333</p>
+          <p>33333</p>
+        </div>
+      </el-main>
     </el-aside>
 
     <!-- 右侧列表区域视图 -->
@@ -147,9 +156,14 @@ export default {
   data() {
     return {
       enumState,
+      left: {  //左侧的-类型
+        data: [],
+        currentNode: null,
+        loading: false,
+      },
       // 搜索条件，分页参数通过混合复用
       query: {
-        name: '',
+        name: undefined,
         createTime: undefined, //时间范围数组
         state: undefined,
       },

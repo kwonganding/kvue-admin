@@ -12,8 +12,8 @@ export const list = {
       query: {         // 分页查询对象query
         pageIndex: 1,
         pageSize: 20,
-        orderBy: '',
-        sortOrder: '', // ASC/DESC
+        orderBy: undefined,
+        sortOrder: undefined, // ASC/DESC
       },
       dataList: {      // 服务端返回的分页数据对象
         list: [],      // 列表数据
@@ -39,7 +39,7 @@ export const list = {
       this.loading = true
       this.getList(this.query)
         .then(data => {
-          this.dataList = data.data
+          this.dataList = data?.data
           this.afterLoadData()
         }).finally(() => this.loading = false)
     },
@@ -57,7 +57,7 @@ export const list = {
      */
     handleSortChange(sort) {
       if (!sort.order) {
-        this.query.orderBy = this.query.sortOrder = null
+        this.query.orderBy = this.query.sortOrder = undefined
       }
       else {
         this.query.orderBy = sort.prop
@@ -147,7 +147,6 @@ export const form = {
         this.$nextTick(() => {
           this.isModified = false
         })
-
         return
       }
       // 获取最新数据

@@ -7,7 +7,7 @@ import service, { get, post } from '@/utils/request'
  * @param {object} 查询对象
  */
 export function getList(query) {
-  return get("/system/department/list", query)
+  return get("/system/dict/list", query)
 }
 
 /**
@@ -15,7 +15,7 @@ export function getList(query) {
  * @param {string} 主键id
  */
 export function getById(id) {
-  return get("/system/department/id/" + id)
+  return get("/system/dict/id/" + id)
 }
 
 /**
@@ -25,7 +25,7 @@ export function getById(id) {
 export function saveOrUpdate(data) {
   // 父级pid默认0
   data.pid ??= 0
-  return post("/system/department", data)
+  return post("/system/dict", data)
 }
 
 /**
@@ -33,14 +33,13 @@ export function saveOrUpdate(data) {
  * @param {Array} 主键id集合
  */
 export function deleteById(ids) {
-  return service.delete("/system/department/" + ids)
+  return service.delete("/system/dict/" + ids)
 }
 
-
 /**
- * 查询可用部门列表
+ * 根据type获取所有有效字典数据
  * @param {object} 查询对象
  */
-export function getDepartments() {
-  return get("/system/department/list", { state: 'normal', orderBy: 'orderNum' })
+export function getDictData(type) {
+  return get("/system/dict/type/" + type)
 }

@@ -3,6 +3,7 @@
 
 let sqlite3 = require('sqlite3').verbose();
 let db = new sqlite3.Database('./src/db/kdb.db');
+const sqlHelper = require('../utils/sql-helper.js')
 
 //?sqlite参数化，用问号"?"占位，参数值用数组组装。
 //执行sql： db.run(sql,para,callback)
@@ -47,12 +48,14 @@ function queryData(sql, params) {
  * @param {Array} params sql参数值数组
  * @returns 返回Promise({total,list})
  */
-async function queryPageData(listSql, totalSql, params) {
+async function queryPageData(listSql, totalSql, params, query) {
   const data = {}
   // 1、获取总数
   const trows = await queryData(totalSql, params)
   data.total = trows?.[0]?.total
-  // 2、查询列表数据
+  // 2、查询列表数据  
+  // 排序、分页
+  listSql += sqlHelper.orderBy(query) + sqlHelper.page(query, params)
   data.list = await queryData(listSql, params)
   return data
 }
@@ -83,6 +86,8 @@ function executeSql(sql, params) {
     }
   })
 }
+
+// Error: SQLITE_CONSTRAINT: NOT NULL constraint failed: sys_dict.type
 
 /** 判断执行结果是否有效：影响行数、id
  * https://github.com/TryGhost/node-sqlite3/wiki/API#runparam---callback

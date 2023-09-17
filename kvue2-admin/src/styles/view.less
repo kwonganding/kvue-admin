@@ -22,14 +22,31 @@
   }
 }
 
-// 路由视图页面：放在左侧的内容区域，配合上面view使用
-.view-left {
+// 左侧侧边栏布局，el-aside：含头部el-header、内容区域el-main
+.aside-view-layout {
   margin-right: 8px;
-}
+  overflow: initial;
+  padding: 5px;
+  @header: 34px;
 
-// 路由视图页面：放在右侧的内容区域，配合上面view使用
-.view-right {
-  margin-left: 8px;
+  header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 4px;
+    border-bottom: 1px dashed #0001;
+    height: @header;
+    line-height: @header;
+
+    .el-button+.el-button {
+      margin-left: 4px;
+    }
+
+  }
+
+  .el-main {
+    padding: 2px 0;
+    max-height: calc(100% - @header);
+  }
 }
 
 // 标准crud列表页面的布局，上中下模式，中间表格区域内容填满+滚动条

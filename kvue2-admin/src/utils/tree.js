@@ -15,13 +15,18 @@ export function list2Tree(list, option = { key: 'id', parent: 'pid', children: '
   list.forEach(item => {
     map[item[option.key]] = item
   })
-  //遍历设置根节点、父级节点
+  //遍历设置根节点、父级节点，父节点可能不存在
   list.forEach(item => {
-    if (!pvalue(item))
+    if (!pvalue(item))  //pid无效（0），视为根节点
       tree.push(item)
     else {
-      map[pvalue(item)][option.children] ??= []
-      map[pvalue(item)][option.children].push(item)
+      const pnode = map[pvalue(item)]
+      if (pnode) {
+        map[pvalue(item)][option.children] ??= []
+        map[pvalue(item)][option.children].push(item)
+      }
+      // 如果其父节点不存在，则视为根节点
+      else tree.push(item)
     }
   })
   return tree

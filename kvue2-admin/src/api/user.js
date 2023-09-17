@@ -64,7 +64,7 @@ export function getList(query) {
  * @param {string} 主键id
  */
 export function getById(id) {
-  return get("/system/user/" + id)
+  return get("/system/user/id/" + id)
 }
 
 /**

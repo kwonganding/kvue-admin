@@ -9,16 +9,15 @@ class SqlHelper {
    * 构造select字段的sql：select *** from table
    */
   select(table) {
-    const select = selectColumns(table)
+    const select = this.selectColumns(table)
     return `SELECT ${select} FROM ${table.name}`
   }
   /**
    * 仅构造select字段的sql，并且设定as别名
    */
   selectColumns(table, as) {
-    const select = table.fields
+    let select = table.fields.filter(f => f.select)
       .map(f => {
-        if (!f.select) return ''
         return f.column == f.cameName ? f.column : `${f.column} as ${f.cameName}`
       })
     if (as)
@@ -31,7 +30,9 @@ class SqlHelper {
    */
   #where(field, data, params) {
     const value = data[field.cameName]
-    if (value == undefined || value == null) return
+    if (value === undefined || value === null || value === '')
+      return ''
+
     switch (field.operator) {
       case '=':
       case '>':
@@ -67,7 +68,7 @@ class SqlHelper {
    * 统计总数total的sql
    */
   total(table) {
-    return `select count(id) as total from ${table.name}`
+    return `SELECT count(id) as total FROM ${table.name}`
   }
 
   /**
@@ -103,7 +104,7 @@ class SqlHelper {
         params.push(f.customValue())
         return
       }
-      const value = data[f.cameName]
+      let value = data[f.cameName]
       if (value == undefined || value == null) return
       if (f.converter)
         value = f.converter(value)
