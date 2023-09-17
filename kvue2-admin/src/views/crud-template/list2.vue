@@ -2,10 +2,15 @@
   <!-- 主内容：树+列表 -->
   <el-container v-loading="loading">
     <!-- 左侧部门树，独立视图 -->
-    <el-aside width="210px" class="view aside-view-layout">
-      <el-header height="32px">
-        <span style="line-height:32px">
-          <i class="iconfont icon-cluster"></i> 组织机构树
+    <el-aside :width="asideCollapse?'34px':'210px'" class="view aside-view-layout" :class="{collapse:asideCollapse}">
+      <el-header height="none">
+        <span>
+          <i
+            :class="asideCollapse?'el-icon-d-arrow-right':'el-icon-d-arrow-left'"
+            class="collapse-btn"
+            @click="asideCollapse=!asideCollapse"
+          ></i>
+          <span v-show="!asideCollapse">组织机构树</span>
         </span>
         <span>
           <el-button icon="el-icon-plus" type="text" title="新增"></el-button>
@@ -13,22 +18,17 @@
         </span>
       </el-header>
       <el-main>
-        <div style="line-height:36px">
-          <p>33333</p>
-          <p>33333</p>
-          <p>33333</p>
-          <p>33333</p>
-          <p>33333</p>
-          <p>33333</p>
-          <p>33333</p>
-          <p>33333</p>
-          <p>33333</p>
-          <p>33333</p>
-          <p>33333</p>
-          <p>33333</p>
-          <p>33333</p>
-          <p>33333</p>
-        </div>
+        <ul style="line-height:36px;padding-left: 5px;">
+          <li>参考资料123</li>
+          <li>33333</li>
+          <li>33333</li>
+          <li>33333</li>
+          <li>33333</li>
+          <li>33333</li>
+          <li>33333</li>
+          <li>33333</li>
+          <li>33333</li>
+        </ul>
       </el-main>
     </el-aside>
 
@@ -156,6 +156,7 @@ export default {
   data() {
     return {
       enumState,
+      asideCollapse: false,  // 侧边栏是否收起
       left: {  //左侧的-类型
         data: [],
         currentNode: null,

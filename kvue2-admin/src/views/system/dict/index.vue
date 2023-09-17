@@ -2,7 +2,7 @@
   <!-- 主内容：树+列表 -->
   <el-container>
     <!-- 左侧部门树，独立视图 -->
-    <el-aside width="300px" class="view aside-view-layout">
+    <el-aside width="280px" class="view aside-view-layout">
       <el-header height="none">
         <span>
           <i class="el-icon-guide"></i> 字典类型

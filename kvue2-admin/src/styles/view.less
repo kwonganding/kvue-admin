@@ -28,6 +28,15 @@
   overflow: initial;
   padding: 5px;
   @header: 34px;
+  transition: all 0.5s;
+
+  &.collapse {
+
+    .el-main,
+    header>span:nth-of-type(2) {
+      display: none;
+    }
+  }
 
   header {
     display: flex;
@@ -36,6 +45,15 @@
     border-bottom: 1px dashed #0001;
     height: @header;
     line-height: @header;
+
+    .collapse-btn {
+      padding: 5px 2px;
+      cursor: pointer;
+
+      &:hover {
+        color: var(--theme-hcolor);
+      }
+    }
 
     .el-button+.el-button {
       margin-left: 4px;

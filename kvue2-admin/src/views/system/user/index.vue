@@ -2,10 +2,15 @@
   <!-- 主内容：树+列表 -->
   <el-container>
     <!-- 左侧部门树，独立视图 -->
-    <el-aside width="240px" class="view aside-view-layout">
-      <el-header height="32px">
-        <span style="line-height:32px">
-          <i class="iconfont icon-cluster"></i> 组织机构树
+    <el-aside :width="asideCollapse?'36px':'220px'" class="view aside-view-layout" :class="{collapse:asideCollapse}">
+      <el-header height="none">
+        <span>
+          <i
+            :class="asideCollapse?'el-icon-d-arrow-right':'el-icon-d-arrow-left'"
+            class="collapse-btn"
+            @click="asideCollapse=!asideCollapse"
+          ></i>
+          <span v-show="!asideCollapse">组织机构树</span>
         </span>
         <span>
           <el-button
@@ -121,7 +126,7 @@
               <el-tag :type="enumGender[scope.row.gender]?.type">{{ enumGender[scope.row.gender]?.text }}</el-tag>
             </template>
           </el-table-column>
-          <el-table-column label="电话号码" min-width="180" prop="phone" align="left" show-overflow-tooltip></el-table-column>
+          <el-table-column label="电话号码" min-width="120" prop="phone" align="left" show-overflow-tooltip></el-table-column>
           <el-table-column label="邮箱" min-width="180" prop="email" align="left" show-overflow-tooltip></el-table-column>
           <el-table-column label="状态" width="100" prop="state" align="center">
             <template slot-scope="scope">
@@ -179,6 +184,7 @@ export default {
     return {
       enumState,
       enumGender,
+      asideCollapse: false,  // 侧边栏是否收起
       tree: {  //左侧的树-组织机构
         data: [],
         currentNode: null,
