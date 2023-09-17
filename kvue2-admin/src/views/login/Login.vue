@@ -70,10 +70,7 @@ export default {
             this.$message.success(mes)
             // 登录成功，跳转路由
             this.$router.push('/').catch(() => { })
-          })
-          .catch(err => {
-            this.$message.error(err)
-          })
+          }).catch(() => { })
           .finally(() => this.loading = false)
       })
     },

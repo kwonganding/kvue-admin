@@ -7,10 +7,11 @@ import setting from '@/settings'
  * sessionStorage保存token的Key
  */
 const KEY_TOKEN = setting.title + '_TOKEN'
+const storage = localStorage
 
 // 存储用户信息
 const state = {
-  token: sessionStorage.getItem(KEY_TOKEN),
+  token: storage.getItem(KEY_TOKEN),
   userInfo: null,   // 用户基本信息{id,name,avatar},默认必须为null，会以此来判断是否更新
 }
 
@@ -18,8 +19,8 @@ const state = {
 const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token
-    //sessionStorage 中存储一份，避免刷新时丢失
-    sessionStorage.setItem(KEY_TOKEN, token)
+    //本地存储一份，避免刷新时丢失
+    storage.setItem(KEY_TOKEN, token)
   },
   SET_USERINFO: (state, user) => {
     state.userInfo = Object.freeze(user)

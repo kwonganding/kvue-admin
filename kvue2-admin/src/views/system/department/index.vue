@@ -60,7 +60,7 @@
           <template slot-scope="scope">
             <el-link @click="handleAdd(scope.row)" type="primary" icon="el-icon-plus">新增</el-link>
             <el-link @click="handleEdit(scope.row)" type="primary" icon="el-icon-edit">修改</el-link>
-            <el-link @click="handleDelete(scope.row.id)" type="warning" icon="el-icon-delete">删除</el-link>
+            <el-link @click="handleDelete(scope.row)" type="warning" icon="el-icon-delete">删除</el-link>
           </template>
         </el-table-column>
       </el-table>

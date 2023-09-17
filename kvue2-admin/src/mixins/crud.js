@@ -69,11 +69,16 @@ export const list = {
     /**
      * 删除选中项数据（参数为id），支持多个，多个逗号隔开
      */
-    handleDelete(id) {
-      // 如果id为空，则取选中项
-      let ids = id ?? this.$refs.dataTable?.selection?.map(r => r.id).join(',')
-      if (!ids) return
-      this.$confirm.warning(`确定要删除所选数据[${ids}]吗？删除后将无法恢复，请再次确认！`, "删除提醒").then(() => {
+    handleDelete(item) {
+      // 如果参数为空则获取选中项
+      const items = item ? [item] : this.$refs.dataTable?.selection
+      if (!items || items.length < 1) return
+      const ids = items.map(r => r.id).join(',')
+      let names = items.map(r => r.name).join(', ')
+      if (names.length > 60)
+        names = names.substring(0, 60) + '...'
+      const notice = `确定要删除所选 ${items.length} 项数据 [ ${names} ] 吗？删除后将无法恢复，请再次确认！`
+      this.$confirm.warning(notice, "删除提醒").then(() => {
         this.loading = true
         this.deleteById(ids).then((data) => {
           this.$message.success(data.message)
@@ -180,7 +185,7 @@ export const form = {
           .then(res => {
             this.$message.success(res.message)
             this.afterSave()
-          })
+          }).catch(() => { })
           .finally(() => { this.saveLoading = false })
       })
     },

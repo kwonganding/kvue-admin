@@ -10,7 +10,7 @@
         <span>
           <el-button icon="el-icon-plus" type="text" title="新增" @click="handleEdit()"></el-button>
           <el-button icon="el-icon-edit" type="text" title="修改" @click="handleEdit(currentNode)"></el-button>
-          <el-button icon="el-icon-delete" type="text" title="删除" @click="handleDelete(currentNode?.id)"></el-button>
+          <el-button icon="el-icon-delete" type="text" title="删除" @click="handleDelete(currentNode)"></el-button>
           <el-button @click="loadData" icon="el-icon-refresh-left" type="text" v-throttle title="刷新"></el-button>
         </span>
       </el-header>
@@ -89,7 +89,7 @@ export default {
   ul {
     margin: 5px 1px;
     li {
-      padding: 10px 5px;
+      padding: 8px 5px;
       cursor: pointer;
       background: #f8f8f8;
       margin-bottom: 5px;

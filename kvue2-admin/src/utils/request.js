@@ -68,8 +68,8 @@ service.interceptors.response.use(
     // 处理错误返回：消息提示+日志记录
     console.error(data)
     Message({ message: data.message, type: "error", duration: 4000 })
-    // 统一处理错误，暂时不返回，后续再看情况优化
-    // return Promise.reject(data.message)
+    // 统一处理错误，外面不用处理。但缺点是，如果外面不处理，会出现未处理的Promise异常：Uncaught (in promise)
+    return Promise.reject(data)
   },
   // 错误error，各种HTTP的异常状态码处理
   error => {
@@ -80,7 +80,8 @@ service.interceptors.response.use(
     message ??= `网络可能出现异常，错误代码：${status}`
 
     Message({ message, type: "error", duration: 4000 })
-    // 这里应该不用返回了，都已经处理过了    // return Promise.reject(error)
+    // 这里应该不用返回了，都已经处理过了
+    return Promise.reject(error)
   }
 )
 

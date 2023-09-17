@@ -72,8 +72,7 @@ function executeSql(sql, params) {
       db.run(sql, params, function(error) {
         // this: { lastID: 0, changes: 0 }
         if (error) {
-          let e = error.toString().replace('Error: SQLITE_CONSTRAINT: UNIQUE constraint failed', '值已存在')
-          reject(e)
+          reject(handleError(error))
         }
         if (this.changes > 0)
           resolve(this.lastID)
@@ -87,7 +86,22 @@ function executeSql(sql, params) {
   })
 }
 
+const SQL_ERRORS = [
+  { error: 'Error: SQLITE_CONSTRAINT: NOT NULL constraint failed', text: '字段值不可为空' },
+  { error: 'Error: SQLITE_CONSTRAINT: UNIQUE constraint failed', text: '字段值已存在' },
+]
+
+function handleError(error) {
+  const etext = error.toString()
+  const ne = SQL_ERRORS.filter(e => etext.startsWith(e.error))?.[0]
+  if (ne) {
+    return (etext.match(/[^.]+$/)[0] || "") + ne.text
+  }
+  return etext
+}
+
 // Error: SQLITE_CONSTRAINT: NOT NULL constraint failed: sys_dict.type
+// Error: SQLITE_CONSTRAINT: UNIQUE constraint failed
 
 /** 判断执行结果是否有效：影响行数、id
  * https://github.com/TryGhost/node-sqlite3/wiki/API#runparam---callback

@@ -128,15 +128,15 @@
               <el-tag :type="enumState[scope.row.state]?.type">{{ enumState[scope.row.state]?.text }}</el-tag>
             </template>
           </el-table-column>
-          <el-table-column label="创建日期" width="160" prop="createTime" align="center" sortable="custom">
+          <el-table-column label="创建日期" min-width="160" prop="createTime" align="center" sortable="custom">
             <template slot-scope="scope">{{ formatTime(scope.row.createTime) }}</template>
           </el-table-column>
 
           <!-- 操作列，按需固定：fixed="right"-->
-          <el-table-column label="操作" class-name="table-link-btton" width="130" align="center" fixed="right">
+          <el-table-column label="操作" class-name="table-link-btton" width="120" align="center" fixed="right">
             <template slot-scope="scope">
               <el-link @click="handleEdit(scope.row)" type="primary" icon="el-icon-edit">修改</el-link>
-              <el-link @click="handleDelete(scope.row.id)" type="warning" icon="el-icon-delete">删除</el-link>
+              <el-link @click="handleDelete(scope.row)" type="warning" icon="el-icon-delete">删除</el-link>
             </template>
           </el-table-column>
         </el-table>
