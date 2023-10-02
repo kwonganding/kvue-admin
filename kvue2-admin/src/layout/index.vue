@@ -16,7 +16,7 @@
       <el-container class="main-wrapper scroll" style="overflow-x: hidden;">
         <transition mode="out-in" :name="config.routerAnimation ? 'fade-transform' : ''">
           <keep-alive :include="cacheNames">
-            <router-view></router-view>
+            <router-view :key="$route.path"></router-view>
           </keep-alive>
         </transition>
       </el-container>

@@ -35,6 +35,7 @@ export default {
     isActived() {
       return this.$route.path == this.item.path
     }
+
   },
 }
 </script>

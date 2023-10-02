@@ -73,6 +73,11 @@ router.beforeEach(async (to, from, next) => {
     return next()
   if (!store.getters.token)
     return next('/login')
+  // 处理外链
+  if (to.meat?.menuType === 'link' && to.meta.href) {
+    window.open(to.meta.href, "_blank")
+    return next(false)
+  }
   if (store.getters.userInfo)
     return next()
 

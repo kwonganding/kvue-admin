@@ -35,7 +35,8 @@ class User extends Base {
     table.add('pwd').set({ select: false, converter: pwdConverter })
     table.add('phone', '%')
     table.add('email', '%')
-    table.add('department_id', 'in')
+    // query只能传入字符串，转换为数组
+    table.add('department_id', 'in').set({ where: false })
     table.add('remark', '%')
   }
 
@@ -45,9 +46,15 @@ class User extends Base {
   appendWhere(query, params) {
     let where = ''
     if (query.name) {
-      where = " and (name like ? or id like ?)";
+      where += " and (name like ? or id like ?)";
       params.push("%" + query.name + "%");
       params.push("%" + query.name + "%");
+    }
+    // 部门采用数组集合，包含所有子部门数据
+    if (query.departmentId) {
+      const arr = query.departmentId.split(',')
+      where += ` and department_id in (${arr.map(v => '?').join(',')})`;
+      params.push(...arr);
     }
     return where
   }

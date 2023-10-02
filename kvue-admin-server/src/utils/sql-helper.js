@@ -29,7 +29,7 @@ class SqlHelper {
    * 构造单个字段的where条件+参数处理
    */
   #where(field, data, params) {
-    const value = data[field.cameName]
+    let value = data[field.cameName]
     if (value === undefined || value === null || value === '')
       return ''
 

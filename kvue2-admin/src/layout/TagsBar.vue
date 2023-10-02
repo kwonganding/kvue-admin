@@ -3,7 +3,7 @@
     <router-link
       class="item"
       v-for="r in cacheRoutes"
-      :to="r"
+      :to="r.path"
       :key="r.path"
       :class="isActive(r) ? 'active' : ''"
       @contextmenu.prevent.native="showMenu(r, $event)"

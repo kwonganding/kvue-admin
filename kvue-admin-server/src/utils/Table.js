@@ -8,7 +8,7 @@ const { came2line, line2came } = require('./util')
  * @param {boolean} select 是否生成select查询语句
  * @param {boolean} where 是否生成where语句
  * @param {boolean} update 是否生成update语句
- * @param {Function} converter 值转换器，对前端传入的值进行转换：bool converter(value)
+ * @param {Function} converter 值转换器，对前端传入的值进行转换：value converter(value)
  * @param {Function} customValue 自定义值方法，insert、update时获取值，value customValue()
  */
 function Field(column, operator = '=', pk = false, select = true, where = true, update = true, converter = null, customValue = undefined) {
