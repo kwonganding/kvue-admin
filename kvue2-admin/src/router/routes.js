@@ -169,7 +169,7 @@ export function buildRoutes(authResource) {
   })
 
   // 4、构建菜单树，菜单树是包含了所有类型节点（目录、路由视图）
-  menuRoutes = list2Tree(listRoutes, { key: 'id', parent: (n) => n.meta.pid, children: 'children' })
+  menuRoutes = list2Tree(listRoutes, { key: 'id', parentKey: (n) => n.meta.pid, children: 'children' })
   // 递归处理下path递归父节点的name+自己的name，示例：user-center/user
   buildPath(menuRoutes)
 

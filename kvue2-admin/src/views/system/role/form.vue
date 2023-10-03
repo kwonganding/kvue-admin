@@ -66,7 +66,7 @@ import FormDrawer from '@/components/FormDrawer.vue'
 import { getList, getById, saveOrUpdate, deleteById } from '@/api/role.js'
 import { getPermissions } from '@/api/permission.js'
 import { enumState } from '@/model/enums'
-import { list2Tree, map } from '@/utils/tree'
+import { list2Tree, map, mapParent } from '@/utils/tree'
 
 export default {
   name: 'RoleForm',
@@ -125,15 +125,27 @@ export default {
     // check	当复选框被点击的时候触发
     // 共两个参数，依次为：传递给 data 属性的数组中该节点所对应的对象、树目前的选中状态对象，包含 checkedNodes、checkedKeys、halfCheckedNodes、halfCheckedKeys 四个属性
     onCheckChange(node, tree) {
+      // 判断当前节点的状态
+      const checked = tree.checkedKeys.includes(node.id)
+
+      // 1、父节点：如果当前节点选中了，递归父节点选中
+      if (checked) {
+        const pids = mapParent(node, n => n.id)
+        pids?.forEach(id => {
+          this.$refs.perTree.setChecked(id, checked, false)
+        })
+      }
+      ///2、子节点，同步子节点
       if (!node.children || node.children.length < 1)
         return
       // 手动实现父子单向联动
       const childrenIds = map(node.children, n => n.id)
-      // 判断当前节点的状态
-      const checked = tree.checkedKeys.includes(node.id)
-      childrenIds.forEach(id => {
+
+      // 所有子节点同步
+      childrenIds?.forEach(id => {
         this.$refs.perTree.setChecked(id, checked, false)
       })
+
     }
   }
 }

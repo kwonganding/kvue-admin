@@ -1,15 +1,15 @@
 // tree树形结构数据处理
 
 /**
- * 集合数据转换为树形结构。option.parent支持函数，示例：(n) => n.meta.parentName
+ * 集合数据转换为树形结构。option.parentKey支持函数，示例：(n) => n.meta.parentName
  * @param {Array} list 集合数据
  * @param {Object} option 对象键配置，默认值{ key: 'id', parent: 'pid', children: 'children' }
  * @returns 树形结构数据tree
  */
-export function list2Tree(list, option = { key: 'id', parent: 'pid', children: 'children' }) {
+export function list2Tree(list, option = { key: 'id', parentKey: 'pid', children: 'children' }) {
   let tree = []
   // 获取父编码统一为函数
-  let pvalue = typeof (option.parent) === 'function' ? option.parent : (n) => n[option.parent]
+  let pvalue = typeof (option.parentKey) === 'function' ? option.parentKey : (n) => n[option.parentKey]
   // map存放所有对象
   let map = {}
   list.forEach(item => {
@@ -24,6 +24,7 @@ export function list2Tree(list, option = { key: 'id', parent: 'pid', children: '
       if (pnode) {
         map[pvalue(item)][option.children] ??= []
         map[pvalue(item)][option.children].push(item)
+        item.parent = map[pvalue(item)]  // 设置一个父节点parent
       }
       // 如果其父节点不存在，则视为根节点
       else tree.push(item)
@@ -132,6 +133,24 @@ export function map(tree, callback, option = { children: 'children' }) {
       if (res) result.push(...res)
     }
   })
+  return result
+}
+
+/**
+ * 对树形结构向上递归遍历所有父节点，返回父节点数组。要求数据具有父节点属性parent
+ * @param {*} node 起始节点
+ * @param {*} callback 遍历匹配函数
+ * @returns 返回匹配的节点数组
+ */
+export function mapParent(node, callback) {
+  const result = []
+  if (!node || !node.parent) return null
+  result.push(callback(node.parent))
+
+  // 递归向上遍历
+  const res = mapParent(node.parent, callback)
+  if (res) result.push(...res)
+
   return result
 }
 
