@@ -9,55 +9,7 @@ import { list2Tree } from '@/utils/tree'
  * 基于该数据会解析出两个集合：
  * menuResource：菜单资源，用于菜单展示，包含了目录、菜单
  * asyncRoutes：路由数据，挂载到框架页面下面（children），给路由组件用于路由
- */
-// const item = {
-//   name: 'home',       // 唯一编码，如果是组件（菜单视图），则为组件name。如果是目录，则会拼接到URL上（Path）
-//   title: '工作台',     // 标题
-//   url: 'views/home',  // 路由地址，”views/“开头的相对路径，目录、功能权限则不需要，不能斜杠开头
-//   type: 'view',       // dictionary(目录)、view(视图组件,菜单项)、permission(按钮、请求权限)
-//   show: true,         // 是否显示到菜单
-//   sort: 1,            // 在菜单中的同级排序
-//   icon: '',           // 图标
-//   parentName: '',     // 父级name，根节点则为空
-//   nocache: true,        // 是否缓存视图
-// }
-//#endregion
 
-/**
- * 本地权限资源配置，这里配置的数据仅为development调试用
- */
-const localResource1 = [
-  {
-    name: 'system', title: '系统管理',
-    type: 'dictionary', url: '', show: true, sort: 1,
-    icon: 'el-icon-s-tools', parentName: '',
-  },
-  {
-    name: 'user', title: '用户管理',
-    type: 'view', url: 'views/system/user', show: true, sort: 1,
-    icon: 'el-icon-user', parentName: 'system',
-  },
-  {
-    name: 'role', title: '用户角色',
-    type: 'view', url: 'views/system/role', show: true, sort: 2,
-    icon: 'el-icon-coordinate', parentName: 'system',
-  },
-  {
-    name: 'department', title: '组织机构',
-    type: 'view', url: 'views/system/department', show: true, sort: 3,
-    icon: 'iconfont icon-cluster', parentName: 'system',
-  },
-  {
-    name: 'permission', title: '菜单资源',
-    type: 'view', url: 'views/system/permission', show: true, sort: 3,
-    icon: 'el-icon-menu', parentName: 'system',
-  },
-  {
-    name: 'dict', title: '数据字典',
-    type: 'view', url: 'views/system/dict', show: true, sort: 6,
-    icon: 'el-icon-s-order', parentName: 'system',
-  },
-]
 
 /**
  * 本地权限资源配置，这里配置的数据仅为development调试用，配置结构和服务端返回的数据一致，统一处理。
@@ -102,17 +54,35 @@ const localResource = [
     view: 'views/dev-view/enums', path: '',
   },
 
-
   {
-    id: 8011, pid: 8000,
-    name: 'link', title: '外链-百度', icon: 'el-icon-link',
-    type: 'menu', menuType: 'link', visible: 1, cache: 0,
-    view: 'http://www.baidu.com', path: '',
+    id: 8006, pid: 8000, // 动态路由
+    name: 'dynamic-path', title: '动态路由123', icon: 'iconfont icon-codelibrary-fill',
+    type: 'menu', menuType: 'default', visible: 1, cache: 1,
+    view: '', path: 'dev/dynamic-path/123',
   },
   {
+    id: 8007, pid: 8000, // 动态路由
+    name: 'dynamic-path', title: '动态路由456', icon: 'iconfont icon-codelibrary-fill',
+    type: 'menu', menuType: 'default', visible: 1, cache: 1,
+    view: '', path: 'dev/dynamic-path/456',
+  },
+  {
+    id: 8006, pid: 8000, // 注册一个动态路由，不显示只用于路由注册
+    name: 'dynamic-path', title: '动态', icon: 'iconfont icon-codelibrary-fill',
+    type: 'menu', menuType: 'default', visible: 0, cache: 1,
+    view: 'views/dev-view/dynamic-path', path: 'dev/dynamic-path/:id(.*)',
+  },
+
+  {
     id: 8012, pid: 8000,
-    name: 'link', title: '内链-百度', icon: 'el-icon-link',
-    type: 'menu', menuType: 'link', visible: 1, cache: 1,
+    name: 'iframe', title: '内链-博客园', icon: 'el-icon-link',
+    type: 'menu', menuType: 'iframe', visible: 1, cache: 1,
+    view: '', path: 'iframe/https://www.cnblogs.com/',
+  },
+  {
+    id: 8011, pid: 8000,
+    name: 'b1', title: '外链-百度', icon: 'el-icon-link',
+    type: 'menu', menuType: 'link', visible: 1, cache: 0,
     view: 'http://www.baidu.com', path: '',
   },
 
@@ -132,10 +102,9 @@ const localResource = [
   {
     id: 9002, pid: 9000,
     name: 'list2', title: '列表2-树列表', icon: 'el-icon-s-operation',
-    type: 'menu', menuType: 'default', visible: 1, cache: 0,
+    type: 'menu', menuType: 'default', visible: 1, cache: 1,
     view: 'views/crud-template/list2', path: '',
   },
-
 ]
 
 /**
@@ -148,7 +117,14 @@ function createAsyncRoutes() {
       path: '/',
       name: 'Layout',
       component: Layout,
-      children: []
+      children: [
+        {
+          path: '/iframe/:href(.*)',
+          name: 'iframe',
+          meta: { title: '内链', icon: 'el-icon-link' },
+          component: () => import('@/layout/iframe.vue')
+        },
+      ]
     },
     // 404 要放到这里，就是整体路由的最后
     { path: '*', redirect: '/404', meta: { title: '404', show: false }, }
@@ -156,9 +132,13 @@ function createAsyncRoutes() {
 }
 
 /**
- * 用于菜单显示的资源，localResource、authResource处理后会追加到这里。
+ * menuRoutes:用于菜单显示的资源，localResource、authResource处理后会追加到这里。
  */
 export let menuRoutes = []
+/**
+ * listRoutes:所有路由信息，包括菜单、待注册的组件路由
+ */
+export let listRoutes = []
 
 /**
  * 构建路由，根据服务端权限资源，构建菜单树、视图路由
@@ -174,7 +154,7 @@ export function buildRoutes(authResource) {
   const asyncRoutes = createAsyncRoutes()
 
   // 2、先转换为标准路由数据结构
-  const ritems = items.map(item => {
+  listRoutes = items.map(item => {
     let route = {
       name: item.name, id: item.id,
       path: item.path ? item.path : item.name,
@@ -189,16 +169,13 @@ export function buildRoutes(authResource) {
   })
 
   // 4、构建菜单树，菜单树是包含了所有类型节点（目录、路由视图）
-  menuRoutes = list2Tree(ritems, { key: 'id', parent: (n) => n.meta.pid, children: 'children' })
+  menuRoutes = list2Tree(listRoutes, { key: 'id', parent: (n) => n.meta.pid, children: 'children' })
   // 递归处理下path递归父节点的name+自己的name，示例：user-center/user
   buildPath(menuRoutes)
 
-  console.dir(menuRoutes)
-
   // 5、筛选路由视图，添加到框架页下面，并返回
-  const vitems = ritems.filter(r => r.component)
-  asyncRoutes[0].children.push(...vitems)
-
+  const vitems = listRoutes.filter(r => r.component)
+  asyncRoutes[0].children.unshift(...vitems)
 
   return asyncRoutes
 }
@@ -206,10 +183,13 @@ export function buildRoutes(authResource) {
 // 递归处理path路径
 function buildPath(items, parentPath = '') {
   if (!items) return
+  let path = ''
   items.forEach(item => {
-    if (parentPath !== '' || !item.path?.startsWith('/')) {
-      item.path = parentPath + '/' + item.path
-    }
+    // 如果有path，则直接使用，注意/开头，判断开头是否有/
+    path = item.meta.path ? item.meta.path : parentPath + '/' + item.path
+    if (!path.startsWith('/'))
+      path = '/' + path
+    item.path = path
     buildPath(item.children, item.path)
   })
 }

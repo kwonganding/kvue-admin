@@ -130,12 +130,11 @@ export default {
       // 手动实现父子单向联动
       const childrenIds = map(node.children, n => n.id)
       // 判断当前节点的状态
-      const checked = tree.checkedKeys.some(n => n === node.id)
+      const checked = tree.checkedKeys.includes(node.id)
       childrenIds.forEach(id => {
         this.$refs.perTree.setChecked(id, checked, false)
       })
     }
-
   }
 }
 </script>

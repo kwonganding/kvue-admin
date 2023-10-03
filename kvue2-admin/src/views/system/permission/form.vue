@@ -58,7 +58,7 @@
                     类型为菜单时有效：
                     <p>选项卡（default）：默认值，资源地址（view）值为组件路径</p>
                     <p>外接（link）：资源地址（view）值为http地址，新标签打开</p>
-                    <p>内链（iframe）：资源地址（view）值为http地址，内部iframe打开</p>
+                    <p>内链（iframe）：内部iframe打开，通过路由路径path动态参数设置url地址，如“iframe/https://www.cnblogs.com/”</p>
                   </div>
                 </el-tooltip>
               </span>
@@ -96,15 +96,15 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="资源地址" prop="view" v-show="isMenu">
+          <el-form-item label="组件资源" prop="view" v-show="isMenu">
             <template slot="label">
               <span>
-                资源地址
+                组件资源
                 <el-tooltip class="item" effect="dark" placement="right">
                   <i class="el-icon-question" style="vertical-align: middle;"></i>
                   <div slot="content">
                     组件（资源）地址，示例：views/system/user，“view”开头
-                    <p>如果是链接（内链、外链），则为链接URL地址，http开头</p>
+                    <p>如果是链接（外链），则为链接URL地址，http开头</p>
                   </div>
                 </el-tooltip>
               </span>
@@ -124,9 +124,10 @@
                 <el-tooltip class="item" effect="dark" placement="right">
                   <i class="el-icon-question" style="vertical-align: middle;"></i>
                   <div slot="content">
-                    类型为菜单时有效：作为路由地址，会递归包含父级name。可为空：默认使用编码name代替，设置动态路径时才需要设置。
+                    类型为菜单时有效：作为路由地址，默认为空，取编码name值+递归父级的编码值。
                     <p>注册动态路由：如“user/:id”，view填写组件资源地址，并设置隐藏（仅注册路由），动态路由也可以在代码中静态注册。</p>
                     <p>使用动态路由，如“user/123”，册动态路由、使用动态路由分别处理。</p>
+                    <p>内链：如“iframe/https://www.cnblogs.com/”</p>
                   </div>
                 </el-tooltip>
               </span>

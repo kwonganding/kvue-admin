@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '@/store'
 import defaultSetting from '@/settings'
-import { buildRoutes } from './routes'
+import { buildRoutes, listRoutes } from './routes'
 
 import Layout from '../layout'
 import Login from '../views/login/login.vue'
@@ -93,7 +93,9 @@ router.beforeEach(async (to, from, next) => {
 })
 // 全局守卫，每个路由导航后：更新标题
 router.afterEach((to) => {
-  document.title = defaultSetting.getPageTitle(to.meta.title)
+  // 手动匹配一下全部路由，照顾动态参数路由
+  let route = listRoutes.filter(s => s.path === to.path)?.[0] ?? to
+  document.title = defaultSetting.getPageTitle(route.meta.title)
 })
 
 /**

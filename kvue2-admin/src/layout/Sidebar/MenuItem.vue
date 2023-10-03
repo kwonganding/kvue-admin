@@ -1,7 +1,7 @@
 <template>
   <el-menu-item
     v-if="!hasChildren"
-    :index="isLink?undefined:item.path"
+    :index="isLink?'':item.path"
     style="position: relative;"
     @click.native="handleClick($event)"
   >

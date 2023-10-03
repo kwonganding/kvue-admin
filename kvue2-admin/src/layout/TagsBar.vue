@@ -38,6 +38,9 @@
 </template>
 
 <script>
+
+import { listRoutes } from '@/router/routes'
+
 export default {
   name: "TagsBar",
   data() {
@@ -108,9 +111,12 @@ export default {
       this.tagMenu.visible = false
     },
     addTag() {
+      // 为了照顾一下动态路由，手动匹配一下路由信息
+      let route = listRoutes.filter(s => s.path === this.$route.path)?.[0] ?? this.$route
+
       //添加到缓存路由中，排除跳转页面，
       if (this.$route.name === "redirect") return
-      this.$store.commit("tagsBar/ADD", this.$route)
+      this.$store.commit("tagsBar/ADD", route)
     },
     handleClose(tag) {
       tag ??= this.selectedTag
