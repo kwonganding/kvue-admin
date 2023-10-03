@@ -18,6 +18,9 @@ function loadSessionStorage(state) {
   state.cacheNames = vstate?.cacheNames
   state.cacheRoutes = vstate?.cacheRoutes
 }
+function updateCacheNames(state) {
+  state.cacheNames = state.cacheRoutes.filter(s => s.meta.cache).map(s => s.name)
+}
 
 export default {
   namespaced: true,
@@ -44,7 +47,7 @@ export default {
       if (!state.cacheRoutes.some(s => s.path === obj.path))
         //添加打开的路由，只需要path、name、mata
         state.cacheRoutes.push({ path: obj.path, name: obj.name, meta: obj.meta })
-      state.cacheNames = state.cacheRoutes.map(s => s.name)
+      updateCacheNames(state)
       saveSessionStorage(state)
     },
     REMOVE(state, obj) {
@@ -52,7 +55,7 @@ export default {
       if (i < 0)
         return
       state.cacheRoutes.splice(i, 1)
-      state.cacheNames = state.cacheRoutes.map(s => s.name)
+      updateCacheNames(state)
       saveSessionStorage(state)
     },
     CLEAR(state) {
@@ -60,13 +63,13 @@ export default {
       // 退出登录的时候调用
       const affixItems = state.cacheRoutes.filter(s => s.meta.affix)
       state.cacheRoutes = affixItems
-      state.cacheNames = state.cacheRoutes.map(s => s.name)
+      updateCacheNames(state)
       saveSessionStorage(state)
     },
     REMOVE_OTHERS(state, obj) {
       // 移除其他的，不含固定、当前
       state.cacheRoutes = state.cacheRoutes.filter(s => s.meta.affix || s.path === obj.path)
-      state.cacheNames = state.cacheRoutes.map(s => s.name)
+      updateCacheNames(state)
       saveSessionStorage(state)
     },
     // 移除缓存的名字，用于刷新

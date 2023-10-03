@@ -28,74 +28,6 @@ import { list2Tree } from '@/utils/tree'
  */
 const localResource1 = [
   {
-    name: 'dev', title: '开发组件',
-    type: 'dictionary', url: '', show: true, sort: 1,
-    icon: 'iconfont icon-code', parentName: '',
-  },
-  {
-    name: 'components', title: '小组件集合',
-    url: 'views/dev-view/components',
-    type: 'view', show: true, sort: 1,
-    icon: 'iconfont icon-compass', parentName: 'dev',
-    permissions: ['add', 'edit', 'delete']
-  },
-  {
-    name: 'fileupload', title: '图片/文件上传',
-    url: 'views/dev-view/fileupload',
-    type: 'view', show: true, sort: 2,
-    icon: 'el-icon-upload', parentName: 'dev',
-  },
-  {
-    name: 'editor', title: '富文本/上传',
-    url: 'views/dev-view/editor',
-    type: 'view', show: true, sort: 2,
-    icon: 'el-icon-document', parentName: 'dev',
-  },
-  {
-    name: 'utils', title: 'utils库',
-    url: 'views/dev-view/utils',
-    type: 'view', show: true, sort: 3,
-    icon: 'iconfont icon-codelibrary-fill', parentName: 'dev',
-  },
-  {
-    name: 'enums', title: '枚举EnumFactory',
-    url: 'views/dev-view/enums',
-    type: 'view', show: true, sort: 3,
-    icon: 'iconfont icon-codelibrary-fill', parentName: 'dev',
-  },
-  {
-    name: 'query-view', title: 'q11', path: 'query-view/s1', href1: "http://www.baidu.com",
-    url: 'views/dev-view/query-view',
-    type: 'view', show: true, sort: 3,
-    icon: 'iconfont icon-codelibrary-fill', parentName: 'dev',
-  },
-  {
-    name: 'query-view', title: 'q22', path: 'query-view/s2', href2: "http://www.baidu.com",
-    url: 'views/dev-view/query-view',
-    type: 'view', show: true, sort: 3,
-    icon: 'iconfont icon-codelibrary-fill', parentName: 'dev',
-  },
-
-
-  {
-    name: 'crud', title: 'crud模板',
-    type: 'dictionary', url: '', show: true, sort: 1,
-    icon: 'iconfont icon-codepen-square-fill', parentName: '',
-  },
-  {
-    name: 'list1', title: '列表1-简单',
-    url: 'views/crud-template/list1',
-    type: 'view', show: true, sort: 1,
-    icon: 'iconfont icon-unorderedlist', parentName: 'crud',
-  },
-  {
-    name: 'list2', title: '列表2-也算简单',
-    url: 'views/crud-template/list2',
-    type: 'view', show: true, sort: 2,
-    icon: 'el-icon-s-operation', parentName: 'crud',
-  },
-
-  {
     name: 'system', title: '系统管理',
     type: 'dictionary', url: '', show: true, sort: 1,
     icon: 'el-icon-s-tools', parentName: '',
@@ -132,18 +64,78 @@ const localResource1 = [
  * 转换为路由所需的数据结构，原本数据全部存储在meta中
  */
 const localResource = [
+  // 开发组件
   {
     id: 8000, pid: 0,
     name: 'dev', title: '开发组件', icon: 'iconfont icon-code',
     type: 'catalog', menuType: 'default', visible: 1, cache: 1,
-    view: '', path: '', nav: ''
+    view: '', path: '',
   },
   {
     id: 8001, pid: 8000,
     name: 'components', title: '小组件集合', icon: 'iconfont icon-compass',
     type: 'menu', menuType: 'default', visible: 1, cache: 1,
-    view: 'views/dev-view/components', path: '', nav: '',
+    view: 'views/dev-view/components', path: '',
   },
+  {
+    id: 8002, pid: 8000,
+    name: 'fileupload', title: '图片/文件上传', icon: 'el-icon-upload',
+    type: 'menu', menuType: 'default', visible: 1, cache: 1,
+    view: 'views/dev-view/fileupload', path: '',
+  },
+  {
+    id: 8003, pid: 8000,
+    name: 'editor', title: '富文本/上传', icon: 'el-icon-upload',
+    type: 'menu', menuType: 'default', visible: 1, cache: 1,
+    view: 'views/dev-view/editor', path: '',
+  },
+  {
+    id: 8004, pid: 8000,
+    name: 'utils', title: 'utils库', icon: 'iconfont icon-codelibrary-fill',
+    type: 'menu', menuType: 'default', visible: 1, cache: 1,
+    view: 'views/dev-view/utils', path: '',
+  },
+  {
+    id: 8005, pid: 8000,
+    name: 'enums', title: '枚举EnumFactory', icon: 'iconfont icon-codelibrary-fill',
+    type: 'menu', menuType: 'default', visible: 1, cache: 1,
+    view: 'views/dev-view/enums', path: '',
+  },
+
+
+  {
+    id: 8011, pid: 8000,
+    name: 'link', title: '外链-百度', icon: 'el-icon-link',
+    type: 'menu', menuType: 'link', visible: 1, cache: 0,
+    view: 'http://www.baidu.com', path: '',
+  },
+  {
+    id: 8012, pid: 8000,
+    name: 'link', title: '内链-百度', icon: 'el-icon-link',
+    type: 'menu', menuType: 'link', visible: 1, cache: 1,
+    view: 'http://www.baidu.com', path: '',
+  },
+
+  // crud模板
+  {
+    id: 9000, pid: 0,
+    name: 'crud', title: 'crud模板', icon: 'iconfont icon-codepen-square-fill',
+    type: 'catalog', menuType: 'default', visible: 1, cache: 1,
+    view: '', path: '',
+  },
+  {
+    id: 9001, pid: 9000,
+    name: 'list1', title: '列表1-简单', icon: 'iconfont icon-unorderedlist',
+    type: 'menu', menuType: 'default', visible: 1, cache: 1,
+    view: 'views/crud-template/list1', path: '',
+  },
+  {
+    id: 9002, pid: 9000,
+    name: 'list2', title: '列表2-树列表', icon: 'el-icon-s-operation',
+    type: 'menu', menuType: 'default', visible: 1, cache: 0,
+    view: 'views/crud-template/list2', path: '',
+  },
+
 ]
 
 /**
@@ -188,6 +180,7 @@ export function buildRoutes(authResource) {
       path: item.path ? item.path : item.name,
       meta: item
     }
+    // 注册路由
     if (item.type === 'menu' && item.menuType === 'default' && item.view) {
       // 注意这里的坑，必须 “@/”开头，作为常量字符，不能放到动态参数里。大概原因是 动态导入需要首先确定路径
       route.component = () => import(`@/${item.view}`)
@@ -197,13 +190,13 @@ export function buildRoutes(authResource) {
 
   // 4、构建菜单树，菜单树是包含了所有类型节点（目录、路由视图）
   menuRoutes = list2Tree(ritems, { key: 'id', parent: (n) => n.meta.pid, children: 'children' })
-  // 递归处理下path、nav，递归父节点的name+自己的name，示例：user-center/user
+  // 递归处理下path递归父节点的name+自己的name，示例：user-center/user
   buildPath(menuRoutes)
 
   console.dir(menuRoutes)
 
   // 5、筛选路由视图，添加到框架页下面，并返回
-  const vitems = ritems.filter(r => r.type === 'menu' && r.menuType === 'default' && r.view)
+  const vitems = ritems.filter(r => r.component)
   asyncRoutes[0].children.push(...vitems)
 
 
@@ -216,7 +209,6 @@ function buildPath(items, parentPath = '') {
   items.forEach(item => {
     if (parentPath !== '' || !item.path?.startsWith('/')) {
       item.path = parentPath + '/' + item.path
-      item.nav = parentPath + '/' + item.meta.nav ? item.meta.nav : item.path
     }
     buildPath(item.children, item.path)
   })

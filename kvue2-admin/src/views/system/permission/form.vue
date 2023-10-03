@@ -124,9 +124,9 @@
                 <el-tooltip class="item" effect="dark" placement="right">
                   <i class="el-icon-question" style="vertical-align: middle;"></i>
                   <div slot="content">
-                    类型为菜单时有效：作为路由注册地址，会递归包含父级name
-                    <p>可为空：默认使用编码代替</p>
-                    <p>设置动态路径参数才需要设置，如“user/:id”</p>
+                    类型为菜单时有效：作为路由地址，会递归包含父级name。可为空：默认使用编码name代替，设置动态路径时才需要设置。
+                    <p>注册动态路由：如“user/:id”，view填写组件资源地址，并设置隐藏（仅注册路由），动态路由也可以在代码中静态注册。</p>
+                    <p>使用动态路由，如“user/123”，册动态路由、使用动态路由分别处理。</p>
                   </div>
                 </el-tooltip>
               </span>
@@ -134,20 +134,7 @@
             <el-input v-model.trim="formData.path" maxlength="64" clearable></el-input>
           </el-form-item>
         </el-col>
-        <el-col :span="12">
-          <el-form-item label="导航路径" prop="nav" v-show="isMenu">
-            <template slot="label">
-              <span>
-                导航路径
-                <el-tooltip class="item" effect="dark" placement="right">
-                  <i class="el-icon-question" style="vertical-align: middle;"></i>
-                  <div slot="content">菜单的导航URL地址，默认不用设置（用编码值），只有设置了动态路由时才需要明确设置导航地址，如“user/1”</div>
-                </el-tooltip>
-              </span>
-            </template>
-            <el-input v-model.trim="formData.nav" maxlength="64" clearable></el-input>
-          </el-form-item>
-        </el-col>
+        <el-col :span="12"></el-col>
       </el-row>
 
       <el-row>
@@ -250,7 +237,6 @@ export default {
         icon: '',
         menuType: enumMenuType.values[0].key,
         path: undefined,
-        nav: undefined,
         view: undefined,
         visible: 1,
         cache: 1,
