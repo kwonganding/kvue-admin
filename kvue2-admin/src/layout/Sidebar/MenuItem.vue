@@ -1,11 +1,11 @@
 <template>
-  <el-menu-item v-if="!hasChildren" :index="item.path" style="position: relative;">
+  <el-menu-item v-if="!hasChildren" :index="item.nav" style="position: relative;">
     <i :class="item.meta.icon"></i>
     <!-- 名称用title插槽，折叠时才有效 -->
     <span slot="title" style="margin-left:2px">{{ item.meta.title }}</span>
     <span v-show="isActived" class="active-suffix" :style="config.theme"></span>
   </el-menu-item>
-  <el-submenu v-else :index="item.path">
+  <el-submenu v-else :index="item.nav">
     <template slot="title">
       <i :class="item.meta.icon"></i>
       <span slot="title" style="margin-left:2px">{{ item.meta.title }}</span>
@@ -27,13 +27,13 @@ export default {
   },
   computed: {
     children() {
-      return this.item?.children?.filter(s => s.meta.show)
+      return this.item?.children?.filter(s => s.meta.visible)
     },
     hasChildren() {
       return this.item?.children?.length > 0
     },
     isActived() {
-      return this.$route.path == this.item.path
+      return this.$route.nav == this.item.nav
     }
 
   },

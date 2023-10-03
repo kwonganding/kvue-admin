@@ -35,14 +35,13 @@ class Base {
     listSql += ` WHERE 1=1 ` + where
     // 排序
     listSql += sqlHelper.orderBy(query)
-
     // 执行查询
     queryData(listSql, params)
       .then(data => {
         res.send(new ResponseData(data))
       })
       .catch(err => {
-        console.err(err)
+        console.error(err)
         res.send(new ResponseData().setError(err))
       })
   }

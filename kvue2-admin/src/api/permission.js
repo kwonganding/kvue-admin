@@ -10,7 +10,7 @@ export function getList(query) {
   query ??= {}
   query.orderBy = 'orderNum'
   query.sortOrder = 'ASC'
-  return get("/system/department/list", query)
+  return get("/system/permission/list", query)
 }
 
 /**
@@ -18,7 +18,7 @@ export function getList(query) {
  * @param {string} 主键id
  */
 export function getById(id) {
-  return get("/system/department/id/" + id)
+  return get("/system/permission/id/" + id)
 }
 
 /**
@@ -28,7 +28,7 @@ export function getById(id) {
 export function saveOrUpdate(data) {
   // 父级pid默认0
   data.pid ??= 0
-  return post("/system/department", data)
+  return post("/system/permission", data)
 }
 
 /**
@@ -36,7 +36,7 @@ export function saveOrUpdate(data) {
  * @param {Array} 主键id集合
  */
 export function deleteById(ids) {
-  return service.delete("/system/department/" + ids)
+  return service.delete("/system/permission/" + ids)
 }
 
 
@@ -44,6 +44,6 @@ export function deleteById(ids) {
  * 查询可用部门列表
  * @param {object} 查询对象
  */
-export function getDepartments() {
-  return get("/system/department/list", { state: 'normal', orderBy: 'orderNum' })
+export function getPermissions() {
+  return get("/system/permission/list", { state: 'normal', orderBy: 'orderNum' })
 }

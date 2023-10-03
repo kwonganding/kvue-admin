@@ -1,7 +1,7 @@
 <!-- 表单编辑-dialog弹框 -->
 <template>
   <FormDialog
-    :title="title+'用户'"
+    :title="title+'组织'"
     width="700px"
     top="10vh"
     @save="save"
@@ -17,7 +17,7 @@
       </el-form-item>
 
       <el-form-item label="上级部门" prop="pid">
-        <TreeSelect :data="departments" v-model="formData.pid" clearable :only-leaf="false"></TreeSelect>
+        <TreeSelect :data="treeList" v-model="formData.pid" clearable :only-leaf="false"></TreeSelect>
       </el-form-item>
 
       <el-form-item label="排序号" prop="orderNum">
@@ -59,7 +59,7 @@ import { form } from '@/mixins/crud.js'
 import FormDialog from '@/components/FormDialog.vue'
 import TreeSelect from '@/components/TreeSelect.vue'
 
-import { getList, getById, saveOrUpdate, getDepartments } from '@/api/department.js'
+import { getList, getById, saveOrUpdate } from '@/api/department.js'
 import { enumState } from '@/model/enums'
 import { list2Tree, setTreeDisable } from '@/utils/tree'
 
@@ -70,7 +70,7 @@ export default {
   data() {
     return {
       enumState,
-      departments: [], // 部门集合树
+      treeList: [], // 部门集合树
       pid: undefined,  // 父级id，缓存一下
       formRules: {
         name: [{ required: true, message: '必填' }],
@@ -96,9 +96,9 @@ export default {
     // 虚方法（按需实现）：弹窗加载前执行
     // 每次加载部门数据
     beforeOpen([pid]) {
-      getDepartments().then(res => {
+      getList().then(res => {
         const list = res.data
-        this.departments = list2Tree(list)
+        this.treeList = list2Tree(list)
 
         // 修改时，不能选择自己及后代
         if (this.keyId)

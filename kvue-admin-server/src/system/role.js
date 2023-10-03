@@ -31,13 +31,34 @@ class Departmet extends Base {
     const params = [req.params.id];
     queryData(sql, params)
       .then(rows => {
-        res.send(new ResponseData(rows?.[0]))
+        const role = rows?.[0]
+        queryData('select per_id from sys_role_permission where role_id = ?', [role.id]).then(proles => {
+          role.perIds = proles.map(s => s['per_id'])
+        }).finally(() => {
+          res.send(new ResponseData(role))
+        })
       })
       .catch(err => {
         console.log(err)
         res.send(new ResponseData().setError(err))
       })
-    // 获取菜单资源
+  }
+  
+  /**
+   * 基本信息保存成功后的后续操作，默认发送成功消息
+   * @param {*} keyId 主键id
+   */
+  saveContinue(req, res, keyId) {
+    const permissionIds = req.body.perIds
+    // 保存用户角色信息
+    this.saveRolePermission(keyId, permissionIds)
+      .then(() => {
+        res.send(new ResponseData(keyId, `保存${this.table.title}（${keyId}）成功！`))
+      })
+      .catch(err => {
+        console.log(err)
+        res.send(new ResponseData().setError(`保存${this.table.title}（${keyId}）-授权信息发生错误：${err}`))
+      })
   }
 
 

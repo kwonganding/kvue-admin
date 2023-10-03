@@ -11,18 +11,25 @@ const Base = require('../utils/Base.js')
 const sqlHelper = require('../utils/sql-helper.js');
 
 
-class Departmet extends Base {
+class Permission extends Base {
   constructor() {
     super()
-    this.table = new Table('sys_department', 'department', '组织结构')
+    this.table = new Table('sys_permission', 'permission', '菜单资源')
     this.config(this.table)
   }
   config(table) {
     super.config(table)
+    table.add('title', '%')
     table.add('name', '%')
     table.add('order_num')
     table.add('pid')
-    table.add('manager', '%')
+    table.add('type','in')
+    table.add('icon')
+    table.add('menu_type')
+    table.add('path')
+    table.add('view')
+    table.add('visible')
+    table.add('cache')
     table.add('remark', '%')
   }
 
@@ -33,5 +40,5 @@ class Departmet extends Base {
     router.get(`/${this.table.code}/list`, (req, res) => this.getList(req, res))
   }
 }
-new Departmet().route(router)
+new Permission().route(router)
 module.exports = router

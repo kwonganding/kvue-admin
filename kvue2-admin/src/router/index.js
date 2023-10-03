@@ -18,7 +18,7 @@ Vue.use(VueRouter)
  */
 
 /**
- * 本地的固定路由，无需权限
+ * 本地的固定路由，无需权限，也不会在菜单上显示
  */
 const constantRoutes = [
   {
@@ -74,8 +74,8 @@ router.beforeEach(async (to, from, next) => {
   if (!store.getters.token)
     return next('/login')
   // 处理外链
-  if (to.meat?.menuType === 'link' && to.meta.href) {
-    window.open(to.meta.href, "_blank")
+  if (to.meat?.menuType === 'link' && to.meta.view) {
+    window.open(to.meta.view, "_blank")
     return next(false)
   }
   if (store.getters.userInfo)

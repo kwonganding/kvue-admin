@@ -26,7 +26,7 @@ import { list2Tree } from '@/utils/tree'
 /**
  * 本地权限资源配置，这里配置的数据仅为development调试用
  */
-const localResource = [
+const localResource1 = [
   {
     name: 'dev', title: '开发组件',
     type: 'dictionary', url: '', show: true, sort: 1,
@@ -116,9 +116,33 @@ const localResource = [
     icon: 'iconfont icon-cluster', parentName: 'system',
   },
   {
+    name: 'permission', title: '菜单资源',
+    type: 'view', url: 'views/system/permission', show: true, sort: 3,
+    icon: 'el-icon-menu', parentName: 'system',
+  },
+  {
     name: 'dict', title: '数据字典',
     type: 'view', url: 'views/system/dict', show: true, sort: 6,
     icon: 'el-icon-s-order', parentName: 'system',
+  },
+]
+
+/**
+ * 本地权限资源配置，这里配置的数据仅为development调试用，配置结构和服务端返回的数据一致，统一处理。
+ * 转换为路由所需的数据结构，原本数据全部存储在meta中
+ */
+const localResource = [
+  {
+    id: 8000, pid: 0,
+    name: 'dev', title: '开发组件', icon: 'iconfont icon-code',
+    type: 'catalog', menuType: 'default', visible: 1, cache: 1,
+    view: '', path: '', nav: ''
+  },
+  {
+    id: 8001, pid: 8000,
+    name: 'components', title: '小组件集合', icon: 'iconfont icon-compass',
+    type: 'menu', menuType: 'default', visible: 1, cache: 1,
+    view: 'views/dev-view/components', path: '', nav: '',
   },
 ]
 
@@ -153,30 +177,36 @@ export function buildRoutes(authResource) {
   const items = authResource ?? []
   // 如果是开发环境，则附加本地路由资源
   if (process.env.NODE_ENV === 'development') {
-    items.push(...localResource)
+    items.unshift(...localResource)
   }
   const asyncRoutes = createAsyncRoutes()
 
   // 2、先转换为标准路由数据结构
   const ritems = items.map(item => {
-    let route = { name: item.name, path: item.path ? item.path : item.name, query: item.query, meta: item }
-    if (item.url) {
+    let route = {
+      name: item.name, id: item.id,
+      path: item.path ? item.path : item.name,
+      meta: item
+    }
+    if (item.type === 'menu' && item.menuType === 'default' && item.view) {
       // 注意这里的坑，必须 “@/”开头，作为常量字符，不能放到动态参数里。大概原因是 动态导入需要首先确定路径
-      route.component = () => import(`@/${item.url}`)
+      route.component = () => import(`@/${item.view}`)
     }
     return route
   })
-  // 排个序
-  ritems.sort((a, b) => a.meta.sort - b.meta.sort)
 
   // 4、构建菜单树，菜单树是包含了所有类型节点（目录、路由视图）
-  menuRoutes = list2Tree(ritems, { key: 'name', parent: (n) => n.meta.parentName, children: 'children' })
-  // 递归处理下path，递归父节点的name+自己的name，示例：user-center/user
+  menuRoutes = list2Tree(ritems, { key: 'id', parent: (n) => n.meta.pid, children: 'children' })
+  // 递归处理下path、nav，递归父节点的name+自己的name，示例：user-center/user
   buildPath(menuRoutes)
 
+  console.dir(menuRoutes)
+
   // 5、筛选路由视图，添加到框架页下面，并返回
-  const vitems = ritems.filter(r => r.meta.type === 'view')
+  const vitems = ritems.filter(r => r.type === 'menu' && r.menuType === 'default' && r.view)
   asyncRoutes[0].children.push(...vitems)
+
+
   return asyncRoutes
 }
 
@@ -184,8 +214,10 @@ export function buildRoutes(authResource) {
 function buildPath(items, parentPath = '') {
   if (!items) return
   items.forEach(item => {
-    if (parentPath !== '' || !item.path?.startsWith('/'))
+    if (parentPath !== '' || !item.path?.startsWith('/')) {
       item.path = parentPath + '/' + item.path
+      item.nav = parentPath + '/' + item.meta.nav ? item.meta.nav : item.path
+    }
     buildPath(item.children, item.path)
   })
 }

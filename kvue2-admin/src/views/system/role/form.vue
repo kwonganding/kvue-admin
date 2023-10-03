@@ -21,7 +21,20 @@
       </el-form-item>
 
       <el-form-item label="分配权限" prop="roleIds">
-        <el-tree multiple style="width:100%"></el-tree>
+        <el-tree
+          ref="perTree"
+          :data="treeList"
+          show-checkbox
+          default-expand-all
+          multiple
+          node-key="id"
+          :props="{label:'title',children:'children'}"
+          style="width:100%;border:1px solid #0001"
+        >
+          <span :class="{'permission-button':data.type==='button'}" slot-scope="{ node, data }">
+            <span>{{ node.label }}</span>
+          </span>
+        </el-tree>
       </el-form-item>
 
       <el-form-item label="备注" prop="remark">
@@ -49,7 +62,9 @@ import { form } from '@/mixins/crud.js'
 import FormDrawer from '@/components/FormDrawer.vue'
 
 import { getList, getById, saveOrUpdate, deleteById } from '@/api/role.js'
+import { getPermissions } from '@/api/permission.js'
 import { enumState } from '@/model/enums'
+import { list2Tree } from '@/utils/tree'
 
 export default {
   name: 'RoleForm',
@@ -58,6 +73,7 @@ export default {
   data() {
     return {
       enumState,
+      treeList: undefined,
       formRules: {
         name: [{ required: true, message: '必填' }],
       },
@@ -70,10 +86,39 @@ export default {
     newFromData() {
       return {
         name: undefined,
-        roleIds: undefined,
+        perIds: [], // 授权信息集合
         remark: undefined,
         state: enumState.values[0].key,
       }
+    },
+    // 虚方法（按需实现）：弹窗加载前执行，参数为open方法的剩余参数
+    beforeOpen() {
+      if (this.treeList) return
+      // 加载权限资源树
+      getPermissions().then(res => {
+        const list = res.data
+        this.treeList = list2Tree(list)
+        setTimeout(() => {
+          this.setPerButtonStyle()
+        }, 100)
+      })
+    },
+    // 虚方法（按需实现）：弹窗加载后执行，参数为open方法的剩余参数
+    afterOpen(args) {
+      this.$refs.perTree.setCheckedKeys(this.formData.perIds)
+    },
+    // 设置按钮权限样式，横向显示
+    setPerButtonStyle() {
+      const doms = document.querySelectorAll('.permission-button')
+      for (let i = 0; i < doms.length; i++) {
+        doms[i].parentNode.style.cssText = 'float: left; padding-right: 20px;'
+        doms[i].parentNode.parentNode.parentNode.style.marginLeft = '40px'
+      }
+    },
+    // 保存前的动作，返回bool，false则不执行保存
+    beforeSave() {
+      this.formData.perIds = this.$refs.perTree.getCheckedKeys()
+      return true
     },
   }
 }

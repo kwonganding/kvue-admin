@@ -39,8 +39,14 @@ router.post('/auth/login', (req, res) => {
 router.get('/auth/getInfo', (req, res) => {
   //构造sql查询
   const sql = 'select id,name,avatar,nickname from sys_user where name=? '
-  const rsql = ''
-  const psql = ''
+  
+  // 关联查询权限，用户id、权限id、权限状态正常
+  const psql = `SELECT p.id,p.title, p.name,p.type,p.pid,p.icon,p.menu_type as 'menuType',p.path,p.nav,p."view",p.visible,p.cache_enable as 'cacheEnable'
+  FROM sys_user_role ur
+  INNER JOIN sys_role r ON ur.role_id = r.id
+  INNER JOIN sys_role_permission rp ON r.id = rp.role_id
+  INNER JOIN sys_permission p ON rp.per_id = p.id
+  WHERE ur.name = ? and p.state='normal' and r.state='normal' order by p.order_num asc`
 
 
   const params = [req.payload.name];
@@ -48,7 +54,11 @@ router.get('/auth/getInfo', (req, res) => {
     .then(rows => {
       const resData = new ResponseData()
       if (rows && rows.length > 0)
-        resData.data = rows[0]
+        {
+          resData.data = rows[0]
+          resData.data.permissions=[] // 授权的权限集合，按钮授权汇总到permissions
+        }
+        
       else
         resData.setError('用户不存在：' + req.payload.name)
       res.send(resData)

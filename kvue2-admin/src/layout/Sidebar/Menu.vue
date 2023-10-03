@@ -28,7 +28,7 @@ export default {
     }
   },
   created: function() {
-    this.menuItems = Object.freeze(menuRoutes.filter(s => s.meta.show))
+    this.menuItems = Object.freeze(menuRoutes.filter(s => s.meta.visible))
   },
 }
 </script>
