@@ -18,12 +18,13 @@ const JWT_HEADER_KEY = 'authtoken'
  * @param {string} userName 
  * @param {number} maxage 有效时长（单位秒），默认4个小时
  */
-function JWT(userName, maxage = 4 * 3600) {
+function JWT(id, userName, maxage = 4 * 3600) {
   this.header = {
     alg: 'sm2', // 加密算法，采用国密算法（非对称）实现
     type: 'JWT' // 数据类型，固定为JWT
   }
   this.payload = {
+    id: id,
     name: userName,
     exp: Date.now() + maxage * 1000  // jwt有效时间
   }
@@ -34,8 +35,9 @@ function JWT(userName, maxage = 4 * 3600) {
  * @param {string} userName 用户名
  * @returns 编码、签名后的字符串
  */
-function createJWT(userName) {
-  const jwt = new JWT(userName)
+function createJWT(id, userName) {
+  const jwt = new JWT(id, userName)
+
   const header = JSON.stringify(jwt.header)
   const payload = JSON.stringify(jwt.payload)
   // sm3签名
@@ -75,7 +77,7 @@ function varifyJWT(req, res, next) {
     return res.send(new ResponseData().setCode(4002))
   }
   // 都没问题，更新jwt(主要是时间),
-  let njwt = createJWT(payloadObj.name)
+  let njwt = createJWT(payloadObj.id, payloadObj.name)
   // token载荷放到req上
   req.payload = payloadObj
   // 返回的新的jwt

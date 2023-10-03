@@ -109,9 +109,6 @@ export default {
     },
     addTag() {
       //添加到缓存路由中，排除跳转页面，
-
-      console.log(this.$route)
-
       if (this.$route.name === "redirect") return
       this.$store.commit("tagsBar/ADD", this.$route)
     },

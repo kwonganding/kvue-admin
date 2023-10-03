@@ -28,6 +28,8 @@
           default-expand-all
           multiple
           node-key="id"
+          check-strictly
+          @check="onCheckChange"
           :props="{label:'title',children:'children'}"
           style="width:100%;border:1px solid #0001"
         >
@@ -64,7 +66,7 @@ import FormDrawer from '@/components/FormDrawer.vue'
 import { getList, getById, saveOrUpdate, deleteById } from '@/api/role.js'
 import { getPermissions } from '@/api/permission.js'
 import { enumState } from '@/model/enums'
-import { list2Tree } from '@/utils/tree'
+import { list2Tree, map } from '@/utils/tree'
 
 export default {
   name: 'RoleForm',
@@ -120,6 +122,20 @@ export default {
       this.formData.perIds = this.$refs.perTree.getCheckedKeys()
       return true
     },
+    // check	当复选框被点击的时候触发
+    // 共两个参数，依次为：传递给 data 属性的数组中该节点所对应的对象、树目前的选中状态对象，包含 checkedNodes、checkedKeys、halfCheckedNodes、halfCheckedKeys 四个属性
+    onCheckChange(node, tree) {
+      if (!node.children || node.children.length < 1)
+        return
+      // 手动实现父子单向联动
+      const childrenIds = map(node.children, n => n.id)
+      // 判断当前节点的状态
+      const checked = tree.checkedKeys.some(n => n === node.id)
+      childrenIds.forEach(id => {
+        this.$refs.perTree.setChecked(id, checked, false)
+      })
+    }
+
   }
 }
 </script>

@@ -46,11 +46,12 @@
         <ListViewToolbar :form="query" @on-search="doSearch" @on-reset="doSearch">
           <!-- 左侧-功能按钮区 -->
           <template #left>
-            <el-button type="primary" icon="el-icon-plus" @click="handleEdit()">新增</el-button>
+            <el-button type="primary" icon="el-icon-plus" @click="handleEdit()" v-permission="'add'">新增</el-button>
             <el-button
               icon="el-icon-delete"
               type="warning"
               @click="handleDelete()"
+              v-permission="'delete'"
               :disabled="$refs.dataTable?.selection.length<1"
             >删除</el-button>
             <el-tag
@@ -140,8 +141,8 @@
           <!-- 操作列，按需固定：fixed="right"-->
           <el-table-column label="操作" class-name="table-link-btton" width="120" align="center" fixed="right">
             <template slot-scope="scope">
-              <el-link @click="handleEdit(scope.row)" type="primary" icon="el-icon-edit">修改</el-link>
-              <el-link @click="handleDelete(scope.row)" type="warning" icon="el-icon-delete">删除</el-link>
+              <el-link @click="handleEdit(scope.row)" v-permission="'edit'" type="primary" icon="el-icon-edit">修改</el-link>
+              <el-link @click="handleDelete(scope.row)" v-permission="'delete'" type="warning" icon="el-icon-delete">删除</el-link>
             </template>
           </el-table-column>
         </el-table>

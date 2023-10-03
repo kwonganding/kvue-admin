@@ -81,7 +81,7 @@ router.beforeEach(async (to, from, next) => {
     .then(() => {
       // 基于用户权限处理路由、菜单，都统一添加到框架页下面
       //TODO：这里参数应掺入服务端返回的路由权限数据
-      const authResource = []
+      const authResource = store.getters.userInfo.permissions
       const routeItems = buildRoutes(authResource)
       router.addRoutes(routeItems)
       // 由于更新了路由，需重新设置当前路由目标。replace: true替换，不会产生历史记录
