@@ -3,6 +3,7 @@ const ResponseData = require('../utils/response');
 const sqlHelper = require('../utils/sql-helper.js')
 const { db, queryPageData, executeSql, queryData } = require('../db/db.js');
 
+// 数据层CRUD处理的基类，基于表配置实现了单表的增删改查接口
 class Base {
   // 表结构配置，具体类实现表结构配置
   table = undefined

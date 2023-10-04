@@ -43,7 +43,7 @@ class Departmet extends Base {
         res.send(new ResponseData().setError(err))
       })
   }
-  
+
   /**
    * 基本信息保存成功后的后续操作，默认发送成功消息
    * @param {*} keyId 主键id
@@ -103,29 +103,3 @@ class Departmet extends Base {
 }
 new Departmet().route(router)
 module.exports = router
-
-
-/**
- * 获取单个详情，包括角色的授权资源id集合
- */
-// router.get('/role/:id', async (req, res) => {
-//   const sql = `SELECT id,name,state,remark,create_time as createTime ,last_time as lastTime
-//     FROM ${TABLE_NAME} WHERE id = ? `
-//   const params = [req.params.id];
-//   let error = null
-//   // 1、获取基本信息
-//   const rrows = await queryData(sql, params).catch(err => error = err)
-//   const data = rrows?.[0]
-//   // 2、获取资源授权信息
-//   if (data) {
-//     const prows = await queryData(`SELECT GROUP_CONCAT(per_id) as ids FROM sys_role_permission WHERE role_id = ?`, params)
-//       .catch(err => error = err)
-//     data.permissionIds = prows?.[0]?.ids?.split(',').map(s=>parseInt(s))
-//   }
-
-//   // 返回
-//   if (error)
-//     res.send(new ResponseData().setError(error))
-//   else
-//     res.send(new ResponseData(data))
-// })
