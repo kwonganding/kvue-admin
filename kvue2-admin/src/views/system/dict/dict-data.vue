@@ -38,12 +38,12 @@
         height="100%"
       >
         <!-- <el-table-column label="ID" width="200" prop="id" align="left"></el-table-column> -->
-        <el-table-column label="名称" min-width="120" prop="name" align="left"></el-table-column>
+        <el-table-column label="名称" min-width="160" prop="name" align="left"></el-table-column>
         <el-table-column label="编码" min-width="120" prop="code" align="left"></el-table-column>
         <el-table-column label="字典类型" width="120" prop="type" align="center"></el-table-column>
-        <el-table-column label="排序号" width="120" prop="orderNum" align="center" sortable="custom"></el-table-column>
+        <el-table-column label="排序号" width="100" prop="orderNum" align="center" sortable="custom"></el-table-column>
 
-        <el-table-column label="状态" width="120" prop="state" align="center">
+        <el-table-column label="状态" width="100" prop="state" align="center">
           <template slot-scope="scope">
             <el-tag
               v-if="scope.row.state"
@@ -53,7 +53,7 @@
         </el-table-column>
 
         <!-- 操作列，按需固定：fixed="right"-->
-        <el-table-column label="操作" class-name="table-link-btton" width="200" align="center">
+        <el-table-column label="操作" class-name="table-link-btton" width="180" align="center">
           <template slot-scope="scope">
             <el-link @click="handleEdit(null,scope.row)" v-show="isTree" type="primary" icon="el-icon-plus">新增</el-link>
             <el-link @click="handleEdit(scope.row)" type="primary" icon="el-icon-edit">修改</el-link>

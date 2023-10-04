@@ -7,6 +7,7 @@ function checkPermission(el, value, vnode) {
   if (!value) return
   // 获取当前页面路由的权限配置
   const permissions = vnode.componentInstance?.$root?.$route?.meta?.permissions
+  // 为null、undefined则没有处理，注意
   if (!permissions) return
   if (!permissions.includes(value)) {
     el.style.display = 'none'

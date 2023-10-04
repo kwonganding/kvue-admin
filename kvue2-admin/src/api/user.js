@@ -73,9 +73,12 @@ export function getById(id) {
  * @param {object} 保存的数据对象
  */
 export function saveOrUpdate(data) {
-  if (data.pwd)
-    data.pwd = encrypt(data.pwd)
-  return post("/system/user", data)
+  // 为了不影响UI数据，创建一个副本，简单类型，浅拷贝即可。
+  let user = {}
+  Object.assign(user, data)
+  if (user.pwd)
+    user.pwd = encrypt(user.pwd)
+  return post("/system/user", user)
 }
 
 /**

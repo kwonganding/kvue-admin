@@ -127,7 +127,7 @@ class SqlHelper {
         params.push(f.customValue())
         return
       }
-      const value = data[f.cameName]
+      let value = data[f.cameName]
       if (value == undefined || value == null) return
       if (f.converter)
         value = f.converter(value)

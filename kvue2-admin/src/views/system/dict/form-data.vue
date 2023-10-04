@@ -108,8 +108,6 @@ export default {
 
     // 虚方法（按需实现）：弹窗加载后执行
     afterOpen() {
-      if (this.pid && !this.keyId)
-        this.formData.pid = this.pid
       this.formData.type = this.dict.type
     },
   }

@@ -1,5 +1,5 @@
 <template>
-  <el-container class="view list-view-layout">
+  <el-container class="view list-view-layout" style="padding:20px">
     <el-form label-width="120px" style="width:600px" label-position="left">
       <el-row>动态路由，路由路径：dynamic-path/:id</el-row>
       <br />

@@ -107,7 +107,9 @@ export default {
     },
     // 虚方法（按需实现）：弹窗加载后执行，参数为open方法的剩余参数
     afterOpen(args) {
-      this.$refs.perTree.setCheckedKeys(this.formData.perIds)
+      this.$nextTick(() => {
+        this.$refs.perTree.setCheckedKeys(this.formData.perIds)
+      })
     },
     // 设置按钮权限样式，横向显示
     setPerButtonStyle() {

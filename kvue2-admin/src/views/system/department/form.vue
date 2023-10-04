@@ -94,21 +94,18 @@ export default {
     },
 
     // 虚方法（按需实现）：弹窗加载前执行
-    // 每次加载部门数据
+    // 每次加载部门数据，为了保证部门数据是最新的，只能辛苦每次都获取了
     beforeOpen([pid]) {
       getList().then(res => {
         const list = res.data
         this.treeList = list2Tree(list)
-
         // 修改时，不能选择自己及后代
         if (this.keyId)
-          setTreeDisable(this.departments, list.filter(s => s.id === this.keyId)?.[0])
-
-        // 再次更新pid
+          setTreeDisable(this.treeList, list.filter(s => s.id === this.keyId)?.[0])
         // 指定父级
         if (!this.keyId) { //新增
           this.$nextTick(() => {
-            this.formData.pid = this.pid
+            this.formData.pid = pid
           })
         }
       })
@@ -116,9 +113,6 @@ export default {
     // 虚方法（按需实现）：弹窗加载后执行
     afterOpen([pid]) {
       this.pid = pid
-      // 指定父级
-      if (pid && !this.keyId)
-        this.formData.pid = pid
     },
   }
 }

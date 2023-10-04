@@ -35,7 +35,7 @@
         :default-sort="{prop: 'orderNum', order: 'ascending'}"
         height="100%"
       >
-        <el-table-column label="标题" min-width="120" prop="title" align="left" show-overflow-tooltip>
+        <el-table-column label="图标/标题" min-width="140" prop="title" align="left" show-overflow-tooltip>
           <i slot-scope="scope" :class="scope.row.icon">&nbsp;{{ scope.row.title }}</i>
         </el-table-column>
         <el-table-column label="编码" min-width="80" prop="name" align="left"></el-table-column>

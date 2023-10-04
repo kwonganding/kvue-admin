@@ -91,7 +91,7 @@
 
       <el-row>
         <el-col :span="12">
-          <el-form-item label="图标Icon" prop="icon">
+          <el-form-item label="图标Icon" prop="icon" v-show="showIcon">
             <IconSelect v-model="formData.icon"></IconSelect>
           </el-form-item>
         </el-col>
@@ -222,6 +222,9 @@ export default {
   computed: {
     isMenu() {
       return this.formData.type === 'menu'
+    },
+    showIcon() {
+      return this.formData.type !== 'button'
     }
   },
   methods: {
@@ -268,10 +271,6 @@ export default {
     },
     // 虚方法（按需实现）：弹窗加载后执行
     afterOpen() {
-      // 指定父级
-      if (!this.keyId) { //新增
-        this.formData.pid = this.parent?.id
-      }
       // 根据父节点处理默认值
       if (this.parent) {
         switch (this.parent.type) {

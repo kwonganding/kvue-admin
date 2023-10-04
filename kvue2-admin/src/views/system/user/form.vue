@@ -165,8 +165,6 @@ export default {
         this.formRules.pwd[0].required = false
         // 强制验证一次，更新校验状态
         this.$refs.form.validate()
-
-
       }
     },
 

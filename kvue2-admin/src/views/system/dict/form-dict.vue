@@ -24,7 +24,7 @@
           <el-radio border :key="0" :label="0">否</el-radio>
         </el-radio-group>
         <el-tooltip class="item" effect="dark" content="用来设置字典数据是否支持树形结构，默认‘否’单级结构" placement="top-end">
-          <i class="el-icon-warning" style="margin-left: 10px;font-size: 16px;"></i>
+          <i class="el-icon-warning" style="margin-left: 10px;font-size: 16px;vertical-align: middle;"></i>
         </el-tooltip>
       </el-form-item>
     </el-form>

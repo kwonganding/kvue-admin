@@ -54,33 +54,39 @@ const localResource = [
     view: 'views/dev-view/enums', path: '',
   },
 
+
   {
-    id: 8006, pid: 8000, // 动态路由
+    id: 8100, pid: 8000,
+    name: 'route', title: '动态路由参数', icon: 'el-icon-attract',
+    type: 'catalog', menuType: 'default', visible: 1, cache: 1,
+    view: '', path: '',
+  },
+  {
+    id: 8101, pid: 8100, // 动态路由
     name: 'dynamic-path', title: '动态路由123', icon: 'iconfont icon-codelibrary-fill',
     type: 'menu', menuType: 'default', visible: 1, cache: 1,
     view: '', path: 'dev/dynamic-path/123',
   },
   {
-    id: 8007, pid: 8000, // 动态路由
+    id: 8102, pid: 8100, // 动态路由
     name: 'dynamic-path', title: '动态路由456', icon: 'iconfont icon-codelibrary-fill',
     type: 'menu', menuType: 'default', visible: 1, cache: 1,
     view: '', path: 'dev/dynamic-path/456',
   },
   {
-    id: 8006, pid: 8000, // 注册一个动态路由，不显示只用于路由注册
+    id: 8103, pid: 8100, // 注册一个动态路由，不显示只用于路由注册
     name: 'dynamic-path', title: '动态', icon: 'iconfont icon-codelibrary-fill',
     type: 'menu', menuType: 'default', visible: 0, cache: 1,
     view: 'views/dev-view/dynamic-path', path: 'dev/dynamic-path/:id(.*)',
   },
-
   {
-    id: 8012, pid: 8000,
+    id: 8104, pid: 8100,
     name: 'iframe', title: '内链-博客园', icon: 'el-icon-link',
     type: 'menu', menuType: 'iframe', visible: 1, cache: 1,
     view: '', path: 'iframe/https://www.cnblogs.com/',
   },
   {
-    id: 8011, pid: 8000,
+    id: 8011, pid: 8100,
     name: 'b1', title: '外链-百度', icon: 'el-icon-link',
     type: 'menu', menuType: 'link', visible: 1, cache: 0,
     view: 'http://www.baidu.com', path: '',

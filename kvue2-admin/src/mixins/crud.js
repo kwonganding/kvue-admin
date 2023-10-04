@@ -109,7 +109,7 @@ export const form = {
       keyId: null,         // 主键id值，可据此判断新增、修改
       fullscreen: false,   // 是否全屏
       visible: false,      // 是否显示
-      isModified: false,   // 表单值是否已修改
+      isModified: false,   // 表单值是否已修改，通过监听表单数据来判断修改状态，如果已修改窗口只能手动关闭，不支持Esc+点击其他位置关闭了
     }
   },
   watch: {
